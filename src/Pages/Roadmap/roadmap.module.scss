@@ -1,0 +1,77 @@
+.roadmap {
+  min-height: 100vh;
+  padding: 4rem;
+  margin-top: 4rem;
+
+  @media (max-width: 768px) {
+    padding: 2rem 1rem;
+  }
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 4rem;
+
+  h1 {
+    font-family: "Marcellus", serif;
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(135deg, var(--color-foreground), var(--color-muted-foreground));
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    @media (max-width: 768px) {
+      font-size: 2rem;
+    }
+  }
+
+  p {
+    font-family: "Poppins", sans-serif;
+    font-size: 1.125rem;
+    color: var(--color-muted-foreground);
+    margin-bottom: 2rem;
+  }
+}
+
+.legend {
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+  flex-wrap: wrap;
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: "Poppins", sans-serif;
+  font-size: 0.95rem;
+  color: var(--color-muted-foreground);
+
+  svg {
+    flex-shrink: 0;
+
+    &.completed {
+      color: #10b981;
+      stroke-width: 2;
+    }
+
+    &.inProgress {
+      color: #3b82f6;
+      stroke-width: 2;
+    }
+
+    &.planned {
+      color: #9ca3af;
+      stroke-width: 2;
+    }
+  }
+}
+
+.timeline {
+  max-width: 900px;
+  margin: 0 auto;
+  position: relative;
+}

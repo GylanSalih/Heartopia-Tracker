@@ -40,19 +40,18 @@ const DesktopHeader = (): React.ReactElement => {
         <Link to="/" className={styles.logo}>
           <img 
             src="/assets/img/Logo_Black.png" 
-            alt="Lost Dreams of Tomorrow Logo" 
+            alt="PetalStack Logo" 
             className={styles.logoLight}
-            width={32}
-            height={32}
+            width={48}
+            height={48}
           />
           <img 
             src="/assets/img/Logo_White.png" 
-            alt="Lost Dreams of Tomorrow Logo" 
+            alt="PetalStack Logo" 
             className={styles.logoDark}
-            width={32}
-            height={32}
+            width={48}
+            height={48}
           />
-          <span>Lost Dreams of Tomorrow</span>
         </Link>
 
         {/* Desktop Navigation */}
@@ -62,6 +61,18 @@ const DesktopHeader = (): React.ReactElement => {
             className={`${styles.navLink} ${isActive('/') ? styles.active : ''}`}
           >
             Home
+          </Link>
+          <Link 
+            to="/tools" 
+            className={`${styles.navLink} ${isActive('/tools') ? styles.active : ''}`}
+          >
+            Tools
+          </Link>
+          <Link 
+            to="/roadmap" 
+            className={`${styles.navLink} ${isActive('/roadmap') ? styles.active : ''}`}
+          >
+            Roadmap
           </Link>
           
           {/* Dark Mode Toggle */}
@@ -103,6 +114,18 @@ const DesktopHeader = (): React.ReactElement => {
                 className={`${styles.mobileNavLink} ${isActive('/') ? styles.active : ''}`}
               >
                 Home
+              </Link>
+              <Link 
+                to="/tools" 
+                className={`${styles.mobileNavLink} ${isActive('/tools') ? styles.active : ''}`}
+              >
+                Tools
+              </Link>
+              <Link 
+                to="/roadmap" 
+                className={`${styles.mobileNavLink} ${isActive('/roadmap') ? styles.active : ''}`}
+              >
+                Roadmap
               </Link>
             </div>
 

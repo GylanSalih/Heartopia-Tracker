@@ -1,10 +1,12 @@
 import { useState, useMemo } from "react";
-import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, ReferenceLine } from "recharts";
+import {
+  LineChart, Line, XAxis, YAxis, Tooltip,
+  ResponsiveContainer, CartesianGrid, ReferenceLine
+} from "recharts";
 import "./GameFormula.scss";
 
 // ============================================================
 // FORMULA: XP(n) = floor(BASE * n^POLY * EXP_FACTOR^n)
-// Class Modifier: effectiveXP per kill = monsterXP * classModifier
 // ============================================================
 function calcXP(level, { base, poly, expF }) {
   if (level < 1) return 0;
@@ -29,26 +31,25 @@ function fmtFull(n) {
 }
 function clamp(val, min, max) { return Math.max(min, Math.min(max, val)); }
 
-const DEFAULTS    = { base: 80, poly: 2.0, expF: 1.065 };
+const DEFAULTS     = { base: 80, poly: 2.0, expF: 1.065 };
 const ACTIVE_MULT  = 1.0;
 const OFFLINE_MULT = 0.65;
 
-// Color tokens — still needed for dynamic/computed values (chart colors, phase tints, etc.)
 const C = {
   bg:       "#111318",
   surface:  "#1a1d24",
   border:   "#2a2e38",
   borderHi: "#3a3f4d",
   text:     "#ffffff",
-  muted:    "#ffffff",
-  faint:    "#ffffff",
-  early:    "#ffffff",
-  mid:      "#ffffff",
-  late:     "#ffffff",
-  endgame:  "#ffffff",
-  active:   "#ffffff",
-  offline:  "#ffffff",
-  accent:   "#ffffff",
+  muted:    "#a0a8b8",
+  faint:    "#6b7280",
+  early:    "#7dd3fc",
+  mid:      "#86efac",
+  late:     "#fbbf24",
+  endgame:  "#f87171",
+  active:   "#34d399",
+  offline:  "#94a3b8",
+  accent:   "#818cf8",
 };
 
 // ============================================================
@@ -94,153 +95,124 @@ function getPhase(lvl) {
 }
 
 const attributeData = [
-  {
-    attr: "VIT", icon: "❤️", label: "Vitality",
-    grants: [{ stat: "MaxHP", formula: "100 + VIT × 15", example: "10 VIT → 250 HP" }]
-  },
-  {
-    attr: "STR", icon: "⚔️", label: "Strength",
-    grants: [{ stat: "Damage", formula: "10 + STR × 2", example: "10 STR → 30 Dmg" }]
-  },
-  {
-    attr: "WIS", icon: "💧", label: "Wisdom",
-    grants: [{ stat: "MaxMP", formula: "50 + WIS × 5", example: "10 WIS → 100 MP" }]
-  },
-  {
-    attr: "AGI", icon: "💨", label: "Agility",
+  { attr: "VIT", icon: "❤️", label: "Vitality",
+    grants: [{ stat: "MaxHP", formula: "100 + VIT × 15", example: "10 VIT → 250 HP" }] },
+  { attr: "STR", icon: "⚔️", label: "Strength",
+    grants: [{ stat: "Damage", formula: "10 + STR × 2", example: "10 STR → 30 Dmg" }] },
+  { attr: "WIS", icon: "💧", label: "Wisdom",
+    grants: [{ stat: "MaxMP", formula: "50 + WIS × 5", example: "10 WIS → 100 MP" }] },
+  { attr: "AGI", icon: "💨", label: "Agility",
     grants: [
       { stat: "CritChance", formula: "5% + AGI × 0.5%", example: "10 AGI → 10%" },
       { stat: "Accuracy",   formula: "80 + AGI × 1",    example: "10 AGI → 90"   }
-    ]
-  },
-  {
-    attr: "END", icon: "🛡️", label: "Endurance",
+    ] },
+  { attr: "END", icon: "🛡️", label: "Endurance",
     grants: [
-      { stat: "Defence%",   formula: "0% + END × 0.3%", example: "10 END → 3% Red." },
-      { stat: "CarryWeight",formula: "END × 2",          example: "10 END → +20 kg"  }
-    ]
-  },
-  {
-    attr: "LCK", icon: "🍀", label: "Luck",
+      { stat: "Defence%",    formula: "0% + END × 0.3%", example: "10 END → 3% Red." },
+      { stat: "CarryWeight", formula: "END × 2",          example: "10 END → +20 kg"  }
+    ] },
+  { attr: "LCK", icon: "🍀", label: "Luck",
     grants: [
       { stat: "CritDmg",    formula: "1.5x + LCK × 0.02", example: "10 LCK → 1.7x"  },
       { stat: "DropRarity", formula: "LCK × 1%",           example: "10 LCK → +10%" }
-    ]
-  }
+    ] }
 ];
 
 // ============================================================
 // BASE UI COMPONENTS
 // ============================================================
 function Card({ children, className = "", style = {} }) {
-  return (
-    <div className={`card ${className}`} style={style}>
-      {children}
-    </div>
-  );
+  return <div className={`card ${className}`} style={style}>{children}</div>;
 }
-
 function Label({ children }) {
   return <div className="label">{children}</div>;
 }
-
 function SectionTitle({ children, className = "" }) {
   return <div className={`section-title ${className}`}>{children}</div>;
 }
-
 function NumInput({ label, value, onChange, min, max }) {
   return (
     <div className="num-input">
       <Label>{label}</Label>
-      <input
-        type="number" min={min} max={max} value={value}
-        onChange={e => onChange(clamp(parseInt(e.target.value) || min, min, max))}
-      />
+      <input type="number" min={min} max={max} value={value}
+        onChange={e => onChange(clamp(parseInt(e.target.value) || min, min, max))} />
     </div>
   );
 }
-
 function TabBtn({ active, onClick, children }) {
   return (
-    <button
-      className={`tab-btn${active ? " tab-btn--active" : ""}`}
-      onClick={onClick}
-    >
+    <button className={`tab-btn${active ? " tab-btn--active" : ""}`} onClick={onClick}>
       {children}
     </button>
   );
 }
 
 // ============================================================
-// MODIFIER DEMO
+// SIDEBAR: MODIFIERS CONTROLS
 // ============================================================
-function ModifierDemo() {
-  const [baseVal, setBaseVal] = useState(100);
-  const [flat,    setFlat]    = useState(50);
-  const [pctAdd,  setPctAdd]  = useState(0.10);
-  const [pctMult, setPctMult] = useState(0.20);
+function ModifierSidebar({ baseVal, setBaseVal, flat, setFlat, pctAdd, setPctAdd, pctMult, setPctMult }) {
   const result = (baseVal + flat) * (1 + pctAdd) * (1 + pctMult);
 
   const sliders = [
-    { label: "BASE VALUE",              val: baseVal, set: setBaseVal, min: 0, max: 500, step: 1    },
-    { label: "FLAT BONUS (+HP, +DMG)",  val: flat,    set: setFlat,    min: 0, max: 300, step: 1    },
-    { label: "PERCENT ADD (0.1=+10%)",  val: pctAdd,  set: setPctAdd,  min: 0, max: 1,   step: 0.05 },
-    { label: "PERCENT MULT (0.2=×1.2)", val: pctMult, set: setPctMult, min: 0, max: 1,   step: 0.05 },
+    { label: "BASE VALUE",     val: baseVal, set: setBaseVal, min: 0, max: 500,  step: 1,    dec: 0  },
+    { label: "FLAT BONUS",     val: flat,    set: setFlat,    min: 0, max: 300,  step: 1,    dec: 0  },
+    { label: "PERCENT ADD",    val: pctAdd,  set: setPctAdd,  min: 0, max: 1,    step: 0.05, dec: 2, note: `= +${(pctAdd*100).toFixed(0)}%` },
+    { label: "PERCENT MULT",   val: pctMult, set: setPctMult, min: 0, max: 1,    step: 0.05, dec: 2, note: `= ×${(1+pctMult).toFixed(2)}` },
   ];
 
   return (
-    <Card className="modifier-demo">
-      <SectionTitle>INTERACTIVE MODIFIER DEMO</SectionTitle>
-      <div className="modifier-demo__formula-hint">
-        formula: (Base + Flat) × (1 + PercentAdd) × (1 + PercentMult)
+    <>
+      <div className="sidebar__section-title">MODIFIER DEMO</div>
+      <div className="sidebar__formula-box">
+        (Base + Flat) × (1 + Add) × (1 + Mult)
       </div>
 
-      <div className="modifier-demo__sliders">
-        {sliders.map(({ label, val, set, min, max, step }) => (
-          <div key={label} className="modifier-demo__slider-row">
-            <div className="slider-header">
-              <span className="slider-label">{label}</span>
-              <span className="slider-value">{step < 1 ? val.toFixed(2) : val}</span>
-            </div>
-            <input type="range" min={min} max={max} step={step} value={val}
-              onChange={e => set(Number(e.target.value))} />
+      <div style={{ height: 10 }} />
+
+      {sliders.map(({ label, val, set, min, max, step, dec, note }) => (
+        <div key={label} className="sidebar__slider-row">
+          <div className="slider-header">
+            <span className="slider-label">{label}{note ? ` — ${note}` : ""}</span>
+            <span className="slider-value">{dec > 0 ? val.toFixed(dec) : val}</span>
           </div>
-        ))}
-      </div>
-
-      <div className="modifier-demo__results">
-        {[
-          { label: "BASE",    val: baseVal,          note: "starting point" },
-          { label: "+ FLAT",  val: `+${flat}`,        note: "from equipment" },
-          { label: "= FINAL", val: result.toFixed(1), note: "after all mods", big: true },
-        ].map(({ label, val, note, big }) => (
-          <div key={label} className="modifier-demo__result-item">
-            <div className="result-label">{label}</div>
-            <div className={`result-value${big ? " result-value--big" : ""}`}>{val}</div>
-            <div className="result-note">{note}</div>
+          <input type="range" min={min} max={max} step={step} value={val}
+            style={{ accentColor: C.accent }}
+            onChange={e => set(Number(e.target.value))} />
+          <div className="slider-range">
+            <span>{min}</span><span>{max}</span>
           </div>
-        ))}
+        </div>
+      ))}
+
+      <div className="sidebar__section-title" style={{ marginTop: 4 }}>RESULT</div>
+
+      <div className="sidebar__result-box">
+        <div className="res-label">BASE</div>
+        <div className="res-value">{baseVal}</div>
+      </div>
+      <div className="sidebar__result-box">
+        <div className="res-label">+ FLAT</div>
+        <div className="res-value res-value--accent">+{flat} → {baseVal + flat}</div>
+      </div>
+      <div className="sidebar__result-box">
+        <div className="res-label">FINAL</div>
+        <div className="res-value res-value--big">{result.toFixed(1)}</div>
       </div>
 
-      <div className="modifier-demo__formula-output">
-        ({baseVal} + {flat}) × (1 + {pctAdd.toFixed(2)}) × (1 + {pctMult.toFixed(2)}) ={" "}
-        <span>{result.toFixed(1)}</span>
+      <div className="sidebar__formula-box">
+        ({baseVal} + {flat}) × (1 + {pctAdd.toFixed(2)}) × (1 + {pctMult.toFixed(2)}){" "}
+        = <span>{result.toFixed(1)}</span>
       </div>
-    </Card>
+    </>
   );
 }
 
 // ============================================================
-// ELEMENT DEMO
+// SIDEBAR: ELEMENTS CONTROLS
 // ============================================================
-function ElementDemo() {
-  const [atkFire,  setAtkFire]  = useState(50);
-  const [physBase, setPhysBase] = useState(100);
-  const [physAtk,  setPhysAtk]  = useState(20);
-  const [resIce,   setResIce]   = useState(60);
-  const [resFire,  setResFire]  = useState(30);
-
-  const softCap    = (r) => r <= 50 ? r : 50 + (r - 50) * 0.5;
+function ElementSidebar({ atkFire, setAtkFire, physBase, setPhysBase, physAtk, setPhysAtk,
+                          resIce, setResIce, resFire, setResFire }) {
+  const softCap     = (r) => r <= 50 ? r : 50 + (r - 50) * 0.5;
   const totalWeight = resIce + resFire;
   const avgEffect   = totalWeight > 0 ? (2.0 * resIce + 0.5 * resFire) / totalWeight : 1.0;
   const physDmg     = Math.round((physBase + physAtk) * (1 - softCap(0) / 100));
@@ -253,66 +225,68 @@ function ElementDemo() {
     { label: "🔥 FIRE ATTACK",  val: atkFire,  set: setAtkFire,  max: 100 },
   ];
   const resistSliders = [
-    { label: "❄️  ICE RESIST",  val: resIce,  set: setResIce  },
-    { label: "🔥 FIRE RESIST", val: resFire, set: setResFire },
+    { label: "❄️ ICE RESIST",  val: resIce,  set: setResIce,  eff: softCap(resIce).toFixed(0)  },
+    { label: "🔥 FIRE RESIST", val: resFire, set: setResFire, eff: softCap(resFire).toFixed(0) },
   ];
 
   return (
-    <Card className="element-demo">
-      <SectionTitle>INTERACTIVE ELEMENT DAMAGE DEMO</SectionTitle>
-
-      <div className="element-demo__grid">
-        <div>
-          <div className="element-demo__section-label">ATTACKER</div>
-          {attackSliders.map(({ label, val, set, max }) => (
-            <div key={label} className="element-demo__slider-row">
-              <div className="slider-header">
-                <span className="slider-label">{label}</span>
-                <span className="slider-value">{val}</span>
-              </div>
-              <input type="range" min={0} max={max} value={val}
-                onChange={e => set(Number(e.target.value))} />
-            </div>
-          ))}
-        </div>
-
-        <div>
-          <div className="element-demo__section-label">DEFENDER RESISTANCES</div>
-          {resistSliders.map(({ label, val, set }) => (
-            <div key={label} className="element-demo__slider-row">
-              <div className="slider-header">
-                <span className="slider-label">{label}</span>
-                <span className="slider-value">{val}% → eff. {softCap(val).toFixed(0)}%</span>
-              </div>
-              <input type="range" min={0} max={100} value={val}
-                onChange={e => set(Number(e.target.value))} />
-            </div>
-          ))}
-          <div className="element-demo__effectiveness">
-            🔥 vs ❄️  = ×2.0 (strong)<br />
-            🔥 vs 🔥 = ×0.5 (weak)<br />
-            weighted avg: <span>×{avgEffect.toFixed(2)}</span>
+    <>
+      <div className="sidebar__section-title">ATTACKER</div>
+      {attackSliders.map(({ label, val, set, max }) => (
+        <div key={label} className="sidebar__slider-row">
+          <div className="slider-header">
+            <span className="slider-label">{label}</span>
+            <span className="slider-value">{val}</span>
           </div>
+          <input type="range" min={0} max={max} value={val}
+            style={{ accentColor: C.accent }}
+            onChange={e => set(Number(e.target.value))} />
+          <div className="slider-range"><span>0</span><span>{max}</span></div>
         </div>
-      </div>
+      ))}
 
-      <div className="element-demo__results">
-        {[
-          { label: "⚔️  PHYSICAL", val: physDmg },
-          { label: "🔥 FIRE",     val: fireDmg },
-          { label: "TOTAL",       val: total,   big: true },
-        ].map(({ label, val, big }) => (
-          <div key={label} className="element-demo__result-item">
-            <div className="result-label">{label}</div>
-            <div className={`result-value${big ? " result-value--big" : ""}`}>{val}</div>
+      <div className="sidebar__divider" />
+
+      <div className="sidebar__section-title">DEFENDER RESIST</div>
+      {resistSliders.map(({ label, val, set, eff }) => (
+        <div key={label} className="sidebar__slider-row">
+          <div className="slider-header">
+            <span className="slider-label">{label}</span>
+            <span className="slider-value">{val}% → {eff}%</span>
           </div>
-        ))}
+          <input type="range" min={0} max={100} value={val}
+            style={{ accentColor: C.accent }}
+            onChange={e => set(Number(e.target.value))} />
+          <div className="slider-range"><span>0</span><span>100</span></div>
+        </div>
+      ))}
+
+      <div className="sidebar__effectiveness">
+        🔥 vs ❄️ = ×2.0 (strong)<br />
+        🔥 vs 🔥 = ×0.5 (weak)<br />
+        weighted avg: <span>×{avgEffect.toFixed(2)}</span>
       </div>
 
-      <div className="element-demo__footer-note">
-        Soft Cap: 100% resist → max 75% reduction (never full immunity)
+      <div className="sidebar__divider" />
+
+      <div className="sidebar__section-title">DAMAGE RESULT</div>
+      <div className="sidebar__result-box">
+        <div className="res-label">⚔️ PHYSICAL</div>
+        <div className="res-value">{physDmg}</div>
       </div>
-    </Card>
+      <div className="sidebar__result-box">
+        <div className="res-label">🔥 FIRE</div>
+        <div className="res-value res-value--accent">{fireDmg}</div>
+      </div>
+      <div className="sidebar__result-box">
+        <div className="res-label">TOTAL DAMAGE</div>
+        <div className="res-value res-value--big">{total}</div>
+      </div>
+
+      <div className="sidebar__formula-box">
+        soft cap: 100% → max <span>75%</span> effective
+      </div>
+    </>
   );
 }
 
@@ -329,6 +303,19 @@ export default function App() {
   const [chartMode,     setChartMode]     = useState("needed");
   const [selectedMod,   setSelectedMod]   = useState(0);
   const [customMult,    setCustomMult]    = useState(1.0);
+
+  // Modifier Demo state (hoisted for sidebar)
+  const [modBaseVal, setModBaseVal] = useState(100);
+  const [modFlat,    setModFlat]    = useState(50);
+  const [modPctAdd,  setModPctAdd]  = useState(0.10);
+  const [modPctMult, setModPctMult] = useState(0.20);
+
+  // Element Demo state (hoisted for sidebar)
+  const [atkFire,  setAtkFire]  = useState(50);
+  const [physBase, setPhysBase] = useState(100);
+  const [physAtk,  setPhysAtk]  = useState(20);
+  const [resIce,   setResIce]   = useState(60);
+  const [resFire,  setResFire]  = useState(30);
 
   const activeMod       = CLASS_MODIFIERS[selectedMod];
   const classMultiplier = selectedMod === 0 ? customMult : activeMod.mult;
@@ -384,171 +371,196 @@ export default function App() {
     { key: "expF", label: "EXP",  min: 1.005, max: 1.15, step: 0.005, dec: 3, color: C.late  },
   ];
 
+  // Which tabs show the sidebar?
+  const SIDEBAR_TABS = ["calc", "chart", "modifiers", "elements"];
+  const hasSidebar   = SIDEBAR_TABS.includes(tab);
+
+  // ============================================================
+  // SIDEBAR CONTENT — varies per tab
+  // ============================================================
+  function renderSidebar() {
+    if (tab === "modifiers") {
+      return (
+        <aside className="sidebar">
+          <ModifierSidebar
+            baseVal={modBaseVal} setBaseVal={setModBaseVal}
+            flat={modFlat}       setFlat={setModFlat}
+            pctAdd={modPctAdd}   setPctAdd={setModPctAdd}
+            pctMult={modPctMult} setPctMult={setModPctMult}
+          />
+        </aside>
+      );
+    }
+
+    if (tab === "elements") {
+      return (
+        <aside className="sidebar">
+          <ElementSidebar
+            atkFire={atkFire}   setAtkFire={setAtkFire}
+            physBase={physBase} setPhysBase={setPhysBase}
+            physAtk={physAtk}   setPhysAtk={setPhysAtk}
+            resIce={resIce}     setResIce={setResIce}
+            resFire={resFire}   setResFire={setResFire}
+          />
+        </aside>
+      );
+    }
+
+    // calc + chart: standard sidebar
+    return (
+      <aside className="sidebar">
+        {/* Enemy Preset */}
+        <div>
+          <Label>ENEMY PRESET</Label>
+          <select className="styled-select" value={selectedEnemy}
+            onChange={e => handleEnemySelect(parseInt(e.target.value))}>
+            {ENEMIES.map((enemy, idx) => (
+              <option key={idx} value={idx}>
+                {enemy.name}{enemy.xp !== null ? `  —  ${fmt(enemy.xp)} XP` : ""}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <NumInput label="MONSTER XP VALUE" value={monsterXP}
+          onChange={v => { setMonsterXP(v); setSelectedEnemy(0); }} min={1} max={10000000} />
+
+        <div className="grid-2">
+          <NumInput label="CURRENT LVL" value={currentLvl}
+            onChange={v => setCurrentLvl(Math.min(v, targetLvl - 1))} min={1} max={998} />
+          <NumInput label="TARGET LVL" value={targetLvl}
+            onChange={v => setTargetLvl(Math.max(v, currentLvl + 1))} min={2} max={999} />
+        </div>
+
+        <hr className="sidebar__divider" />
+
+        {/* Class Modifier */}
+        <div>
+          <Label>CLASS / ITEM XP MODIFIER</Label>
+          <div className="sidebar__modifier-info">
+            Multiplies effective XP per kill.<br />
+            <span>eff. XP = monsterXP × {classMultiplier.toFixed(2)}</span>
+          </div>
+
+          <select className="styled-select styled-select--hi" value={selectedMod}
+            onChange={e => {
+              const idx = parseInt(e.target.value);
+              setSelectedMod(idx);
+              if (idx > 0) setCustomMult(CLASS_MODIFIERS[idx].mult);
+            }}>
+            {CLASS_MODIFIERS.map((m, idx) => (
+              <option key={idx} value={idx}>{m.name}  ×{m.mult.toFixed(2)}</option>
+            ))}
+          </select>
+
+          {selectedMod > 0 && (
+            <div className="sidebar__modifier-desc">{activeMod.desc}</div>
+          )}
+
+          <div>
+            <div className="sidebar__custom-multiplier-header">
+              <span className="label-text">CUSTOM MULTIPLIER</span>
+              <span className="value-display">×{classMultiplier.toFixed(2)}</span>
+            </div>
+            <input type="range" min={1.0} max={5.0} step={0.05} value={classMultiplier}
+              style={{ accentColor: C.accent }}
+              onChange={e => { setCustomMult(parseFloat(e.target.value)); setSelectedMod(0); }} />
+            <div className="sidebar__custom-multiplier-range">
+              <span>×1.00</span><span>×5.00</span>
+            </div>
+          </div>
+
+          <div className="sidebar__xp-pill">
+            <div className="sidebar__xp-pill-item">
+              <div className="pill-label">BASE XP/KILL</div>
+              <div className="pill-value">{fmt(monsterXP)}</div>
+            </div>
+            <div className="sidebar__xp-pill-item">
+              <div className="pill-label">EFF. XP/KILL</div>
+              <div className="pill-value pill-value--accent">{fmt(effectiveXPPerKill)}</div>
+            </div>
+          </div>
+        </div>
+
+        <hr className="sidebar__divider" />
+
+        <Label>FORMULA PARAMETERS</Label>
+
+        {PARAM_SLIDERS.map(({ key, label, min, max, step, dec, color }) => (
+          <div key={key}>
+            <div className="sidebar__param-slider-header">
+              <span className="param-label">{label}</span>
+              <span className="param-value" style={{ color }}>{params[key].toFixed(dec)}</span>
+            </div>
+            <input type="range" min={min} max={max} step={step} value={params[key]}
+              style={{ accentColor: color }}
+              onChange={e => setParams(p => ({ ...p, [key]: parseFloat(e.target.value) }))} />
+            <div className="sidebar__param-slider-range">
+              <span>{min}</span><span>{max}</span>
+            </div>
+          </div>
+        ))}
+
+        {/* Quick Preview */}
+        <div className="sidebar__quick-preview">
+          <Label>QUICK PREVIEW</Label>
+          {[
+            { lvl: 5,   label: "Lv 5→6",     color: C.early   },
+            { lvl: 30,  label: "Lv 30→31",   color: C.mid     },
+            { lvl: 100, label: "Lv 100→101", color: C.late    },
+            { lvl: 300, label: "Lv 300→301", color: C.endgame },
+          ].map(({ lvl, label, color }) => (
+            <div key={lvl} className="sidebar__quick-preview-item">
+              <span className="preview-label">{label}</span>
+              <span className="preview-value" style={{ color }}>
+                {fmt(calcXP(lvl, params))} XP
+              </span>
+            </div>
+          ))}
+        </div>
+
+        <button className="reset-btn"
+          onClick={() => { setParams(DEFAULTS); setSelectedMod(0); setCustomMult(1.0); }}>
+          RESET TO DEFAULT
+        </button>
+      </aside>
+    );
+  }
+
+  // ============================================================
+  // RENDER
+  // ============================================================
   return (
     <div className="app">
 
-      {/* ===== HEADER ===== */}
-      <header className="header">
-        <div>
-          <div className="header__subtitle">IDLE GAME SYSTEM</div>
-          <h1 className="header__title">XP Formula Builder</h1>
-        </div>
-        <nav className="header__tabs">
-          {[
-            { id: "calc",       label: "CALCULATOR" },
-            { id: "formula",    label: "FORMULA"    },
-            { id: "chart",      label: "CHART"      },
-            { id: "attributes", label: "ATTRIBUTES" },
-            { id: "modifiers",  label: "STAT MODS"  },
-            { id: "elements",   label: "ELEMENTS"   },
-          ].map(({ id, label }) => (
-            <TabBtn key={id} active={tab === id} onClick={() => setTab(id)}>{label}</TabBtn>
-          ))}
-        </nav>
-      </header>
-
-      <div className="layout">
-
-        {/* ===== SIDEBAR ===== */}
-        <aside className="sidebar">
-
-          {/* Enemy Preset */}
+      {/* HEADER */}
+      <div className="header-wrapper">
+        <header className="header">
           <div>
-            <Label>ENEMY PRESET</Label>
-            <select
-              className="styled-select"
-              value={selectedEnemy}
-              onChange={e => handleEnemySelect(parseInt(e.target.value))}
-            >
-              {ENEMIES.map((enemy, idx) => (
-                <option key={idx} value={idx}>
-                  {enemy.name}{enemy.xp !== null ? `  —  ${fmt(enemy.xp)} XP` : ""}
-                </option>
-              ))}
-            </select>
+            <div className="header__subtitle">IDLE GAME SYSTEM</div>
+            <h1 className="header__title">XP Formula Builder</h1>
           </div>
-
-          <NumInput label="MONSTER XP VALUE" value={monsterXP}
-            onChange={v => { setMonsterXP(v); setSelectedEnemy(0); }} min={1} max={10000000} />
-
-          <div className="grid-2">
-            <NumInput label="CURRENT LVL" value={currentLvl}
-              onChange={v => setCurrentLvl(Math.min(v, targetLvl - 1))} min={1} max={998} />
-            <NumInput label="TARGET LVL" value={targetLvl}
-              onChange={v => setTargetLvl(Math.max(v, currentLvl + 1))} min={2} max={999} />
-          </div>
-
-          <div className="sidebar__divider" />
-
-          {/* Class Modifier */}
-          <div>
-            <Label>CLASS / ITEM XP MODIFIER</Label>
-            <div className="sidebar__modifier-info">
-              Multiplies effective XP per kill.<br />
-              <span>eff. XP = monsterXP × {classMultiplier.toFixed(2)}</span>
-            </div>
-
-            <select
-              className="styled-select styled-select--hi"
-              value={selectedMod}
-              onChange={e => {
-                const idx = parseInt(e.target.value);
-                setSelectedMod(idx);
-                if (idx > 0) setCustomMult(CLASS_MODIFIERS[idx].mult);
-              }}
-            >
-              {CLASS_MODIFIERS.map((m, idx) => (
-                <option key={idx} value={idx}>
-                  {m.name}  ×{m.mult.toFixed(2)}
-                </option>
-              ))}
-            </select>
-
-            {selectedMod > 0 && (
-              <div className="sidebar__modifier-desc">{activeMod.desc}</div>
-            )}
-
-            <div>
-              <div className="sidebar__custom-multiplier-header">
-                <span className="label-text">CUSTOM MULTIPLIER</span>
-                <span className="value-display">×{classMultiplier.toFixed(2)}</span>
-              </div>
-              <input
-                type="range" min={1.0} max={5.0} step={0.05}
-                value={classMultiplier}
-                style={{ accentColor: C.accent }}
-                onChange={e => {
-                  setCustomMult(parseFloat(e.target.value));
-                  setSelectedMod(0);
-                }}
-              />
-              <div className="sidebar__custom-multiplier-range">
-                <span>×1.00</span>
-                <span>×5.00</span>
-              </div>
-            </div>
-
-            <div className="sidebar__xp-pill">
-              <div className="sidebar__xp-pill-item">
-                <div className="pill-label">BASE XP/KILL</div>
-                <div className="pill-value">{fmt(monsterXP)}</div>
-              </div>
-              <div className="sidebar__xp-pill-item">
-                <div className="pill-label">EFF. XP/KILL</div>
-                <div className="pill-value pill-value--accent">{fmt(effectiveXPPerKill)}</div>
-              </div>
-            </div>
-          </div>
-
-          <div className="sidebar__divider" />
-
-          <Label>FORMULA PARAMETERS</Label>
-
-          {PARAM_SLIDERS.map(({ key, label, min, max, step, dec, color }) => (
-            <div key={key}>
-              <div className="sidebar__param-slider-header">
-                <span className="param-label">{label}</span>
-                <span className="param-value" style={{ color }}>{params[key].toFixed(dec)}</span>
-              </div>
-              <input
-                type="range" min={min} max={max} step={step} value={params[key]}
-                style={{ accentColor: color }}
-                onChange={e => setParams(p => ({ ...p, [key]: parseFloat(e.target.value) }))}
-              />
-              <div className="sidebar__param-slider-range">
-                <span>{min}</span>
-                <span>{max}</span>
-              </div>
-            </div>
-          ))}
-
-          {/* Quick Preview */}
-          <div className="sidebar__quick-preview">
-            <Label>QUICK PREVIEW</Label>
+          <nav className="header__tabs">
             {[
-              { lvl: 5,   label: "Lv 5→6",     color: C.early   },
-              { lvl: 30,  label: "Lv 30→31",   color: C.mid     },
-              { lvl: 100, label: "Lv 100→101", color: C.late    },
-              { lvl: 300, label: "Lv 300→301", color: C.endgame },
-            ].map(({ lvl, label, color }) => (
-              <div key={lvl} className="sidebar__quick-preview-item">
-                <span className="preview-label">{label}</span>
-                <span className="preview-value" style={{ color }}>
-                  {fmt(calcXP(lvl, params))} XP
-                </span>
-              </div>
+              { id: "calc",       label: "CALCULATOR" },
+              { id: "formula",    label: "FORMULA"    },
+              { id: "chart",      label: "CHART"      },
+              { id: "attributes", label: "ATTRIBUTES" },
+              { id: "modifiers",  label: "STAT MODS"  },
+              { id: "elements",   label: "ELEMENTS"   },
+            ].map(({ id, label }) => (
+              <TabBtn key={id} active={tab === id} onClick={() => setTab(id)}>{label}</TabBtn>
             ))}
-          </div>
+          </nav>
+        </header>
+      </div>
 
-          <button
-            className="reset-btn"
-            onClick={() => { setParams(DEFAULTS); setSelectedMod(0); setCustomMult(1.0); }}
-          >
-            RESET TO DEFAULT
-          </button>
-        </aside>
+      {/* LAYOUT — conditional sidebar */}
+      <div className={`layout${hasSidebar ? "" : " layout--full"}`}>
 
-        {/* ===== MAIN CONTENT ===== */}
+        {hasSidebar && renderSidebar()}
+
+        {/* MAIN CONTENT */}
         <main className="main">
 
           {/* ========== CALCULATOR ========== */}
@@ -570,7 +582,6 @@ export default function App() {
                 </div>
               )}
 
-              {/* Stat cards */}
               <div className="calc__stat-cards">
                 {[
                   { label: "TOTAL XP NEEDED",   val: fmt(journey.totalXP),  sub: fmtFull(journey.totalXP), color: C.accent },
@@ -585,7 +596,6 @@ export default function App() {
                 ))}
               </div>
 
-              {/* Farming comparison */}
               <SectionTitle>
                 FARMING COMPARISON — {fmt(effectiveXPPerKill)} EFF. XP / KILL
                 {classMultiplier > 1 ? ` (×${classMultiplier.toFixed(2)})` : ""}
@@ -625,12 +635,11 @@ export default function App() {
                     </div>
                   </div>
                   <div className="calc__farming-note">
-                    35% XP penalty. No drop bonuses. Steady passive income. Keeps players invested between sessions without letting them fully catch up.
+                    35% XP penalty. No drop bonuses. Steady passive income. Keeps players invested between sessions.
                   </div>
                 </Card>
               </div>
 
-              {/* Modifier comparison table */}
               {classMultiplier > 1.0 && (
                 <>
                   <SectionTitle>CLASS MODIFIER COMPARISON — FULL JOURNEY</SectionTitle>
@@ -651,14 +660,13 @@ export default function App() {
                           const isActive = Math.abs(m.mult - classMultiplier) < 0.001;
                           return (
                             <tr key={i}
-                              className={`data-table__row data-table__row--${i % 2 === 0 ? "even" : "odd"}`}
-                              style={{ background: isActive ? `${C.borderHi}40` : undefined }}
-                            >
+                              className={`data-table__row data-table__row--${i%2===0?"even":"odd"}`}
+                              style={{ background: isActive ? `${C.borderHi}40` : undefined }}>
                               <td className="data-table__td" style={{ fontWeight: isActive ? 700 : 400, color: C.text }}>
                                 {m.name}
                                 {isActive && <span className="data-table__badge-tag" style={{ color: C.faint }}>← ACTIVE</span>}
                               </td>
-                              <td className="data-table__td data-table__td--bold" style={{ fontSize: 14 }}>×{m.mult.toFixed(2)}</td>
+                              <td className="data-table__td data-table__td--bold">×{m.mult.toFixed(2)}</td>
                               <td className="data-table__td data-table__td--muted">{fmt(eff)}</td>
                               <td className="data-table__td data-table__td--muted">{fmt(kills)}</td>
                               <td className="data-table__td" style={{ color: saved > 0 ? C.text : C.faint, fontWeight: saved > 0 ? 700 : 400 }}>
@@ -673,7 +681,6 @@ export default function App() {
                 </>
               )}
 
-              {/* Phase breakdown */}
               {phaseBreakdown.length > 0 && (
                 <>
                   <SectionTitle>PHASE BREAKDOWN</SectionTitle>
@@ -689,9 +696,9 @@ export default function App() {
                             </div>
                             <div className="calc__phase-stats">
                               {[
-                                { lbl: "XP REQUIRED",  val: fmt(p.xp),           color: p.color },
-                                { lbl: "ACTIVE KILLS", val: fmt(p.kills),         color: C.text  },
-                                { lbl: "% OF JOURNEY", val: pct.toFixed(1) + "%", color: C.muted },
+                                { lbl: "XP REQUIRED",  val: fmt(p.xp),           color: p.color  },
+                                { lbl: "ACTIVE KILLS", val: fmt(p.kills),         color: C.text   },
+                                { lbl: "% OF JOURNEY", val: pct.toFixed(1) + "%", color: C.muted  },
                               ].map(({ lbl, val, color }) => (
                                 <div key={lbl} className="calc__phase-stat">
                                   <div className="pstat-label">{lbl}</div>
@@ -710,7 +717,6 @@ export default function App() {
                 </>
               )}
 
-              {/* Reference table */}
               <SectionTitle>LEVEL REFERENCE TABLE</SectionTitle>
               <Card className="card--no-pad">
                 <table className="data-table">
@@ -731,14 +737,11 @@ export default function App() {
                       const isGoal = lvl === to;
                       return (
                         <tr key={lvl}
-                          className={`data-table__row data-table__row--${i % 2 === 0 ? "even" : "odd"}`}
-                          style={{ background: isMe || isGoal ? `${ph.color}0d` : undefined }}
-                        >
+                          className={`data-table__row data-table__row--${i%2===0?"even":"odd"}`}
+                          style={{ background: isMe || isGoal ? `${ph.color}0d` : undefined }}>
                           <td className="data-table__td">
-                            <span
-                              className="data-table__level-badge"
-                              style={isMe || isGoal ? { background: ph.color, color: "#000" } : {}}
-                            >
+                            <span className="data-table__level-badge"
+                              style={isMe || isGoal ? { background: ph.color, color: "#000" } : {}}>
                               {lvl}
                             </span>
                             {isMe   && <span className="data-table__badge-tag" style={{ color: C.accent }}>YOU</span>}
@@ -748,10 +751,8 @@ export default function App() {
                           <td className="data-table__td data-table__td--muted">{fmt(kA)}</td>
                           <td className="data-table__td data-table__td--faint">{fmt(kO)}</td>
                           <td className="data-table__td">
-                            <span
-                              className="data-table__phase-tag"
-                              style={{ color: ph.color, background: `${ph.color}18`, border: `1px solid ${ph.color}44` }}
-                            >
+                            <span className="data-table__phase-tag"
+                              style={{ color: ph.color, background: `${ph.color}18`, border: `1px solid ${ph.color}44` }}>
                               {ph.label}
                             </span>
                           </td>
@@ -841,9 +842,9 @@ export default function App() {
                 </div>
                 <div className="formula__enemy-grid">
                   {ENEMIES.filter(e => e.xp !== null).slice(0, 4).map(({ name, xp }) => {
-                    const colors = [C.early, C.mid, C.late, C.endgame];
-                    const idx = ENEMIES.filter(e => e.xp !== null).indexOf(ENEMIES.find(e => e.name === name));
-                    const color = colors[Math.min(idx, colors.length - 1)];
+                    const cols = [C.early, C.mid, C.late, C.endgame];
+                    const idx  = ENEMIES.filter(e => e.xp !== null).findIndex(e => e.name === name);
+                    const color = cols[Math.min(idx, cols.length - 1)];
                     return (
                       <div key={name} className="formula__enemy-card" style={{ border: `1px solid ${color}33` }}>
                         <div className="enemy-name">{name.trim()}</div>
@@ -928,7 +929,7 @@ export default function App() {
                 <p>
                   The player distributes <strong>Stat Points (+5 per level)</strong> across 6 primary attributes.
                   Each point automatically increases the derived stats via <code>AttributeScalingRules</code> in the config.
-                  Element stats (Fire Attack, Ice Resistance etc.) are <strong>only available through gear</strong>, never from attribute points.
+                  Element stats are <strong>only available through gear</strong>, never from attribute points.
                 </p>
               </Card>
 
@@ -972,10 +973,10 @@ export default function App() {
                 <Card>
                   <SectionTitle>STARTING VALUES</SectionTitle>
                   {[
-                    { label: "Start Stat Points",  val: "5"       },
-                    { label: "Start Skill Points", val: "0"       },
-                    { label: "Start Gold",         val: "1,000"   },
-                    { label: "Max Level",          val: "99"      },
+                    { label: "Start Stat Points",  val: "5"         },
+                    { label: "Start Skill Points", val: "0"         },
+                    { label: "Start Gold",         val: "1,000"     },
+                    { label: "Max Level",          val: "99"        },
                     { label: "EXP at Max Level",   val: "0 (reset)" },
                   ].map(({ label, val }) => (
                     <div key={label} className="attributes__table-row">
@@ -995,15 +996,15 @@ export default function App() {
               <Card className="modifiers__intro">
                 <p>
                   All equipment, buff, and debuff bonuses go through the <strong>StatModifier system</strong>.
-                  There are 3 types — applied in the correct order. Modifiers are immutable after creation and tracked by source for clean removal.
+                  There are 3 types — applied in the correct order. Use the sidebar sliders to interact with the live demo.
                 </p>
               </Card>
 
               <div className="modifiers__type-grid">
                 {[
-                  { type: "Flat",        icon: "+N",  title: "FLAT BONUS",          desc: "Adds a fixed value. Applied first. Best for equipment with clear stat numbers.",          example: "+50 HP, +15 Damage, +20 Defence" },
-                  { type: "PercentAdd",  icon: "%+",  title: "PERCENT ADDITIVE",     desc: "Percentage bonus — multiple PercentAdd modifiers stack additively. Applied second.",      example: "0.1 = +10%  |  0.25 = +25%"     },
-                  { type: "PercentMult", icon: "×",   title: "PERCENT MULTIPLIER",   desc: "Multiplied at the very end. Stacks multiplicatively. Used for powerful buffs.",           example: "0.2 = ×1.2  |  0.5 = ×1.5"     },
+                  { type: "Flat",        icon: "+N",  title: "FLAT BONUS",        desc: "Adds a fixed value. Applied first. Best for equipment with clear stat numbers.",          example: "+50 HP, +15 Damage, +20 Defence" },
+                  { type: "PercentAdd",  icon: "%+",  title: "PERCENT ADDITIVE",  desc: "Percentage bonus — multiple PercentAdd modifiers stack additively. Applied second.",      example: "0.1 = +10%  |  0.25 = +25%"     },
+                  { type: "PercentMult", icon: "×",   title: "PERCENT MULTIPLIER",desc: "Multiplied at the very end. Stacks multiplicatively. Used for powerful buffs.",           example: "0.2 = ×1.2  |  0.5 = ×1.5"     },
                 ].map(({ type, icon, title, desc, example }) => (
                   <Card key={type} className="modifiers__type-card">
                     <div className="type-icon">{icon}</div>
@@ -1013,8 +1014,6 @@ export default function App() {
                   </Card>
                 ))}
               </div>
-
-              <ModifierDemo />
 
               <Card>
                 <SectionTitle>EXAMPLE — SWORD + STRENGTH BUFF</SectionTitle>
@@ -1045,7 +1044,7 @@ export default function App() {
                 <p>
                   Damage runs through <strong>2 separate pipelines</strong>.
                   Physical ignores elemental barriers. Elemental damage is modified by barriers, resistances and a Rock-Paper-Scissors effectiveness system.
-                  Soft caps prevent 100% immunity — max effective resistance is 75%.
+                  Use the sidebar sliders to interact with the live demo.
                 </p>
               </Card>
 
@@ -1080,8 +1079,6 @@ export default function App() {
                   </Card>
                 ))}
               </div>
-
-              <ElementDemo />
 
               <Card>
                 <SectionTitle>RESISTANCE SOFT CAP FORMULA</SectionTitle>

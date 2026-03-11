@@ -5,6 +5,8 @@ import { DesktopHeader } from './components/Header/DesktopHeader';
 import Footer from './components/Footer/Footer';
 import ScrollToTop from './components/ScrollToTop';
 import Home from './Pages/Home/Home';
+import Tools from './Pages/Tools/Tools';
+import Roadmap from './Pages/Roadmap/Roadmap';
 import styles from './app.module.scss';
 
 import './fonts/fonts.css';
@@ -19,6 +21,8 @@ const AppContent = (): React.ReactElement => {
 
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/tools" element={<Tools />} />
+          <Route path="/roadmap" element={<Roadmap />} />
         </Routes>
         
         <Footer />
