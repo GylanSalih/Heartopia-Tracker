@@ -4,237 +4,210 @@
   left: 0;
   right: 0;
   z-index: 1030;
-  background: rgba(255, 255, 255, 0.9);
-  backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--color-border);
-  transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
-  
+  background: transparent;
+  backdrop-filter: none;
+  border-bottom: none;
+  transition: background 250ms cubic-bezier(0.4, 0, 0.2, 1),
+              backdrop-filter 250ms cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1);
+
   &.scrolled {
-    background: rgba(255, 255, 255, 0.95);
-    border-bottom-color: var(--color-border);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06);
   }
 }
 
-// Dark Mode Header
 [data-theme="dark"] .header {
-  background: rgba(0, 0, 0, 0.9);
-  
+  background: transparent;
+
   &.scrolled {
-    background: rgba(0, 0, 0, 0.95);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06);
   }
 }
 
+// KEY FIX: space-between puts logo left, nav right, center stays empty
 .container {
   max-width: 1400px;
   margin: 0 auto;
-  padding: 0 4rem;
+  padding: 0 2.5rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 4rem;
-  gap: 2rem;
-  
+  height: 4.5rem;
+
   @media (max-width: 640px) {
     padding: 0 1rem;
     height: 3.5rem;
   }
 }
 
-// Logo
 .logo {
   display: flex;
   align-items: center;
   gap: 0.75rem;
   text-decoration: none;
-  color: var(--color-foreground);
+  color: #ffffff;
   font-weight: 700;
   font-size: 1.25rem;
   transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
   flex-shrink: 0;
-  
+
   .logoLight {
     display: block;
-    transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
     width: 48px;
     height: 48px;
+    transition: transform 200ms cubic-bezier(0.4, 0, 0.2, 1);
   }
-  
+
   .logoDark {
     display: none;
-    transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
     width: 48px;
     height: 48px;
+    transition: transform 200ms cubic-bezier(0.4, 0, 0.2, 1);
   }
-  
+
   &:hover {
-    opacity: 0.8;
+    opacity: 0.85;
     transform: translateY(-1px);
-    
+
     .logoLight,
     .logoDark {
       transform: rotate(15deg) scale(1.1);
     }
   }
-  
+
   &:focus-visible {
     outline: none;
-    box-shadow: 0 0 0 2px var(--color-background), 0 0 0 4px var(--color-foreground);
+    box-shadow: 0 0 0 2px rgba(255,255,255,0.2), 0 0 0 4px rgba(255,255,255,0.6);
     border-radius: 0.25rem;
   }
 }
 
-// Dark mode logo switching
 [data-theme="dark"] .logo {
-  .logoLight {
-    display: none;
-  }
-  
-  .logoDark {
-    display: block;
-  }
+  .logoLight { display: none; }
+  .logoDark  { display: block; }
 }
 
-// Desktop Navigation
+// Nav sits on the right — no margin: auto
 .desktopNav {
   display: flex;
   align-items: center;
-  gap: 2rem;
-  margin: 0 auto;
-  
+  gap: 1.5rem;
+
   @media (max-width: 768px) {
     display: none;
   }
 }
 
 .navLink {
-  position: relative;
   text-decoration: none;
-  color: var(--color-foreground);
+  color: rgba(255, 255, 255, 0.85);
   font-weight: 500;
-  font-size: 1rem;
+  font-size: 0.975rem;
   padding: 0.5rem 0.75rem;
   transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
   border-radius: 0.375rem;
-  
+  letter-spacing: 0.01em;
+
   &:hover {
-    color: var(--color-muted-foreground);
-    background: var(--color-secondary);
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.12);
   }
-  
+
   &.active {
-    color: var(--color-foreground);
-    background: var(--color-accent);
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.18);
   }
-  
+
   &:focus-visible {
     outline: none;
-    box-shadow: 0 0 0 2px var(--color-background), 0 0 0 4px var(--color-foreground);
+    box-shadow: 0 0 0 2px rgba(255,255,255,0.2), 0 0 0 4px rgba(255,255,255,0.6);
   }
 }
 
-// Dark Mode Toggle in Header
 .themeToggleHeader {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 2.5rem;
-  height: 2.5rem;
+  width: 2.25rem;
+  height: 2.25rem;
   cursor: pointer;
   border-radius: 0.5rem;
-  background: var(--color-secondary);
-  color: var(--color-foreground);
-  border: 1px solid var(--color-border);
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
   transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
-  
+
   &:hover {
-    background: var(--color-accent);
-    border-color: var(--color-muted-foreground);
+    background: rgba(255, 255, 255, 0.22);
+    border-color: rgba(255, 255, 255, 0.35);
     transform: translateY(-1px);
-    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   }
-  
-  &:active {
-    transform: translateY(0) scale(0.95);
-  }
-  
+
+  &:active { transform: translateY(0) scale(0.95); }
+
   &:focus-visible {
     outline: none;
-    box-shadow: 0 0 0 2px var(--color-background), 0 0 0 4px var(--color-foreground);
+    box-shadow: 0 0 0 2px rgba(255,255,255,0.2), 0 0 0 4px rgba(255,255,255,0.6);
   }
 
-  svg {
-    transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
-  }
+  svg { transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1); }
+  &:hover svg { transform: rotate(20deg); }
 }
 
-// Mobile Menu Button
 .mobileMenuButton {
   display: none;
   align-items: center;
   justify-content: center;
   width: 2.5rem;
   height: 2.5rem;
-  background: var(--color-secondary);
-  border: 1px solid var(--color-border);
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 0.5rem;
-  color: var(--color-foreground);
+  color: #ffffff;
   cursor: pointer;
   transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
-  
-  @media (max-width: 768px) {
-    display: flex;
-  }
-  
+
+  @media (max-width: 768px) { display: flex; }
+
   &:hover {
-    background: var(--color-accent);
-    border-color: var(--color-muted-foreground);
+    background: rgba(255, 255, 255, 0.22);
+    border-color: rgba(255, 255, 255, 0.35);
     transform: translateY(-1px);
-    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   }
-  
-  &:active {
-    transform: translateY(0) scale(0.95);
-  }
-  
+
+  &:active { transform: translateY(0) scale(0.95); }
+
   &:focus-visible {
     outline: none;
-    box-shadow: 0 0 0 2px var(--color-background), 0 0 0 4px var(--color-foreground);
+    box-shadow: 0 0 0 2px rgba(255,255,255,0.2), 0 0 0 4px rgba(255,255,255,0.6);
   }
 }
 
-// Mobile Menu Button now uses CSS variables - no dark mode overrides needed
-
-// Modern Mobile Navigation - Full Responsive
 .mobileNav {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.95);
-  backdrop-filter: blur(8px);
+  background: rgba(0, 0, 0, 0.97);
+  backdrop-filter: blur(10px);
   z-index: 1050;
   opacity: 0;
   visibility: hidden;
   transition: opacity 150ms ease-out, visibility 150ms;
-  
+
   &.open {
     opacity: 1;
     visibility: visible;
   }
-  
-  @media (min-width: 769px) {
-    display: none;
-  }
+
+  @media (min-width: 769px) { display: none; }
 }
 
-[data-theme="dark"] .mobileNav {
-  background: rgba(0, 0, 0, 0.98);
-}
-
-// Close Button oben rechts
 .mobileCloseButton {
   position: absolute;
   top: 1.5rem;
@@ -245,22 +218,20 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(255, 255, 255, 0.15);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: 50%;
   color: #ffffff;
   cursor: pointer;
   transition: all 150ms ease-out;
-  
+
   &:hover {
-    background: rgba(255, 255, 255, 0.25);
-    border-color: rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.35);
   }
-  
-  &:active {
-    transform: scale(0.95);
-  }
-  
+
+  &:active { transform: scale(0.95); }
+
   @media (max-width: 640px) {
     top: 1rem;
     right: 1rem;
@@ -277,25 +248,24 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  padding: 6rem 1rem 3rem 1rem;
+  padding: 6rem 1rem 3rem;
   transform: translateY(-20px);
   opacity: 0;
   transition: transform 200ms ease-out, opacity 200ms ease-out;
   box-sizing: border-box;
-  
+
   .mobileNav.open & {
     transform: translateY(0);
     opacity: 1;
   }
 }
 
-// Navigation Links Container
 .mobileNavLinks {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 2rem;
+  gap: 1.5rem;
   flex: 1;
 }
 
@@ -305,206 +275,92 @@
   justify-content: center;
   width: 100%;
   max-width: min(400px, calc(100vw - 2rem));
-  padding: 1.25rem 2rem;
+  padding: 1.125rem 2rem;
   text-decoration: none;
   color: #ffffff;
   font-weight: 600;
   font-size: clamp(1rem, 4vw, 1.125rem);
-  border-radius: 16px;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   transition: all 150ms ease-out;
   text-align: center;
   opacity: 0;
   box-sizing: border-box;
-  
-  // Staggered animation delay for each link
+  letter-spacing: 0.02em;
+
   &:nth-child(1) { transition-delay: 50ms; }
-  &:nth-child(2) { transition-delay: 75ms; }
-  &:nth-child(3) { transition-delay: 100ms; }
-  &:nth-child(4) { transition-delay: 125ms; }
-  &:nth-child(5) { transition-delay: 150ms; }
-  &:nth-child(6) { transition-delay: 175ms; }
-  
-  .mobileNav.open & {
-    opacity: 1;
-  }
-  
+  &:nth-child(2) { transition-delay: 80ms; }
+  &:nth-child(3) { transition-delay: 110ms; }
+
+  .mobileNav.open & { opacity: 1; }
+
   &:hover {
     color: #000000;
     background: rgba(255, 255, 255, 0.95);
-    border-color: rgba(255, 255, 255, 0.3);
     transform: translateY(-2px);
   }
-  
+
   &.active {
     color: #000000;
     background: #ffffff;
-    border-color: rgba(255, 255, 255, 0.4);
     font-weight: 700;
   }
-  
-  &:active {
-    transform: scale(0.98);
-  }
-  
+
+  &:active { transform: scale(0.98); }
+
   &:focus-visible {
     outline: none;
     box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5);
   }
 }
 
-// Social Icons Container
 .socialIcons {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 1.5rem;
+  gap: 1.25rem;
   padding: 1rem 0;
   opacity: 0;
-  transition: opacity 200ms ease-out 200ms;
-  
-  .mobileNav.open & {
-    opacity: 1;
-  }
+  transition: opacity 200ms ease-out 220ms;
+
+  .mobileNav.open & { opacity: 1; }
 }
 
 .socialIcon {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 3rem;
-  height: 3rem;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  width: 2.75rem;
+  height: 2.75rem;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.14);
   border-radius: 50%;
   color: #ffffff;
   text-decoration: none;
   transition: all 150ms ease-out;
-  
+
   &:hover {
-    background: rgba(255, 255, 255, 0.2);
-    border-color: rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.18);
     transform: translateY(-2px);
   }
-  
-  &:active {
-    transform: scale(0.95);
-  }
-  
+
+  &:active { transform: scale(0.95); }
+
   &:focus-visible {
     outline: none;
     box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5);
   }
 }
 
-// Responsive adjustments
-@media (max-width: 640px) {
-  .container {
-    padding: 0 0.75rem;
-  }
-  
-  .logo {
-    font-size: 1.125rem;
-    
-    svg {
-      width: 20px;
-      height: 20px;
-    }
-  }
-  
-  .mobileNavContent {
-    padding: 5rem 1rem 2rem 1rem;
-  }
-  
-  .mobileNavLinks {
-    gap: 1.75rem;
-  }
-  
-  .mobileNavLink {
-    max-width: calc(100vw - 1.5rem);
-    padding: 1rem 1.5rem;
-    font-size: clamp(0.95rem, 4vw, 1rem);
-    border-radius: 12px;
-  }
-  
-  .socialIcons {
-    gap: 1.25rem;
-  }
-  
-  .socialIcon {
-    width: 2.75rem;
-    height: 2.75rem;
-    
-    svg {
-      width: 20px;
-      height: 20px;
-    }
-  }
-}
-
 @media (max-width: 480px) {
   .mobileNavContent {
-    padding: 4.5rem 0.75rem 1.5rem 0.75rem;
+    padding: 4.5rem 0.75rem 1.5rem;
   }
-  
-  .mobileNavLinks {
-    gap: 1.5rem;
-    width: 325px;
-  }
-  
+
   .mobileNavLink {
     max-width: calc(100vw - 1rem);
     padding: 0.875rem 1.25rem;
-    font-size: clamp(0.9rem, 4vw, 0.95rem);
     border-radius: 10px;
   }
-  
-  .socialIcons {
-    gap: 1rem;
-  }
-  
-  .socialIcon {
-    width: 2.5rem;
-    height: 2.5rem;
-    
-    svg {
-      width: 18px;
-      height: 18px;
-    }
-  }
 }
-
-@media (max-width: 360px) {
-  .mobileNavContent {
-    padding: 4rem 0.5rem 1rem 0.5rem;
-  }
-  
-  .mobileNavLinks {
-    gap: 1.25rem;
-
-  }
-  
-  .mobileNavLink {
-    max-width: calc(100vw - 0.75rem);
-    padding: 0.75rem 1rem;
-    font-size: clamp(0.85rem, 4vw, 0.9rem);
-    border-radius: 8px;
-  }
-  
-  .socialIcons {
-    gap: 0.875rem;
-  }
-  
-  .socialIcon {
-    width: 2.25rem;
-    height: 2.25rem;
-    
-    svg {
-      width: 16px;
-      height: 16px;
-    }
-  }
-}
-
-// Clean header styles - all hover and focus effects are now handled in individual component styles

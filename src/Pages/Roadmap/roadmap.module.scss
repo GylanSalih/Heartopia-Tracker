@@ -13,8 +13,8 @@
   margin-bottom: 4rem;
 
   h1 {
-    font-family: "Marcellus", serif;
-    font-size: 3rem;
+    font-family: "Poppins", sans-serif;
+    font-size: 3.5rem;
     font-weight: 700;
     margin-bottom: 0.5rem;
     background: linear-gradient(135deg, var(--color-foreground), var(--color-muted-foreground));
@@ -23,15 +23,16 @@
     -webkit-text-fill-color: transparent;
 
     @media (max-width: 768px) {
-      font-size: 2rem;
+      font-size: 2.25rem;
     }
   }
 
   p {
     font-family: "Poppins", sans-serif;
-    font-size: 1.125rem;
+    font-size: 1.25rem;
     color: var(--color-muted-foreground);
     margin-bottom: 2rem;
+    font-weight: 500;
   }
 }
 

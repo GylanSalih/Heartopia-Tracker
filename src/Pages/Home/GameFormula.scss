@@ -75,23 +75,19 @@ $font-mono:    "Courier New", "Consolas", monospace;
     transform: translateX(-50%);
   }
 
-  &__subtitle {
-    font-family: $font-caps;
-    font-size: 10px;
-    letter-spacing: 3px;
-    color: $faint;
-    margin-bottom: 3px;
-    font-weight: 500;
-    text-transform: uppercase;
+  &__title-section {
+    display: flex;
+    align-items: center;
+    gap: 24px;
   }
 
   &__title {
     margin: 0;
-    font-family: $font-display;
-    font-size: 22px;
-    font-weight: 400;
+    font-family: $font-body;
+    font-size: 24px;
+    font-weight: 600;
     color: $text;
-    letter-spacing: 1px;
+    letter-spacing: 0;
   }
 
   &__tabs {
@@ -183,20 +179,20 @@ $font-mono:    "Courier New", "Consolas", monospace;
       display: flex;
       justify-content: space-between;
       align-items: baseline;
-      margin-bottom: 6px;
+      margin-bottom: 8px;
 
       .label-text {
-        font-family: $font-caps;
-        font-size: 9px;
-        color: $faint;
-        font-weight: 500;
-        letter-spacing: 2px;
+        font-family: $font-body;
+        font-size: 10px;
+        color: #ffffff;
+        font-weight: 600;
+        letter-spacing: 0.5px;
         text-transform: uppercase;
       }
 
       .value-display {
         font-family: $font-body;
-        font-size: 17px;
+        font-size: 18px;
         font-weight: 700;
         color: $text;
       }
@@ -229,12 +225,13 @@ $font-mono:    "Courier New", "Consolas", monospace;
       text-align: center;
 
       .pill-label {
-        font-family: $font-caps;
-        font-size: 9px;
-        color: $faint;
-        letter-spacing: 1.5px;
+        font-family: $font-body;
+        font-size: 10px;
+        color: #ffffff;
+        letter-spacing: 0.5px;
         margin-bottom: 3px;
         text-transform: uppercase;
+        font-weight: 600;
       }
 
       .pill-value {
@@ -258,11 +255,11 @@ $font-mono:    "Courier New", "Consolas", monospace;
       margin-bottom: 7px;
 
       .param-label {
-        font-family: $font-caps;
-        font-size: 9px;
-        color: $muted;
-        font-weight: 500;
-        letter-spacing: 2px;
+        font-family: $font-body;
+        font-size: 10px;
+        color: #ffffff;
+        font-weight: 600;
+        letter-spacing: 0.5px;
         text-transform: uppercase;
       }
 
@@ -313,12 +310,12 @@ $font-mono:    "Courier New", "Consolas", monospace;
 
   // Sidebar sections für Modifier/Element Tabs
   &__section-title {
-    font-family: $font-caps;
-    font-size: 9px;
-    letter-spacing: 2.5px;
-    color: $faint;
+    font-family: $font-body;
+    font-size: 10px;
+    letter-spacing: 1px;
+    color: $text;
     margin-bottom: 10px;
-    font-weight: 500;
+    font-weight: 600;
     text-transform: uppercase;
   }
 
@@ -330,12 +327,13 @@ $font-mono:    "Courier New", "Consolas", monospace;
     margin-bottom: 10px;
 
     .res-label {
-      font-family: $font-caps;
-      font-size: 9px;
-      color: $faint;
-      letter-spacing: 1.5px;
+      font-family: $font-body;
+      font-size: 10px;
+      color: #ffffff;
+      letter-spacing: 0.5px;
       margin-bottom: 4px;
       text-transform: uppercase;
+      font-weight: 600;
     }
 
     .res-value {
@@ -379,26 +377,26 @@ $font-mono:    "Courier New", "Consolas", monospace;
   }
 
   &__slider-row {
-    margin-bottom: 14px;
+    margin-bottom: 18px;
 
     .slider-header {
       display: flex;
       justify-content: space-between;
       align-items: baseline;
-      margin-bottom: 5px;
+      margin-bottom: 8px;
 
       .slider-label {
-        font-family: $font-caps;
-        font-size: 9px;
-        color: $faint;
-        letter-spacing: 1.5px;
-        font-weight: 500;
+        font-family: $font-body;
+        font-size: 11px;
+        color: #ffffff;
+        letter-spacing: 0.5px;
+        font-weight: 600;
         text-transform: uppercase;
       }
 
       .slider-value {
         font-family: $font-body;
-        font-size: 13px;
+        font-size: 16px;
         color: $text;
         font-weight: 700;
       }
@@ -406,6 +404,7 @@ $font-mono:    "Courier New", "Consolas", monospace;
 
     input[type="range"] {
       width: 100%;
+      height: 8px;
       cursor: pointer;
       accent-color: $accent;
     }
@@ -413,12 +412,13 @@ $font-mono:    "Courier New", "Consolas", monospace;
     .slider-range {
       display: flex;
       justify-content: space-between;
-      margin-top: 2px;
+      margin-top: 4px;
 
       span {
         font-family: $font-body;
-        font-size: 10px;
-        color: $faint;
+        font-size: 11px;
+        color: #ffffff;
+        font-weight: 600;
       }
     }
   }
@@ -471,12 +471,12 @@ $font-mono:    "Courier New", "Consolas", monospace;
 
 // Label
 .label {
-  font-family: $font-caps;
-  font-size: 9px;
-  letter-spacing: 2.5px;
-  color: $muted;
-  margin-bottom: 7px;
-  font-weight: 500;
+  font-family: $font-body;
+  font-size: 10px;
+  letter-spacing: 1px;
+  color: $text;
+  margin-bottom: 8px;
+  font-weight: 600;
   text-transform: uppercase;
 }
 
@@ -678,12 +678,13 @@ input[type="range"] {
 
   &__farming-stat {
     .stat-mini-label {
-      font-family: $font-caps;
-      font-size: 9px;
-      color: $faint;
+      font-family: $font-body;
+      font-size: 10px;
+      color: #ffffff;
       margin-bottom: 4px;
-      letter-spacing: 1.5px;
+      letter-spacing: 0.5px;
       text-transform: uppercase;
+      font-weight: 600;
     }
 
     .stat-mini-value {
@@ -844,10 +845,10 @@ input[type="range"] {
   &__level-badge {
     display: inline-block;
     min-width: 42px;
-    padding: 3px 8px;
+    padding: 4px 10px;
     text-align: center;
-    background: $bg;
-    color: $text;
+    background: #000000;
+    color: #ffffff;
     border-radius: 5px;
     font-family: $font-body;
     font-size: 13px;
@@ -864,13 +865,14 @@ input[type="range"] {
   }
 
   &__phase-tag {
-    font-family: $font-caps;
-    font-size: 9px;
-    font-weight: 500;
-    letter-spacing: 1px;
+    font-family: $font-body;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
     text-transform: uppercase;
-    padding: 3px 8px;
+    padding: 4px 10px;
     border-radius: 4px;
+    color: #ffffff;
   }
 }
 

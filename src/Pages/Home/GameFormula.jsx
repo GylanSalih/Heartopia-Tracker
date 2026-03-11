@@ -536,8 +536,7 @@ export default function App() {
       {/* HEADER */}
       <div className="header-wrapper">
         <header className="header">
-          <div>
-            <div className="header__subtitle">IDLE GAME SYSTEM</div>
+          <div className="header__title-section">
             <h1 className="header__title">XP Formula Builder</h1>
           </div>
           <nav className="header__tabs">

@@ -1,10 +1,8 @@
 import React from 'react';
-import { Github, Twitter, Linkedin, Mail, Heart } from 'lucide-react';
+import { Github, Twitter, Linkedin, Mail } from 'lucide-react';
 import styles from './footer.module.scss';
 
 const Footer = (): React.ReactElement => {
-  const currentYear = new Date().getFullYear();
-
   return (
     <footer className={styles.footer}>
       <div className={styles.container}>
@@ -32,8 +30,7 @@ const Footer = (): React.ReactElement => {
           {/* Copyright */}
           <div className={styles.copyright}>
             <p>
-              © {currentYear} PetalStack. Made with{' '}
-              <Heart size={16} className={styles.heart} /> by developers for developers.
+              Copyright © Lost Dreams of Tomorrow All Rights Reserved
             </p>
           </div>
 

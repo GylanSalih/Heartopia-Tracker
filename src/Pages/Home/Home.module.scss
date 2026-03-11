@@ -1,11 +1,9 @@
+
+// NACHHER ✅
 .home {
   min-height: 100vh;
   overflow-x: hidden;
-  padding-top: 4rem;
-  
-  @media (max-width: 640px) {
-    padding-top: 3.5rem;
-  }
+  // kein padding-top — Header ist fixed, Hero braucht keinen Platz dafür
 }
 
 // Features Section
