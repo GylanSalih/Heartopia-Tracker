@@ -1,0 +1,15 @@
+/*-----------------------------------------------------------*/
+/* Fonts CSS */
+/*-----------------------------------------------------------*/
+
+/* Alle Fonts Lokal eingebunden */
+
+/* -------------------Arvo Font START--------------------------*/
+
+
+@font-face {
+  font-family: "ArvoBold";
+  src: url("/src/fonts/Arvo/Arvo-Bold.ttf") format("truetype");
+  font-weight: 500; 
+  font-style: bold;
+}

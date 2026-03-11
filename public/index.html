@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#FF6B35" />
+    <meta name="color-scheme" content="light dark" />
+    
+    <!-- Primary Meta Tags -->
+    <title>Lost Dreams of Tomorrow - XP Calculator & Game Formula</title>
+    <meta name="title" content="Lost Dreams of Tomorrow - XP Calculator & Game Formula" />
+    <meta name="description" content="Ein interaktiver XP Calculator und Game Formula Tool für Lost Dreams of Tomorrow." />
+    <meta name="keywords" content="xp, calculator, game, formula, level, progression" />
+    <meta name="author" content="Lost Dreams of Tomorrow" />
+    <meta name="robots" content="index, follow" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://lostdreamsoftomorrow.com/" />
+    <meta property="og:title" content="Lost Dreams of Tomorrow - XP Calculator & Game Formula" />
+    <meta property="og:description" content="Ein interaktiver XP Calculator und Game Formula Tool für Lost Dreams of Tomorrow." />
+    <meta property="og:image" content="%PUBLIC_URL%/logo512.png" />
+    <meta property="og:site_name" content="Lost Dreams of Tomorrow" />
+    <meta property="og:locale" content="de_DE" />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://lostdreamsoftomorrow.com/" />
+    <meta property="twitter:title" content="Lost Dreams of Tomorrow - XP Calculator & Game Formula" />
+    <meta property="twitter:description" content="Ein interaktiver XP Calculator und Game Formula Tool für Lost Dreams of Tomorrow." />
+    <meta property="twitter:image" content="%PUBLIC_URL%/logo512.png" />
+    
+    <!-- Apple Touch Icons -->
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="%PUBLIC_URL%/logo192.png" />
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="%PUBLIC_URL%/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="16x16" href="%PUBLIC_URL%/favicon.ico" />
+    
+    <!-- Manifest -->
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    
+    <!-- Preconnect to external domains for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    
+    <!-- DNS Prefetch for performance -->
+    <link rel="dns-prefetch" href="//fonts.googleapis.com" />
+    
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "BurgerVergleich24.de",
+      "url": "https://burgervergleich24.de/",
+      "description": "Die beste Plattform zum Vergleichen von Burger Restaurants in Deutschland",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://burgervergleich24.de/search?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+    
+    <!-- Security Headers -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+    <meta http-equiv="X-Frame-Options" content="DENY" />
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block" />
+    
+    <!-- Performance -->
+    <meta name="format-detection" content="telephone=no" />
+  </head>
+  <body>
+    <noscript>
+      <div style="text-align: center; padding: 50px; font-family: Arial, sans-serif;">
+        <h1>JavaScript erforderlich</h1>
+        <p>Diese Anwendung benötigt JavaScript, um ordnungsgemäß zu funktionieren.</p>
+        <p>Bitte aktivieren Sie JavaScript in Ihrem Browser und laden Sie die Seite neu.</p>
+      </div>
+    </noscript>
+    
+    <div id="root"></div>
+    
+    <!-- Loading indicator for better UX -->
+    <style>
+      #root:empty {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background: linear-gradient(135deg, #FF6B35 0%, #F7931E 100%);
+      }
+      
+      #root:empty::after {
+        content: "BurgerVergleich24.de lädt...";
+        color: white;
+        font-family: 'Source Sans Pro', Arial, sans-serif;
+        font-size: 1.2rem;
+        font-weight: 600;
+      }
+    </style>
+  </body>
+</html>

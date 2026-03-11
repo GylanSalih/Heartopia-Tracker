@@ -1,0 +1,1361 @@
+// ============================================================
+// DESIGN TOKENS
+// ============================================================
+$bg:        #111318;
+$surface:   #1a1d24;
+$border:    #2a2e38;
+$border-hi: #3a3f4d;
+$text:      #ffffff;
+$muted:     #ffffff;
+$faint:     #ffffff;
+$early:     #ffffff;
+$mid:       #ffffff;
+$late:      #ffffff;
+$endgame:   #ffffff;
+$active:    #ffffff;
+$offline:   #ffffff;
+$accent:    #ffffff;
+
+$font-family: "'Inter', 'Segoe UI', system-ui, sans-serif";
+$font-mono:   "monospace";
+
+// ============================================================
+// RESET / BASE
+// ============================================================
+* {
+  box-sizing: border-box;
+}
+
+// ============================================================
+// APP SHELL
+// ============================================================
+.app {
+  min-height: 100vh;
+  background: $bg;
+  color: $text;
+  font-family: unquote($font-family);
+}
+
+// ============================================================
+// HEADER
+// ============================================================
+.header {
+  background: $surface;
+  border-bottom: 1px solid $border;
+  padding: 18px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+
+  &__subtitle {
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: $faint;
+    margin-bottom: 3px;
+    font-weight: 600;
+  }
+
+  &__title {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 800;
+    color: $text;
+    letter-spacing: 1px;
+  }
+
+  &__tabs {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+}
+
+// ============================================================
+// LAYOUT
+// ============================================================
+.layout {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+}
+
+// ============================================================
+// SIDEBAR
+// ============================================================
+.sidebar {
+  background: $surface;
+  border-right: 1px solid $border;
+  padding: 24px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  min-height: calc(100vh - 65px);
+
+  &__divider {
+    border-top: 1px solid $border;
+  }
+
+  &__modifier-info {
+    background: $bg;
+    border-radius: 8px;
+    padding: 10px 12px;
+    margin-bottom: 10px;
+    border: 1px solid $border;
+    font-size: 11px;
+    color: $faint;
+    line-height: 1.6;
+
+    span {
+      font-family: $font-mono;
+      color: $text;
+    }
+  }
+
+  &__modifier-desc {
+    background: $bg;
+    border-radius: 6px;
+    padding: 8px 10px;
+    font-size: 11px;
+    color: $faint;
+    margin-bottom: 10px;
+    border-left: 2px solid $border-hi;
+  }
+
+  &__custom-multiplier {
+    &-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 6px;
+
+      .label-text {
+        font-size: 10px;
+        color: $faint;
+        font-weight: 600;
+        letter-spacing: 1px;
+      }
+
+      .value-display {
+        font-size: 17px;
+        font-weight: 800;
+        color: $text;
+      }
+    }
+
+    &-range {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 2px;
+
+      span {
+        font-size: 10px;
+        color: $faint;
+      }
+    }
+  }
+
+  &__xp-pill {
+    margin-top: 12px;
+    background: $bg;
+    border: 1px solid $border;
+    border-radius: 8px;
+    padding: 10px 14px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+
+    &-item {
+      text-align: center;
+
+      .pill-label {
+        font-size: 10px;
+        color: $faint;
+        letter-spacing: 1px;
+        margin-bottom: 3px;
+      }
+
+      .pill-value {
+        font-size: 16px;
+        font-weight: 800;
+        color: $muted;
+
+        &--accent {
+          color: $text;
+        }
+      }
+    }
+  }
+
+  &__param-slider {
+    &-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 7px;
+
+      .param-label {
+        font-size: 11px;
+        color: $muted;
+        font-weight: 600;
+        letter-spacing: 1px;
+      }
+
+      .param-value {
+        font-size: 17px;
+        font-weight: 800;
+      }
+    }
+
+    &-range {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 2px;
+
+      span {
+        font-size: 10px;
+        color: $faint;
+      }
+    }
+  }
+
+  &__quick-preview {
+    border-top: 1px solid $border;
+    padding-top: 16px;
+
+    &-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 7px 0;
+      border-bottom: 1px solid $border;
+
+      .preview-label {
+        font-size: 12px;
+        color: $muted;
+      }
+
+      .preview-value {
+        font-size: 13px;
+        font-weight: 700;
+      }
+    }
+  }
+}
+
+// ============================================================
+// MAIN CONTENT
+// ============================================================
+.main {
+  padding: 28px 32px;
+  overflow: auto;
+}
+
+// ============================================================
+// SHARED UI COMPONENTS
+// ============================================================
+
+// Card
+.card {
+  background: $surface;
+  border: 1px solid $border;
+  border-radius: 10px;
+  padding: 20px;
+
+  &--no-pad {
+    padding: 0;
+    overflow: hidden;
+  }
+
+  &--center {
+    text-align: center;
+  }
+}
+
+// Label
+.label {
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: $muted;
+  margin-bottom: 7px;
+  font-weight: 600;
+}
+
+// SectionTitle
+.section-title {
+  font-size: 12px;
+  letter-spacing: 3px;
+  color: $muted;
+  margin-bottom: 16px;
+  font-weight: 700;
+
+  &--inline {
+    margin: 0;
+  }
+}
+
+// TabBtn
+.tab-btn {
+  padding: 8px 18px;
+  border-radius: 7px;
+  border: 1px solid $border;
+  background: transparent;
+  color: $muted;
+  cursor: pointer;
+  font-size: 11px;
+  letter-spacing: 2px;
+  font-weight: 700;
+  font-family: inherit;
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
+
+  &--active {
+    border-color: $accent;
+    background: #{$accent}18;
+    color: $accent;
+  }
+}
+
+// NumInput
+.num-input {
+  width: 100%;
+
+  input {
+    width: 100%;
+    background: $bg;
+    border: 1px solid $border;
+    border-radius: 7px;
+    color: $text;
+    font-size: 15px;
+    font-weight: 700;
+    padding: 9px 13px;
+    outline: none;
+    box-sizing: border-box;
+    font-family: inherit;
+    transition: border-color 0.15s;
+
+    &:focus {
+      border-color: $accent;
+    }
+  }
+}
+
+// Generic select
+.styled-select {
+  width: 100%;
+  background: $bg;
+  border: 1px solid $border;
+  border-radius: 7px;
+  color: $text;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 9px 13px;
+  outline: none;
+  box-sizing: border-box;
+  font-family: inherit;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  transition: border-color 0.15s;
+
+  &:focus {
+    border-color: $accent;
+  }
+
+  &--hi {
+    border-color: $border-hi;
+
+    &:focus {
+      border-color: $accent;
+    }
+
+    &:blur {
+      border-color: $border-hi;
+    }
+  }
+}
+
+// Reset button
+.reset-btn {
+  margin-top: auto;
+  padding: 9px;
+  border: 1px solid $border;
+  border-radius: 7px;
+  background: transparent;
+  color: $muted;
+  cursor: pointer;
+  font-size: 11px;
+  letter-spacing: 2px;
+  font-weight: 600;
+  font-family: inherit;
+  transition: border-color 0.15s;
+
+  &:hover {
+    border-color: $border-hi;
+  }
+}
+
+// Range input (global accent override via JS still needed per color)
+input[type="range"] {
+  cursor: pointer;
+  accent-color: $accent;
+}
+
+// ============================================================
+// CALCULATOR TAB
+// ============================================================
+.calc {
+  &__modifier-banner {
+    background: $bg;
+    border: 1px solid $border-hi;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+
+    &-name {
+      font-size: 12px;
+      color: $text;
+      font-weight: 700;
+    }
+
+    &-saves {
+      font-size: 12px;
+      color: $faint;
+
+      span {
+        color: $text;
+        font-weight: 700;
+      }
+    }
+  }
+
+  &__stat-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+
+  &__stat-card-value {
+    font-size: 30px;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 5px;
+  }
+
+  &__stat-card-sub {
+    font-size: 11px;
+    color: $faint;
+  }
+
+  &__farming-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+
+  &__farming-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 14px;
+  }
+
+  &__farming-stat {
+    .stat-mini-label {
+      font-size: 11px;
+      color: $faint;
+      margin-bottom: 4px;
+    }
+
+    .stat-mini-value {
+      font-size: 22px;
+      font-weight: 800;
+    }
+
+    .stat-mini-unit {
+      font-size: 10px;
+      color: $faint;
+    }
+  }
+
+  &__farming-note {
+    font-size: 12px;
+    color: $muted;
+    line-height: 1.6;
+    padding: 12px;
+    background: $bg;
+    border-radius: 7px;
+  }
+
+  &__phase-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 28px;
+  }
+
+  &__phase-card {
+    padding: 16px 20px;
+  }
+
+  &__phase-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  &__phase-info {
+    min-width: 160px;
+
+    .phase-label {
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 3px;
+      letter-spacing: 1px;
+    }
+
+    .phase-range {
+      font-size: 12px;
+      color: $muted;
+    }
+  }
+
+  &__phase-stats {
+    display: flex;
+    gap: 32px;
+    flex: 1;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+  }
+
+  &__phase-stat {
+    text-align: right;
+
+    .pstat-label {
+      font-size: 10px;
+      color: $faint;
+      letter-spacing: 1px;
+      margin-bottom: 3px;
+    }
+
+    .pstat-value {
+      font-size: 18px;
+      font-weight: 800;
+    }
+  }
+
+  &__phase-bar-track {
+    margin-top: 12px;
+    height: 4px;
+    background: $bg;
+    border-radius: 3px;
+  }
+
+  &__phase-bar-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.35s;
+  }
+}
+
+// ============================================================
+// TABLE (shared)
+// ============================================================
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+
+  &__head-row {
+    background: $bg;
+  }
+
+  &__th {
+    padding: 11px 16px;
+    text-align: left;
+    font-size: 10px;
+    color: $faint;
+    letter-spacing: 2px;
+    font-weight: 700;
+    border-bottom: 1px solid $border;
+  }
+
+  &__row {
+    border-bottom: 1px solid $border;
+
+    &--even {
+      background: transparent;
+    }
+
+    &--odd {
+      background: #{$surface}80;
+    }
+
+    &--highlight {
+      // applied dynamically with inline tint
+    }
+  }
+
+  &__td {
+    padding: 11px 16px;
+    font-size: 14px;
+
+    &--bold {
+      font-weight: 700;
+      color: $text;
+    }
+
+    &--muted {
+      color: $muted;
+    }
+
+    &--faint {
+      color: $faint;
+    }
+  }
+
+  &__level-badge {
+    display: inline-block;
+    min-width: 42px;
+    padding: 3px 8px;
+    text-align: center;
+    background: $bg;
+    color: $text;
+    border-radius: 5px;
+    font-size: 13px;
+    font-weight: 800;
+
+    &--you,
+    &--goal {
+      // color/bg applied via inline style (dynamic phase color)
+    }
+  }
+
+  &__badge-tag {
+    font-size: 10px;
+    margin-left: 7px;
+    font-weight: 700;
+  }
+
+  &__phase-tag {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    padding: 3px 8px;
+    border-radius: 4px;
+  }
+}
+
+// Modifier comparison table header
+.modifier-table {
+  margin-bottom: 28px;
+}
+
+// ============================================================
+// FORMULA TAB
+// ============================================================
+.formula {
+  &__hero {
+    margin-bottom: 20px;
+    text-align: center;
+
+    .formula-display {
+      font-size: 24px;
+      font-weight: 800;
+      color: $text;
+      margin: 10px 0;
+      letter-spacing: 1px;
+    }
+
+    .formula-live {
+      display: inline-block;
+      background: $bg;
+      border-radius: 8px;
+      padding: 12px 28px;
+      font-size: 16px;
+      color: $muted;
+      margin-top: 6px;
+    }
+
+    .formula-kills {
+      margin-top: 12px;
+      display: inline-block;
+      background: $bg;
+      border-radius: 8px;
+      padding: 10px 20px;
+      font-size: 14px;
+      color: $muted;
+
+      span {
+        color: $text;
+      }
+    }
+  }
+
+  &__params-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-bottom: 22px;
+  }
+
+  &__param-card {
+    &-label {
+      font-size: 10px;
+      color: $faint;
+      letter-spacing: 2px;
+      margin-bottom: 6px;
+      font-weight: 700;
+    }
+
+    &-value {
+      font-size: 34px;
+      font-weight: 900;
+      margin-bottom: 14px;
+      line-height: 1;
+    }
+
+    &-what {
+      font-size: 12px;
+      color: $muted;
+      line-height: 1.65;
+      margin-bottom: 10px;
+    }
+
+    &-effect {
+      font-size: 12px;
+      color: $faint;
+      line-height: 1.65;
+      margin-bottom: 12px;
+    }
+
+    &-tip {
+      font-size: 11px;
+      border-top: 1px solid $border;
+      padding-top: 10px;
+    }
+  }
+
+  &__design-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  &__design-item {
+    padding: 14px;
+    background: $bg;
+    border-radius: 8px;
+
+    .design-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+    }
+
+    .design-body {
+      font-size: 12px;
+      color: $muted;
+      line-height: 1.7;
+    }
+  }
+
+  &__monster-formula {
+    background: $bg;
+    border-radius: 7px;
+    padding: 13px 16px;
+    font-size: 15px;
+    color: $muted;
+    margin-bottom: 16px;
+    font-weight: 600;
+  }
+
+  &__enemy-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+  }
+
+  &__enemy-card {
+    text-align: center;
+    padding: 14px 10px;
+    background: $bg;
+    border-radius: 8px;
+
+    .enemy-name {
+      font-size: 10px;
+      color: $faint;
+      margin-bottom: 7px;
+      font-weight: 600;
+    }
+
+    .enemy-xp {
+      font-size: 17px;
+      font-weight: 800;
+    }
+  }
+}
+
+// ============================================================
+// CHART TAB
+// ============================================================
+.chart {
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  &__toggle {
+    display: flex;
+    gap: 8px;
+  }
+
+  &__card {
+    margin-bottom: 22px;
+    padding: 20px 12px 8px 8px;
+  }
+
+  &__phase-bar {
+    margin-bottom: 14px;
+
+    &-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 6px;
+
+      .phase-name {
+        font-size: 12px;
+        font-weight: 700;
+      }
+
+      .phase-range-label {
+        font-weight: 400;
+        color: $faint;
+      }
+
+      .phase-xp {
+        font-size: 12px;
+        color: $muted;
+
+        .phase-pct {
+          color: $faint;
+        }
+      }
+    }
+
+    &-track {
+      height: 6px;
+      background: $border;
+      border-radius: 4px;
+    }
+
+    &-fill {
+      height: 100%;
+      border-radius: 4px;
+      transition: width 0.4s;
+    }
+  }
+}
+
+// ============================================================
+// ATTRIBUTES TAB
+// ============================================================
+.attributes {
+  &__intro {
+    margin-bottom: 20px;
+
+    p {
+      font-size: 12px;
+      color: $muted;
+      line-height: 1.7;
+      margin: 0;
+    }
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  &__card-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+
+    .attr-icon {
+      font-size: 22px;
+    }
+
+    .attr-name {
+      font-weight: 800;
+      font-size: 16px;
+      color: $text;
+      letter-spacing: 1px;
+    }
+
+    .attr-label {
+      color: $faint;
+      font-size: 11px;
+      letter-spacing: 1px;
+    }
+  }
+
+  &__grant {
+    background: $bg;
+    border-radius: 7px;
+    padding: 10px 12px;
+    margin-bottom: 6px;
+
+    .grant-stat {
+      color: $text;
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .grant-formula {
+      font-family: $font-mono;
+      font-size: 11px;
+      color: $muted;
+    }
+
+    .grant-example {
+      color: $faint;
+      font-size: 10px;
+      margin-top: 3px;
+    }
+  }
+
+  &__tables {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  &__table-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 7px 0;
+    border-bottom: 1px solid $border;
+    font-size: 12px;
+
+    .row-key {
+      color: $faint;
+    }
+
+    .row-val {
+      color: $text;
+      font-family: $font-mono;
+      font-weight: 700;
+    }
+  }
+}
+
+// ============================================================
+// MODIFIERS TAB
+// ============================================================
+.modifiers {
+  &__intro {
+    margin-bottom: 20px;
+
+    p {
+      font-size: 12px;
+      color: $muted;
+      line-height: 1.7;
+      margin: 0;
+    }
+  }
+
+  &__type-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  &__type-card {
+    .type-icon {
+      font-size: 28px;
+      font-weight: 900;
+      color: $text;
+      font-family: $font-mono;
+      margin-bottom: 10px;
+    }
+
+    .type-title {
+      font-size: 10px;
+      color: $faint;
+      letter-spacing: 2px;
+      margin-bottom: 6px;
+      font-weight: 700;
+    }
+
+    .type-desc {
+      font-size: 12px;
+      color: $muted;
+      line-height: 1.65;
+      margin-bottom: 12px;
+    }
+
+    .type-example {
+      font-family: $font-mono;
+      font-size: 11px;
+      color: $text;
+      background: $bg;
+      border-radius: 6px;
+      padding: 8px 10px;
+    }
+  }
+
+  &__example {
+    font-family: $font-mono;
+    font-size: 13px;
+    line-height: 2.2;
+  }
+
+  &__example-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    align-items: center;
+    gap: 16px;
+    padding: 6px 0;
+    border-bottom: 1px solid $border;
+
+    .ex-label {
+      color: $faint;
+      font-size: 12px;
+    }
+
+    .ex-val {
+      color: $text;
+      font-weight: 700;
+    }
+
+    .ex-note {
+      color: $faint;
+      font-size: 11px;
+    }
+  }
+
+  &__example-total {
+    margin-top: 12px;
+    text-align: right;
+    font-size: 16px;
+    font-weight: 800;
+    color: $text;
+  }
+}
+
+// ============================================================
+// MODIFIER DEMO (interactive)
+// ============================================================
+.modifier-demo {
+  margin-bottom: 16px;
+
+  &__formula-hint {
+    font-size: 12px;
+    color: $faint;
+    margin-bottom: 16px;
+    font-family: $font-mono;
+  }
+
+  &__sliders {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 16px;
+  }
+
+  &__slider-row {
+    .slider-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 4px;
+
+      .slider-label {
+        font-size: 10px;
+        color: $faint;
+        letter-spacing: 1px;
+        font-weight: 600;
+      }
+
+      .slider-value {
+        font-size: 12px;
+        color: $text;
+        font-weight: 700;
+        font-family: $font-mono;
+      }
+    }
+  }
+
+  &__results {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+
+  &__result-item {
+    text-align: center;
+    background: $bg;
+    border-radius: 8px;
+    padding: 12px;
+
+    .result-label {
+      font-size: 10px;
+      color: $faint;
+      letter-spacing: 1px;
+      margin-bottom: 4px;
+    }
+
+    .result-value {
+      font-size: 20px;
+      font-weight: 800;
+      color: $text;
+
+      &--big {
+        font-size: 26px;
+      }
+    }
+
+    .result-note {
+      font-size: 10px;
+      color: $faint;
+      margin-top: 2px;
+    }
+  }
+
+  &__formula-output {
+    background: $bg;
+    border-radius: 7px;
+    padding: 12px 16px;
+    font-family: $font-mono;
+    font-size: 12px;
+    color: $faint;
+
+    span {
+      color: $text;
+      font-weight: 700;
+    }
+  }
+}
+
+// ============================================================
+// ELEMENTS TAB
+// ============================================================
+.elements {
+  &__intro {
+    margin-bottom: 20px;
+
+    p {
+      font-size: 12px;
+      color: $muted;
+      line-height: 1.7;
+      margin: 0;
+    }
+  }
+
+  &__pipeline-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  &__pipeline-title {
+    font-size: 12px;
+    font-weight: 700;
+    color: $text;
+    margin-bottom: 14px;
+    letter-spacing: 1px;
+  }
+
+  &__step {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 8px;
+    font-size: 12px;
+
+    .step-num {
+      color: $faint;
+      min-width: 18px;
+      font-weight: 700;
+      font-family: $font-mono;
+    }
+
+    .step-text {
+      color: $muted;
+      line-height: 1.5;
+    }
+  }
+
+  &__softcap-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  &__softcap-item {
+    text-align: center;
+    background: $bg;
+    border-radius: 8px;
+    padding: 12px;
+
+    .sc-in {
+      font-size: 10px;
+      color: $faint;
+      letter-spacing: 1px;
+      margin-bottom: 4px;
+    }
+
+    .sc-out {
+      font-size: 20px;
+      font-weight: 800;
+      color: $text;
+    }
+
+    .sc-note {
+      font-size: 10px;
+      color: $faint;
+      margin-top: 4px;
+    }
+  }
+
+  &__formula-block {
+    font-family: $font-mono;
+    font-size: 12px;
+    color: $faint;
+    background: $bg;
+    border-radius: 7px;
+    padding: 12px 16px;
+    line-height: 1.8;
+
+    span {
+      color: $text;
+    }
+  }
+}
+
+// ============================================================
+// ELEMENT DEMO (interactive)
+// ============================================================
+.element-demo {
+  margin-bottom: 16px;
+
+  &__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 20px;
+  }
+
+  &__section-label {
+    font-size: 11px;
+    color: $faint;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+  }
+
+  &__slider-row {
+    margin-bottom: 10px;
+
+    .slider-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 3px;
+
+      .slider-label {
+        font-size: 10px;
+        color: $faint;
+        letter-spacing: 1px;
+      }
+
+      .slider-value {
+        font-size: 12px;
+        color: $text;
+        font-weight: 700;
+        font-family: $font-mono;
+      }
+    }
+  }
+
+  &__effectiveness {
+    background: $bg;
+    border-radius: 7px;
+    padding: 10px 12px;
+    margin-top: 10px;
+    font-size: 11px;
+    color: $faint;
+    line-height: 1.7;
+
+    span {
+      color: $text;
+      font-weight: 700;
+    }
+  }
+
+  &__results {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+
+  &__result-item {
+    text-align: center;
+    background: $bg;
+    border-radius: 8px;
+    padding: 12px;
+
+    .result-label {
+      font-size: 10px;
+      color: $faint;
+      letter-spacing: 1px;
+      margin-bottom: 4px;
+    }
+
+    .result-value {
+      font-size: 22px;
+      font-weight: 800;
+      color: $text;
+
+      &--big {
+        font-size: 28px;
+      }
+    }
+  }
+
+  &__footer-note {
+    font-size: 11px;
+    color: $faint;
+    text-align: center;
+    font-family: $font-mono;
+  }
+}
+
+// ============================================================
+// UTILITY HELPERS
+// ============================================================
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.mb-20 { margin-bottom: 20px; }
+.mb-28 { margin-bottom: 28px; }
