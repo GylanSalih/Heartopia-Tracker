@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, ReferenceLine } from "recharts";
-import styles from "./GameFormula.css";
+import "./GameFormula.scss";
 
 // ============================================================
 // FORMULA: XP(n) = floor(BASE * n^POLY * EXP_FACTOR^n)

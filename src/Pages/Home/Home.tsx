@@ -1,12 +1,12 @@
 import React from 'react';
-// @ts-expect-error - xp-formel-v5.jsx is a JSX file, not TypeScript
-import XPFormula from './xp-formel-v5';
-import styles from './home.module.scss';
+// @ts-expect-error - GameFormula.jsx is a JSX file, not TypeScript
+import GameFormula from './GameFormula';
+import styles from './Home.module.scss';
 
 const Home = (): React.ReactElement => {
   return (
     <div className={styles.home}>
-      <XPFormula />
+      <GameFormula />
     </div>
   );
 };
