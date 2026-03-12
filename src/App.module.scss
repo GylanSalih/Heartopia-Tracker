@@ -133,9 +133,12 @@
   color: var(--color-foreground);
   overflow-x: hidden;
   position: relative;
-  // Theme transition — only background and color, not everything
-  // (transitioning "all" causes janky repaints on scroll)
-  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 // ============================================================

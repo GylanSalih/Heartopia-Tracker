@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Heartopia — Collection Tracker</title>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="heartopia.css">
+</head>
+<body>
+
+<!-- Header (see also header.html) -->
+<header class="site-header">
+  <div class="header-logo">
+    <span class="logo-heart">♥</span>
+    <span class="logo-name">Heartopia Tracker</span>
+  </div>
+  <nav class="tab-nav">
+    <button class="tab-btn active" onclick="sw('insects',this)"><img src="assets/imgs/insects/Apollo.avif" alt=""> Insekten <span class="cbadge" id="badge-insects">0/76</span></button>
+    <button class="tab-btn" onclick="sw('birds',this)"><img src="assets/imgs/birds/Blue Peafowl.avif" alt=""> Vögel <span class="cbadge" id="badge-birds">0/77</span></button>
+    <button class="tab-btn" onclick="sw('fish',this)"><img src="assets/imgs/fish/Common Whitefish.avif" alt=""> Fische <span class="cbadge" id="badge-fish">0/94</span></button>
+    <button class="tab-btn" onclick="sw('recipes',this)"><img src="assets/imgs/recipes/House Salad.avif" alt=""> Rezepte <span class="cbadge" id="badge-recipes">0/65</span></button>
+    <button class="tab-btn" onclick="sw('npcs',this)"><img src="assets/imgs/npcs/massimo.webp" alt=""> NPCs <span class="cbadge" id="badge-npcs">0/19</span></button>
+    <button class="tab-btn" onclick="sw('animals',this)"><img src="assets/imgs/animals/alpaca.avif" alt=""> Animals <span class="cbadge" id="badge-animals">0/9</span></button>
+    <button class="tab-btn" onclick="sw('achievements',this)"><img src="assets/imgs/achievements/Ace Cat Servant.avif" alt=""> Achievements <span class="cbadge" id="badge-achievements">0/46</span></button>
+    <button class="tab-btn" onclick="sw('collectables',this)"><img src="assets/imgs/collectables/Apple.avif" alt=""> Collectables <span class="cbadge" id="badge-collectables">0/32</span></button>
+    <button class="tab-btn" onclick="sw('ingredients',this)"><img src="assets/imgs/ingredients/Butter.avif" alt=""> Ingredients <span class="cbadge" id="badge-ingredients">0/20</span></button>
+    <button class="tab-btn" onclick="sw('flowers',this)"><img src="assets/imgs/Crops/strawberry.avif" alt="" onerror="this.style.display='none'"> Flowers <span class="cbadge" id="badge-flowers">0/13</span></button>
+    <button class="tab-btn" onclick="sw('crops',this)"><img src="assets/imgs/Crops/tomato.avif" alt=""> Crops <span class="cbadge" id="badge-crops">0/13</span></button>
+  </nav>
+</header>
+
+<!-- Hero section (see also hero.html) -->
+<section class="hero" id="hero">
+  <div class="hero-title">♥ Collection Tracker</div>
+  <div class="hero-sub">Track your progress · Insects · Birds · Fish · Recipes · Animals · Achievements</div>
+  <div class="hero-stats" id="hero-stats"></div>
+</section>
+
+<!-- INSECTS -->
+<div class="tab-content active" id="tab-insects">
+  <div class="toolbar">
+    <div class="prog-wrap"><span class="prog-text" id="prog-insects">0/76</span><div class="prog-outer"><div class="prog-inner" id="bar-insects" style="width:0%"></div></div></div>
+    <div class="tb-actions">
+      <button class="btn btn-json btn-sm" onclick="exportJSON()" title="Export JSON">⬇ JSON</button>
+      <button class="btn btn-json btn-sm" onclick="importJSON()" title="Import JSON">⬆ JSON</button>
+      <button class="btn btn-reset btn-sm" onclick="resetAll()" title="Alles zurücksetzen">✕</button>
+      <span class="sep">|</span>
+      <button class="btn btn-reset btn-sm" onclick="rs('insects')">↻ Sort</button>
+      <input class="si" placeholder="🔍 Suchen…" oninput="ft('insects-table',this.value)">
+    </div>
+  </div>
+  <div class="tab-body">
+    <div class="tab-main">
+      <div class="tw"><table id="insects-table">
+        <thead><tr><th>✓</th>
+          <th class="s" onclick="st('insects','name',this)">Name<span class="a"></span></th>
+          <th class="s" onclick="st('insects','level',this)">Level<span class="a"></span></th>
+          <th class="s" onclick="st('insects','location',this)">Ort<span class="a"></span></th>
+          <th class="s" onclick="st('insects','weather',this)">Wetter<span class="a"></span></th>
+          <th class="s" onclick="st('insects','time',this)">Zeit<span class="a"></span></th>
+        </tr></thead><tbody id="insects-body"></tbody>
+      </table></div>
+    </div>
+    <aside class="detail-panel" id="dp-insects">
+      <div class="dp-placeholder">◀ Click an item to view details</div>
+    </aside>
+  </div>
+</div>
+
+<!-- BIRDS -->
+<div class="tab-content" id="tab-birds">
+  <div class="toolbar">
+    <div class="prog-wrap"><span class="prog-text" id="prog-birds">0/77</span><div class="prog-outer"><div class="prog-inner" id="bar-birds" style="width:0%"></div></div></div>
+    <div class="tb-actions">
+      <button class="btn btn-json btn-sm" onclick="exportJSON()" title="Export JSON">⬇ JSON</button>
+      <button class="btn btn-json btn-sm" onclick="importJSON()" title="Import JSON">⬆ JSON</button>
+      <button class="btn btn-reset btn-sm" onclick="resetAll()" title="Alles zurücksetzen">✕</button>
+      <span class="sep">|</span>
+      <button class="btn btn-reset btn-sm" onclick="rs('birds')">↻ Sort</button>
+      <input class="si" placeholder="🔍 Suchen…" oninput="ft('birds-table',this.value)">
+    </div>
+  </div>
+  <div class="tab-body">
+    <div class="tab-main">
+      <div class="tw"><table id="birds-table">
+        <thead><tr><th>✓</th>
+          <th class="s" onclick="st('birds','name',this)">Name<span class="a"></span></th>
+          <th class="s" onclick="st('birds','level',this)">Level<span class="a"></span></th>
+          <th class="s" onclick="st('birds','location',this)">Ort<span class="a"></span></th>
+          <th class="s" onclick="st('birds','weather',this)">Wetter<span class="a"></span></th>
+          <th class="s" onclick="st('birds','time',this)">Zeit<span class="a"></span></th>
+        </tr></thead><tbody id="birds-body"></tbody>
+      </table></div>
+    </div>
+    <aside class="detail-panel" id="dp-birds">
+      <div class="dp-placeholder">◀ Click an item to view details</div>
+    </aside>
+  </div>
+</div>
+
+<!-- FISH -->
+<div class="tab-content" id="tab-fish">
+  <div class="toolbar">
+    <div class="prog-wrap"><span class="prog-text" id="prog-fish">0/94</span><div class="prog-outer"><div class="prog-inner" id="bar-fish" style="width:0%"></div></div></div>
+    <div class="tb-actions">
+      <div class="star-selector">
+        <label>Preis:</label>
+        <button class="star-btn active" onclick="setStar(1,this)">1★</button>
+        <button class="star-btn" onclick="setStar(2,this)">2★</button>
+        <button class="star-btn" onclick="setStar(3,this)">3★</button>
+        <button class="star-btn" onclick="setStar(4,this)">4★</button>
+        <button class="star-btn" onclick="setStar(5,this)">5★</button>
+      </div>
+      <span class="sep">|</span>
+      <button class="btn btn-json btn-sm" onclick="exportJSON()" title="Export JSON">⬇ JSON</button>
+      <button class="btn btn-json btn-sm" onclick="importJSON()" title="Import JSON">⬆ JSON</button>
+      <button class="btn btn-reset btn-sm" onclick="resetAll()" title="Alles zurücksetzen">✕</button>
+      <span class="sep">|</span>
+      <button class="btn btn-reset btn-sm" onclick="rs('fish')">↻ Sort</button>
+      <input class="si" placeholder="🔍 Suchen…" oninput="ft('fish-table',this.value)">
+    </div>
+  </div>
+  <div class="tab-body">
+    <div class="tab-main">
+    <div class="tw"><table id="fish-table">
+    <thead><tr><th>✓</th>
+      <th class="s" onclick="st('fish','name',this)">Name<span class="a"></span></th>
+      <th class="s" onclick="st('fish','level',this)">Level<span class="a"></span></th>
+      <th class="s" onclick="st('fish','location',this)">Ort<span class="a"></span></th>
+      <th class="s" onclick="st('fish','weather',this)">Wetter<span class="a"></span></th>
+      <th class="s" onclick="st('fish','time',this)">Zeit<span class="a"></span></th>
+      <th class="s" onclick="st('fish','price',this)" id="fish-price-th">Preis <span class="star-label" id="fish-star-lbl">1★</span><span class="a"></span></th>
+    </tr></thead><tbody id="fish-body"></tbody>
+  </table></div>
+    </div>
+    <aside class="detail-panel" id="dp-fish">
+      <div class="dp-placeholder">◀ Click an item to view details</div>
+    </aside>
+  </div>
+</div>
+
+<!-- RECIPES -->
+<div class="tab-content" id="tab-recipes">
+  <div class="toolbar">
+    <div class="prog-wrap"><span class="prog-text" id="prog-recipes">0/65</span><div class="prog-outer"><div class="prog-inner" id="bar-recipes" style="width:0%"></div></div></div>
+    <div class="tb-actions">
+      <div class="star-selector">
+        <label>Preis:</label>
+        <button class="star-btn active" onclick="setStar(1,this)">1★</button>
+        <button class="star-btn" onclick="setStar(2,this)">2★</button>
+        <button class="star-btn" onclick="setStar(3,this)">3★</button>
+        <button class="star-btn" onclick="setStar(4,this)">4★</button>
+        <button class="star-btn" onclick="setStar(5,this)">5★</button>
+      </div>
+      <span class="sep">|</span>
+      <button class="btn btn-json btn-sm" onclick="exportJSON()" title="Export JSON">⬇ JSON</button>
+      <button class="btn btn-json btn-sm" onclick="importJSON()" title="Import JSON">⬆ JSON</button>
+      <button class="btn btn-reset btn-sm" onclick="resetAll()" title="Alles zurücksetzen">✕</button>
+      <span class="sep">|</span>
+      <input class="si" placeholder="🔍 Suchen…" oninput="ft('recipes-table',this.value)">
+    </div>
+  </div>
+  <div class="tab-body">
+    <div class="tab-main">
+      <div class="tw"><table id="recipes-table">
+        <thead><tr><th>✓</th><th>Rezept</th><th>Lv.</th><th>Zutaten</th><th>Freischalten</th><th id="recipes-price-th">Preis <span class="star-label" id="recipes-star-lbl">1★</span></th></tr></thead>
+        <tbody id="recipes-body"></tbody>
+      </table></div>
+    </div>
+    <aside class="detail-panel" id="dp-recipes">
+      <div class="dp-placeholder">◀ Click an item to view details</div>
+    </aside>
+  </div>
+</div>
+
+<!-- NPCs -->
+<div class="tab-content" id="tab-npcs">
+  <div class="toolbar">
+    <div class="prog-wrap"><span class="prog-text" id="prog-npcs">0/19</span><div class="prog-outer"><div class="prog-inner" id="bar-npcs" style="width:0%"></div></div></div>
+    <div class="tb-actions">
+      <button class="btn btn-json btn-sm" onclick="exportJSON()" title="Export JSON">⬇ JSON</button>
+      <button class="btn btn-json btn-sm" onclick="importJSON()" title="Import JSON">⬆ JSON</button>
+      <button class="btn btn-reset btn-sm" onclick="resetAll()" title="Alles zurücksetzen">✕</button>
+      <span class="sep">|</span>
+      <select class="filter-select" id="npcs-loc-filter" onchange="filterNPCLocation(this.value)">
+        <option value="">Alle Orte</option>
+      </select>
+      <input class="si" placeholder="🔍 Suchen…" oninput="filterCards('npcs',this.value)">
+    </div>
+  </div>
+  <div class="tab-body">
+    <div class="tab-main">
+      <div class="card-grid" id="npcs-grid"></div>
+    </div>
+    <aside class="detail-panel" id="dp-npcs">
+      <div class="dp-placeholder">◀ Click an NPC to view details</div>
+    </aside>
+  </div>
+</div>
+
+<!-- ANIMALS -->
+<div class="tab-content" id="tab-animals">
+  <div class="toolbar">
+    <div class="prog-wrap"><span class="prog-text" id="prog-animals">0/9</span><div class="prog-outer"><div class="prog-inner" id="bar-animals" style="width:0%"></div></div></div>
+    <div class="tb-actions">
+      <button class="btn btn-json btn-sm" onclick="exportJSON()" title="Export JSON">⬇ JSON</button>
+      <button class="btn btn-json btn-sm" onclick="importJSON()" title="Import JSON">⬆ JSON</button>
+      <button class="btn btn-reset btn-sm" onclick="resetAll()" title="Alles zurücksetzen">✕</button>
+      <span class="sep">|</span>
+      <input class="si" placeholder="🔍 Suchen…" oninput="filterCards('animals',this.value)">
+    </div>
+  </div>
+  <div class="tab-body">
+    <div class="tab-main">
+      <div class="card-grid" id="animals-grid"></div>
+    </div>
+    <aside class="detail-panel" id="dp-animals">
+      <div class="dp-placeholder">◀ Click an animal to view details</div>
+    </aside>
+  </div>
+</div>
+
+<!-- ACHIEVEMENTS -->
+<div class="tab-content" id="tab-achievements">
+  <div class="toolbar">
+    <div class="prog-wrap"><span class="prog-text" id="prog-achievements">0/46</span><div class="prog-outer"><div class="prog-inner" id="bar-achievements" style="width:0%"></div></div></div>
+    <div class="tb-actions">
+      <button class="btn btn-json btn-sm" onclick="exportJSON()" title="Export JSON">⬇ JSON</button>
+      <button class="btn btn-json btn-sm" onclick="importJSON()" title="Import JSON">⬆ JSON</button>
+      <button class="btn btn-reset btn-sm" onclick="resetAll()" title="Alles zurücksetzen">✕</button>
+      <span class="sep">|</span>
+      <input class="si" placeholder="🔍 Suchen…" oninput="filterCards('achievements',this.value)">
+    </div>
+  </div>
+  <div class="tab-body">
+    <div class="tab-main">
+      <div class="card-grid" id="achievements-grid"></div>
+    </div>
+    <aside class="detail-panel" id="dp-achievements">
+      <div class="dp-placeholder">◀ Click an achievement to view details</div>
+    </aside>
+  </div>
+</div>
+
+<!-- COLLECTABLES -->
+<div class="tab-content" id="tab-collectables">
+  <div class="toolbar">
+    <div class="prog-wrap"><span class="prog-text" id="prog-collectables">0/32</span><div class="prog-outer"><div class="prog-inner" id="bar-collectables" style="width:0%"></div></div></div>
+    <div class="tb-actions">
+      <button class="btn btn-json btn-sm" onclick="exportJSON()" title="Export JSON">⬇ JSON</button>
+      <button class="btn btn-json btn-sm" onclick="importJSON()" title="Import JSON">⬆ JSON</button>
+      <button class="btn btn-reset btn-sm" onclick="resetAll()" title="Alles zurücksetzen">✕</button>
+      <span class="sep">|</span>
+      <input class="si" placeholder="🔍 Suchen…" oninput="filterCards('collectables',this.value)">
+    </div>
+  </div>
+  <div class="tab-body">
+    <div class="tab-main">
+      <div class="card-grid" id="collectables-grid"></div>
+    </div>
+    <aside class="detail-panel" id="dp-collectables">
+      <div class="dp-placeholder">◀ Click a collectable to view details</div>
+    </aside>
+  </div>
+</div>
+
+<!-- INGREDIENTS -->
+<div class="tab-content" id="tab-ingredients">
+  <div class="toolbar">
+    <div class="prog-wrap"><span class="prog-text" id="prog-ingredients">0/20</span><div class="prog-outer"><div class="prog-inner" id="bar-ingredients" style="width:0%"></div></div></div>
+    <div class="tb-actions">
+      <button class="btn btn-json btn-sm" onclick="exportJSON()" title="Export JSON">⬇ JSON</button>
+      <button class="btn btn-json btn-sm" onclick="importJSON()" title="Import JSON">⬆ JSON</button>
+      <button class="btn btn-reset btn-sm" onclick="resetAll()" title="Alles zurücksetzen">✕</button>
+      <span class="sep">|</span>
+      <input class="si" placeholder="🔍 Suchen…" oninput="filterCards('ingredients',this.value)">
+    </div>
+  </div>
+  <div class="tab-body">
+    <div class="tab-main">
+      <div class="card-grid" id="ingredients-grid"></div>
+    </div>
+    <aside class="detail-panel" id="dp-ingredients">
+      <div class="dp-placeholder">◀ Click an ingredient to view details</div>
+    </aside>
+  </div>
+</div>
+
+<!-- FLOWERS -->
+<div class="tab-content" id="tab-flowers">
+  <div class="toolbar">
+    <div class="prog-wrap"><span class="prog-text" id="prog-flowers">0/13</span><div class="prog-outer"><div class="prog-inner" id="bar-flowers" style="width:0%"></div></div></div>
+    <div class="tb-actions">
+      <div class="star-selector">
+        <label>Preis:</label>
+        <button class="star-btn active" onclick="setStar(1,this)">1★</button>
+        <button class="star-btn" onclick="setStar(2,this)">2★</button>
+        <button class="star-btn" onclick="setStar(3,this)">3★</button>
+        <button class="star-btn" onclick="setStar(4,this)">4★</button>
+        <button class="star-btn" onclick="setStar(5,this)">5★</button>
+      </div>
+      <span class="sep">|</span>
+      <button class="btn btn-json btn-sm" onclick="exportJSON()" title="Export JSON">⬇ JSON</button>
+      <button class="btn btn-json btn-sm" onclick="importJSON()" title="Import JSON">⬆ JSON</button>
+      <button class="btn btn-reset btn-sm" onclick="resetAll()" title="Alles zurücksetzen">✕</button>
+      <span class="sep">|</span>
+      <button class="btn btn-reset btn-sm" onclick="rs('flowers')">↻ Sort</button>
+      <input class="si" placeholder="🔍 Suchen…" oninput="ft('flowers-table',this.value)">
+    </div>
+  </div>
+  <div class="tab-body">
+    <div class="tab-main">
+      <div class="tw"><table id="flowers-table">
+        <thead><tr><th>✓</th>
+          <th class="s" onclick="st('flowers','name',this)">Name<span class="a"></span></th>
+          <th class="s" onclick="st('flowers','level',this)">Level<span class="a"></span></th>
+          <th class="s" onclick="st('flowers','growth',this)">Wachszeit<span class="a"></span></th>
+          <th class="s" onclick="st('flowers','seedCost',this)">Samen Kauf<span class="a"></span></th>
+          <th class="s" onclick="st('flowers','seedSell',this)">Samen Verk.<span class="a"></span></th>
+          <th class="s" onclick="st('flowers','price',this)">Preis <span class="star-label" id="flowers-star-lbl">1★</span><span class="a"></span></th>
+        </tr></thead><tbody id="flowers-body"></tbody>
+      </table></div>
+    </div>
+    <aside class="detail-panel" id="dp-flowers">
+      <div class="dp-placeholder">◀ Click a flower to view details</div>
+    </aside>
+  </div>
+</div>
+
+<!-- CROPS (crops) -->
+<div class="tab-content" id="tab-crops">
+  <div class="toolbar">
+    <div class="prog-wrap"><span class="prog-text" id="prog-crops">0/13</span><div class="prog-outer"><div class="prog-inner" id="bar-crops" style="width:0%"></div></div></div>
+    <div class="tb-actions">
+      <div class="star-selector">
+        <label>Preis:</label>
+        <button class="star-btn active" onclick="setStar(1,this)">1★</button>
+        <button class="star-btn" onclick="setStar(2,this)">2★</button>
+        <button class="star-btn" onclick="setStar(3,this)">3★</button>
+        <button class="star-btn" onclick="setStar(4,this)">4★</button>
+        <button class="star-btn" onclick="setStar(5,this)">5★</button>
+      </div>
+      <span class="sep">|</span>
+      <button class="btn btn-json btn-sm" onclick="exportJSON()" title="Export JSON">⬇ JSON</button>
+      <button class="btn btn-json btn-sm" onclick="importJSON()" title="Import JSON">⬆ JSON</button>
+      <button class="btn btn-reset btn-sm" onclick="resetAll()" title="Alles zurücksetzen">✕</button>
+      <span class="sep">|</span>
+      <button class="btn btn-reset btn-sm" onclick="rs('crops')">↻ Sort</button>
+      <input class="si" placeholder="🔍 Suchen…" oninput="ft('crops-table',this.value)">
+    </div>
+  </div>
+  <div class="tab-body">
+    <div class="tab-main">
+      <div class="tw"><table id="crops-table">
+        <thead><tr><th>✓</th>
+          <th class="s" onclick="st('crops','name',this)">Name<span class="a"></span></th>
+          <th class="s" onclick="st('crops','level',this)">Level<span class="a"></span></th>
+          <th class="s" onclick="st('crops','growth',this)">Wachszeit<span class="a"></span></th>
+          <th class="s" onclick="st('crops','buy',this)">Kaufpreis<span class="a"></span></th>
+          <th class="s" onclick="st('crops','price',this)">Preis <span class="star-label" id="crops-star-lbl">1★</span><span class="a"></span></th>
+        </tr></thead><tbody id="crops-body"></tbody>
+      </table></div>
+    </div>
+    <aside class="detail-panel" id="dp-crops">
+      <div class="dp-placeholder">◀ Click a crop to view details</div>
+    </aside>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<!-- POPUP MODAL -->
+<div id="popup-overlay" onclick="if(this===event.target)closePopup()">
+  <div id="popup-box">
+    <button class="popup-close" onclick="closePopup()">✕ Close</button>
+    <img id="popup-img" src="" alt="" onerror="this.style.display='none'">
+    <h2 id="popup-name"></h2>
+    <div id="popup-content"></div>
+    <div class="popup-nav">
+      <button id="popup-prev" onclick="popupNav(-1)">❮ Prev</button>
+      <span class="popup-counter" id="popup-counter"></span>
+      <button id="popup-next" onclick="popupNav(1)">Next ❯</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ─── DATA ───────────────────────────────────────────────────────────────────
+
+
+
+// ─── STAR MULTIPLIERS ───────────────────────────────────────────────────────
+const STAR_MULT = [1, 1.5, 2, 4, 8];
+let currentStar = 1;
+
+function starPrice(base) {
+  if (base === null || base === undefined) return null;
+  return Math.round(base * STAR_MULT[currentStar - 1]);
+}
+
+function setStar(n, btn) {
+  currentStar = n;
+  // Update ALL star button groups
+  document.querySelectorAll('.star-btn').forEach(b => {
+    b.classList.toggle('active', b.textContent.trim() === n + '★');
+  });
+  // Update column headers
+  ['fish','recipes','flowers','crops'].forEach(c => {
+    const lbl = document.getElementById(c + '-star-lbl');
+    if (lbl) lbl.textContent = n + '★';
+  });
+  renderAll();
+  // Update sidebar if showing price data
+  if(_popCat&&_popIdx>=0){
+    const panel=document.getElementById('dp-'+_popCat);
+    if(panel&&panel.querySelector('.dp-header')) _updateDetailPanel(panel);
+  }
+}
+
+// ─── STATE ──────────────────────────────────────────────────────────────────
+const TOTALS={insects:76,birds:77,fish:94,recipes:65,npcs:19,animals:9,achievements:46,collectables:33,ingredients:20,flowers:13,crops:13};
+const DM={insects:INSECTS,birds:BIRDS,fish:FISH,recipes:RECIPES,npcs:NPCS,animals:ANIMALS,achievements:ACHIEVEMENTS,collectables:COLLECTABLES,ingredients:INGREDIENTS,flowers:FLOWERS,crops:crops};
+const state={insects:new Set(),birds:new Set(),fish:new Set(),recipes:new Set(),npcs:new Set(),animals:new Set(),achievements:new Set(),collectables:new Set(),ingredients:new Set(),flowers:new Set(),crops:new Set()};
+const SS={insects:{f:null,d:'asc'},birds:{f:null,d:'asc'},fish:{f:null,d:'asc'},flowers:{f:null,d:'asc'},crops:{f:null,d:'asc'}};
+
+// ─── HELPERS ────────────────────────────────────────────────────────────────
+function wc(w){
+  if(!w||w==='Any')return'wa';
+  const l=w.toLowerCase();
+  if(l.includes('rainbow')&&!l.includes('sunny')&&!l.includes('rain'))return'wrb';
+  if(l.includes('rainy')||l.includes('rain'))return'wr';
+  if(l.includes('sunny'))return'ws';
+  return'wa';
+}
+function pc(p){
+  if(p===null||p===undefined) return `<span class="pn">—</span>`;
+  return `<span class="pt">${p.toLocaleString('de-DE')}</span>`;
+}
+
+function nameToFilename(name){
+  return name.toLowerCase().replace(/\s+/g,'-').replace(/[^\w\-]/g,'');
+}
+
+// ─── IMAGE NAME MAPPINGS (data name → actual filename without ext) ──────────
+const IMG_MAP={
+  insects:{
+    'Gold Grasshoppers':'Gold Grasshopper',
+  },
+  birds:{
+    'Eurasian Robin':'European Robin',
+    'Eurasian Widgeon':'Eurasian Wigeon',
+    "Audouin's Gull":'goeland-d-audouin',
+    'Wallace Fruit Dove':"Wallace's Fruit Dove",
+    'Red-and-Green Macaw':'Red-and-green Macaw',
+    'Eurasian Eagle-Owl':'Eagle-Owl',
+    'Long-Eared Owl':'Long Eared Owl',
+    'Blue-and-Yellow Macaw':'Blue-and-yellow Macaw',
+    'Eastern Bluebird':'eastern_bluebird',
+    'Red-Footed Falcon':'Amur Falcon',
+    'Pied Imperial Pigeon':'colombar-u',
+  },
+  fish:{
+    'Blue Crayfish':'Blue European Crayfish',
+    'Striped Red Mullet':'salmonete_listado',
+    'Common Shrimp':'Common Prawn',
+    'Spined Loach':'locha_china',
+    'Pufferfish':'Puffer Fish',
+    'Horse Mackerel':'Scad',
+    'Seabream':'Blackspot Seabream',
+    'Common Chub':'Crucian Carp',
+    'Schneider':'Common Bleak',
+    'Streber':'European Perch',
+  },
+  recipes:{
+    'Fish & Chips':'Fish and Chips',
+    'Cheesecake':'Cheese Cake',
+    'Latte':'Coffee Latte',
+    'Baked Eggplant w/ Meat':'Baked Eggplant with Meat',
+    'Grilled Shiitake':'Grilled Shiitake Mushroom',
+    'Grilled Button Mushrooms':'Grilled Button Mushroom',
+  },
+  crops:{
+    'Potato':'potatoes',
+    'Carrot':'zanahoria',
+    'White Radish':'white radish',
+    'Tea Tree':'tomato',
+    'Cacao Tree':'tomato',
+    'Avocado':'tomato',
+  },
+  achievements:{
+    'D.G. Member':'D.G. Member',
+    'Golden Music CD':'Golden Music CD',
+    'Meow-Meow Canteen':'Meow-Meow Canteen',
+    'Never Empty-Handed':'Never Empty-Handed',
+    "Shoal's Blessing":"Shoal's Blessing",
+  },
+  collectables:{
+    'Bizarre Penny Bun (Pink)':'Bizarre Penny Bun (Pink)',
+    'Bizarre Penny Bun (Purple)':'Bizarre Penny Bun (Purple)',
+    'Bizarre Penny Bun (Red)':'Bizarre Penny Bun (Red)',
+  },
+  npcs:{
+    'Bailey J':'Bailey_J',
+    'Ka Ching':'ka ching',
+    'Mrs.joa':'mrs.joa',
+  },
+};
+
+function getImgHTML(name,cat){
+  const mapped=(IMG_MAP[cat]&&IMG_MAP[cat][name])||name;
+  let path='';
+  if(cat==='insects') path=`assets/imgs/insects/${mapped}.avif`;
+  else if(cat==='birds') path=`assets/imgs/birds/${mapped}.avif`;
+  else if(cat==='fish') path=`assets/imgs/fish/${mapped}.avif`;
+  else if(cat==='recipes'||cat==='gourmet') path=`assets/imgs/recipes/${mapped}.avif`;
+  else if(cat==='flowers') return '';
+  else if(cat==='crops'){
+    const fn=(IMG_MAP.crops&&IMG_MAP.crops[name])||name.toLowerCase();
+    path=`assets/imgs/Crops/${fn}.avif`;
+  }
+  if(!path) return '';
+  return `<img src="${path}" alt="${name}" class="item-img" onerror="this.style.display='none'">`;
+}
+
+function rowHTML(cat,item,i,extraCols=''){
+  const chk=state[cat].has(i);
+  return `<tr class="${chk?'cr':''}" data-idx="${i}" onclick="rowClick(event,'${cat}',${i})">
+    <td><input type="checkbox" class="cb" ${chk?'checked':''} onchange="tog('${cat}',${i},this)" onclick="event.stopPropagation()"></td>
+    <td><div style="display:flex;align-items:center;">${getImgHTML(item.name,cat)}<span>${item.name}</span></div></td>
+    <td><span class="lv">Lv ${item.level}</span></td>
+    <td>${item.location}</td>
+    <td><span class="wt ${wc(item.weather)}">${item.weather}</span></td>
+    <td class="td">${item.time}</td>
+    ${extraCols}
+  </tr>`;
+}
+
+// ─── RENDER ─────────────────────────────────────────────────────────────────
+function renderColl(cat){
+  const ss=SS[cat];const data=DM[cat];const hasFish=cat==='fish';
+  const tbody=document.getElementById(cat+'-body');
+  let html='',sorted=ss.f!==null;
+  let pairs=data.map((item,i)=>({item,i}));
+  if(sorted){
+    pairs.sort((a,b)=>{
+      let va=a.item[ss.f],vb=b.item[ss.f];
+      if(va===null||va===undefined)va=typeof vb==='number'?-Infinity:'';
+      if(vb===null||vb===undefined)vb=typeof va==='number'?-Infinity:'';
+      if(typeof va==='number')return ss.d==='asc'?va-vb:vb-va;
+      va=String(va).toLowerCase();vb=String(vb).toLowerCase();
+      return ss.d==='asc'?va.localeCompare(vb):vb.localeCompare(va);
+    });
+    pairs.forEach(({item,i})=>{html+=rowHTML(cat,item,i,hasFish?`<td>${pc(starPrice(item.price))}</td>`:'');});
+  } else {
+    let cl=-1;
+    pairs.forEach(({item,i})=>{
+      if(item.level!==cl){cl=item.level;html+=`<tr class="lh"><td colspan="10">♥ LEVEL ${cl}</td></tr>`;}
+      html+=rowHTML(cat,item,i,hasFish?`<td>${pc(starPrice(item.price))}</td>`:'');
+    });
+  }
+  tbody.innerHTML=html;
+}
+
+function renderRecipes(){
+  const tbody=document.getElementById('recipes-body');
+  let html='',cl=-1;
+  RECIPES.forEach((r,i)=>{
+    if(r.level!==cl){cl=r.level;html+=`<tr class="lh"><td colspan="6">♥ LEVEL ${cl}</td></tr>`;}
+    const chk=state.recipes.has(i);
+    html+=`<tr class="${chk?'cr':''}" data-idx="${i}" onclick="rowClick(event,'recipes',${i})">
+      <td><input type="checkbox" class="cb" ${chk?'checked':''} onchange="tog('recipes',${i},this)" onclick="event.stopPropagation()"></td>
+      <td class="ri"><div style="display:flex;align-items:center;">${getImgHTML(r.name,'gourmet')}<span>${r.name}${r.event?'<span class="ev">EVENT</span>':''}</span></div></td>
+      <td><span class="lv">Lv ${r.level}</span></td>
+      <td class="rin">${r.ingredients}</td>
+      <td class="ru">${r.unlock}</td>
+      <td>${pc(starPrice(r.price))}</td>
+    </tr>`;
+  });
+  tbody.innerHTML=html;
+}
+
+function renderFlowers(){
+  const tbody=document.getElementById('flowers-body');
+  const ss=SS.flowers;
+  let pairs=FLOWERS.map((item,i)=>({item,i}));
+  if(ss.f){
+    pairs.sort((a,b)=>{
+      let va=a.item[ss.f],vb=b.item[ss.f];
+      if(va===null||va===undefined)va=typeof vb==='number'?-Infinity:'';
+      if(vb===null||vb===undefined)vb=typeof va==='number'?-Infinity:'';
+      if(typeof va==='number')return ss.d==='asc'?va-vb:vb-va;
+      va=String(va).toLowerCase();vb=String(vb).toLowerCase();
+      return ss.d==='asc'?va.localeCompare(vb):vb.localeCompare(va);
+    });
+  }
+  let html='',cl=-1;
+  pairs.forEach(({item,i})=>{
+    if(!ss.f&&item.level!==cl){cl=item.level;html+=`<tr class="lh"><td colspan="7">♥ LEVEL ${cl}</td></tr>`;}
+    const chk=state.flowers.has(i);
+    html+=`<tr class="${chk?'cr':''}" data-idx="${i}" onclick="rowClick(event,'flowers',${i})">
+      <td><input type="checkbox" class="cb" ${chk?'checked':''} onchange="tog('flowers',${i},this)" onclick="event.stopPropagation()"></td>
+      <td><div style="display:flex;align-items:center;">${getImgHTML(item.name,'flowers')}<span>${item.name}</span></div></td>
+      <td><span class="lv">Lv ${item.level}</span></td>
+      <td class="td">${item.growth}</td>
+      <td>${pc(item.seedCost)}</td>
+      <td>${pc(item.seedSell)}</td>
+      <td>${pc(starPrice(item.price))}</td>
+    </tr>`;
+  });
+  tbody.innerHTML=html;
+}
+
+function rendercrops(){
+  const tbody=document.getElementById('crops-body');
+  const ss=SS.crops;
+  let pairs=crops.map((item,i)=>({item,i}));
+  if(ss.f){
+    pairs.sort((a,b)=>{
+      let va=a.item[ss.f],vb=b.item[ss.f];
+      if(va===null||va===undefined)va=typeof vb==='number'?-Infinity:'';
+      if(vb===null||vb===undefined)vb=typeof va==='number'?-Infinity:'';
+      if(typeof va==='number')return ss.d==='asc'?va-vb:vb-va;
+      va=String(va).toLowerCase();vb=String(vb).toLowerCase();
+      return ss.d==='asc'?va.localeCompare(vb):vb.localeCompare(va);
+    });
+  }
+  let html='',cl=-1;
+  pairs.forEach(({item,i})=>{
+    if(!ss.f&&item.level!==cl){cl=item.level;html+=`<tr class="lh"><td colspan="6">♥ LEVEL ${cl}</td></tr>`;}
+    const chk=state.crops.has(i);
+    html+=`<tr class="${chk?'cr':''}" data-idx="${i}" onclick="rowClick(event,'crops',${i})">
+      <td><input type="checkbox" class="cb" ${chk?'checked':''} onchange="tog('crops',${i},this)" onclick="event.stopPropagation()"></td>
+      <td><div style="display:flex;align-items:center;">${getImgHTML(item.name,'crops')}<span>${item.name}</span></div></td>
+      <td><span class="lv">Lv ${item.level}</span></td>
+      <td class="td">${item.growth}</td>
+      <td>${pc(item.buy)}</td>
+      <td>${pc(starPrice(item.price))}</td>
+    </tr>`;
+  });
+  tbody.innerHTML=html;
+}
+
+function renderAll(){
+  renderColl('insects');renderColl('birds');renderColl('fish');
+  renderRecipes();renderFlowers();rendercrops();
+  renderCards('npcs');renderCards('animals');renderCards('achievements');renderCards('collectables');renderCards('ingredients');
+  Object.keys(TOTALS).forEach(c=>upd(c));
+}
+
+function getCardImgPath(cat,name){
+  if(cat==='npcs'){
+    const fn=(IMG_MAP.npcs&&IMG_MAP.npcs[name])||name.toLowerCase();
+    return `assets/imgs/npcs/${fn}.webp`;
+  }else if(cat==='animals'){
+    return `assets/imgs/animals/${name.toLowerCase()}.avif`;
+  }else if(cat==='achievements'){
+    const fn=(IMG_MAP.achievements&&IMG_MAP.achievements[name])||name;
+    return `assets/imgs/achievements/${fn}.avif`;
+  }else if(cat==='collectables'){
+    const fn=(IMG_MAP.collectables&&IMG_MAP.collectables[name])||name;
+    return `assets/imgs/collectables/${fn}.avif`;
+  }else if(cat==='ingredients'){
+    return `assets/imgs/ingredients/${name}.avif`;
+  }
+  return '';
+}
+
+function renderCards(cat){
+  const data=DM[cat];
+  const grid=document.getElementById(cat+'-grid');
+  let html='';
+
+  if(cat==='animals'){
+    // Group by category
+    const categories=['Fish & Shellfish','Livestock','Small Pets','Wild & Exotic'];
+    const grouped={};
+    data.forEach((item,i)=>{
+      const c=item.category||'Other';
+      if(!grouped[c])grouped[c]=[];
+      grouped[c].push({item,i});
+    });
+    const catEmoji={'Fish & Shellfish':'🐟','Livestock':'🐑','Small Pets':'🐰','Wild & Exotic':'🌿'};
+    categories.forEach(cat2=>{
+      if(!grouped[cat2]||!grouped[cat2].length)return;
+      html+=`<div class="cat-header">${catEmoji[cat2]||'♥'} ${cat2}</div>`;
+      grouped[cat2].forEach(({item,i})=>{
+        const imgSrc=getCardImgPath('animals',item.name);
+        html+=`<div class="card info-card" data-idx="${i}" onclick="selectItem('animals',${i})">
+          <img src="${imgSrc}" alt="${item.name}" class="card-img" onerror="this.style.display='none'">
+          <div class="card-name">${item.name}</div>
+          <div class="card-sub">${item.food}</div>
+        </div>`;
+      });
+    });
+
+  } else if(cat==='achievements'){
+    data.forEach((item,i)=>{
+      const imgSrc=getCardImgPath('achievements',item.name);
+      const chk=state.achievements.has(i);
+      html+=`<div class="card ach-card${chk?' checked':''}" data-idx="${i}">
+        <div class="ach-cb-wrap"><input type="checkbox" ${chk?'checked':''} onchange="togCard('achievements',${i},this)" onclick="event.stopPropagation()"></div>
+        <img src="${imgSrc}" alt="${item.name}" class="card-img" onclick="selectItem('achievements',${i})" style="cursor:pointer">
+        <div class="card-name" onclick="selectItem('achievements',${i})" style="cursor:pointer">${item.name}</div>
+        ${item.category?`<div class="card-sub">${item.category}</div>`:''}
+      </div>`;
+    });
+
+  } else if(cat==='npcs'){
+    data.forEach((item,i)=>{
+      const imgSrc=getCardImgPath('npcs',item.name);
+      html+=`<div class="card info-card" data-idx="${i}" onclick="selectItem('npcs',${i})">
+        <img src="${imgSrc}" alt="${item.name}" class="card-img" onerror="this.style.display='none'">
+        <div class="card-name">${item.name}</div>
+        ${item.role?`<div class="card-sub">${item.role}</div>`:''}
+        ${item.location?`<div class="card-source">📍 ${item.location}</div>`:''}
+      </div>`;
+    });
+
+  } else if(cat==='collectables'){
+    data.forEach((item,i)=>{
+      const imgSrc=getCardImgPath('collectables',item.name);
+      html+=`<div class="card info-card" data-idx="${i}" onclick="selectItem('collectables',${i})">
+        <img src="${imgSrc}" alt="${item.name}" class="card-img" onerror="this.style.display='none'">
+        <div class="card-name">${item.name}</div>
+        ${item.type?`<div class="card-sub">${item.type}</div>`:''}
+        ${item.source?`<div class="card-source">${item.source}</div>`:''}
+      </div>`;
+    });
+
+  } else if(cat==='ingredients'){
+    data.forEach((item,i)=>{
+      const imgSrc=getCardImgPath('ingredients',item.name);
+      html+=`<div class="card info-card" data-idx="${i}" onclick="selectItem('ingredients',${i})">
+        <img src="${imgSrc}" alt="${item.name}" class="card-img" onerror="this.style.display='none'">
+        <div class="card-name">${item.name}</div>
+      </div>`;
+    });
+  }
+
+  grid.innerHTML=html;
+}
+
+// ─── ROW CLICK (table rows) ──────────────────────────────────────────────────────────────
+// Click on a table row: toggle checkbox + show detail in sidebar
+function rowClick(e, cat, i){
+  if(e.target.tagName==='INPUT') return; // let the checkbox handle itself
+  const tr=e.currentTarget;
+  const cb=tr.querySelector('.cb');
+  cb.checked=!cb.checked;
+  tog(cat,i,cb);
+  selectItem(cat,i,tr);
+}
+
+// ─── DETAIL PANEL / SIDEBAR ──────────────────────────────────────────────────────
+let _popCat='', _popIdx=-1, _popData=[];
+
+function selectItem(cat, idx, activeTrigger){
+  _popCat=cat; _popIdx=idx; _popData=DM[cat];
+  // Handle active highlight
+  if(activeTrigger){
+    const tabMain=activeTrigger.closest('.tab-main')||activeTrigger.closest('#'+cat+'-grid');
+    if(tabMain){
+      tabMain.querySelectorAll('.dp-active').forEach(el=>el.classList.remove('dp-active'));
+    } else {
+      // fallback: search within tab
+      const tabContent=document.getElementById('tab-'+cat);
+      if(tabContent) tabContent.querySelectorAll('.dp-active').forEach(el=>el.classList.remove('dp-active'));
+    }
+    activeTrigger.classList.add('dp-active');
+  }
+  const panel=document.getElementById('dp-'+cat);
+  if(panel && window.innerWidth>960){
+    _updateDetailPanel(panel);
+  } else {
+    // Mobile: show popup
+    _showPopup();
+  }
+}
+
+function _updateDetailPanel(panel){
+  const item=_popData[_popIdx];
+  if(!item){panel.innerHTML='<div class="dp-placeholder">◀ Click an item to view details</div>';return;}
+  const cat=_popCat;
+  const imgSrc=_getDetailImgSrc(cat,item);
+
+  let sub='';
+  if(cat==='npcs') sub=item.role||'';
+  else if(cat==='animals') sub=item.category||item.type||'';
+  else if(cat==='achievements') sub=item.category||'';
+  else if(cat==='collectables') sub=item.type||'';
+
+  let rows='';
+  if(cat==='insects'||cat==='birds'){
+    if(item.location) rows+=pi('Ort',item.location);
+    if(item.weather)  rows+=pi('Wetter',`<span class="wt ${wc(item.weather)}">${item.weather}</span>`);
+    if(item.time)     rows+=pi('Zeit',item.time);
+    if(item.level)    rows+=pi('Level',`<span class="lv">Lv ${item.level}</span>`);
+  } else if(cat==='fish'){
+    if(item.location) rows+=pi('Ort',item.location);
+    if(item.weather)  rows+=pi('Wetter',`<span class="wt ${wc(item.weather)}">${item.weather}</span>`);
+    if(item.time)     rows+=pi('Zeit',item.time);
+    if(item.level)    rows+=pi('Level',`<span class="lv">Lv ${item.level}</span>`);
+    rows+=pi('Preis',pc(starPrice(item.price)));
+  } else if(cat==='recipes'){
+    if(item.level)       rows+=pi('Level',`<span class="lv">Lv ${item.level}</span>`);
+    if(item.ingredients) rows+=pi('Zutaten',item.ingredients);
+    if(item.unlock)      rows+=pi('Freischalten',item.unlock);
+    rows+=pi('Preis',pc(starPrice(item.price)));
+  } else if(cat==='flowers'){
+    if(item.level)    rows+=pi('Level',`<span class="lv">Lv ${item.level}</span>`);
+    if(item.growth)   rows+=pi('Wachszeit',item.growth);
+    if(item.seedCost) rows+=pi('Samen Kauf',pc(item.seedCost));
+    if(item.seedSell) rows+=pi('Samen Verk.',pc(item.seedSell));
+    rows+=pi('Preis 1★',pc(item.price));
+  } else if(cat==='crops'){
+    if(item.level)  rows+=pi('Level',`<span class="lv">Lv ${item.level}</span>`);
+    if(item.growth) rows+=pi('Wachszeit',item.growth);
+    if(item.buy)    rows+=pi('Kaufpreis',pc(item.buy));
+    rows+=pi('Verkauf 1★',pc(item.price));
+    rows+=pi('Verkauf 2★',pc(starPrice?starPrice(item.price):null));
+    rows+='<div class="dp-desc" style="font-size:0.72rem;color:var(--gold)">Qualität (1★–5★) basiert auf deinem Anbau-Level!</div>';
+  } else if(cat==='npcs'){
+    if(item.role)     rows+=pi('Rolle',item.role);
+    if(item.location) rows+=pi('Ort',item.location);
+  } else if(cat==='animals'){
+    if(item.type)     rows+=pi('Typ',item.type);
+    if(item.food)     rows+=pi('Futter',item.food);
+    if(item.howToGet) rows+=pi('Erhalten',item.howToGet);
+  } else if(cat==='achievements'){
+    if(item.category)    rows+=pi('Kategorie',item.category);
+    if(item.requirement) rows+=pi('Bedingung',item.requirement);
+  } else if(cat==='collectables'){
+    if(item.type)   rows+=pi('Typ',item.type);
+    if(item.source) rows+=pi('Quelle',item.source);
+  } else if(cat==='ingredients'){
+    rows+='<div class="dp-desc">Ingredient used in cooking recipes.</div>';
+  }
+  const desc=item.description?`<div class="dp-desc">${item.description}</div>`:'';
+
+  // Nav buttons
+  const total=_popData.length;
+  const prevDis=_popIdx<=0?'disabled':'';
+  const nextDis=_popIdx>=total-1?'disabled':'';
+
+  panel.innerHTML=`
+    <div class="dp-header">
+      <img class="dp-img" src="${imgSrc}" alt="${item.name}" onerror="this.style.display='none'">
+      <div class="dp-name">${item.name}</div>
+      ${sub?`<div class="dp-sub">${sub}</div>`:''}
+    </div>
+    <div class="dp-body">
+      ${rows}${desc}
+    </div>
+    <div class="dp-nav">
+      <button ${prevDis} onclick="panelNav(-1)">❮ Prev</button>
+      <span class="dp-counter">${_popIdx+1} / ${total}</span>
+      <button ${nextDis} onclick="panelNav(1)">Next ❯</button>
+    </div>
+  `;
+}
+
+function pi(label,value){
+  return `<div class="dp-row"><span class="dp-lbl">${label}</span><span class="dp-val">${value}</span></div>`;
+}
+
+function _getDetailImgSrc(cat,item){
+  if(cat==='insects')return getImgHTML(item.name,'insects').match(/src="([^"]+)"/)?.[1]||'';
+  if(cat==='birds')return getImgHTML(item.name,'birds').match(/src="([^"]+)"/)?.[1]||'';
+  if(cat==='fish')return getImgHTML(item.name,'fish').match(/src="([^"]+)"/)?.[1]||'';
+  if(cat==='recipes')return getImgHTML(item.name,'gourmet').match(/src="([^"]+)"/)?.[1]||'';
+  if(cat==='flowers')return '';
+  if(cat==='crops')return getImgHTML(item.name,'crops').match(/src="([^"]+)"/)?.[1]||'';
+  return getCardImgPath(cat,item.name);
+}
+
+function panelNav(dir){
+  _popIdx=Math.max(0,Math.min(_popData.length-1,_popIdx+dir));
+  const panel=document.getElementById('dp-'+_popCat);
+  if(panel){
+    // Remove old active highlight
+    const tabContent=document.getElementById('tab-'+_popCat);
+    if(tabContent) tabContent.querySelectorAll('.dp-active').forEach(el=>el.classList.remove('dp-active'));
+    // Add new active highlight
+    const newEl=tabContent?tabContent.querySelector(`[data-idx="${_popIdx}"]`):null;
+    if(newEl) newEl.classList.add('dp-active');
+    _updateDetailPanel(panel);
+  }
+}
+
+// ─── POPUP MODAL ─────────────────────────────────────────────────────────────
+let _popCat='', _popIdx=-1, _popData=[];
+
+function openPopup(cat,i){
+  _popCat=cat; _popIdx=i; _popData=DM[cat];
+  // Mark as seen
+  if(!state[cat].has(i)){
+    state[cat].add(i);
+    upd(cat);
+    try{localStorage.setItem('htp_'+cat,JSON.stringify([...state[cat]]));}catch(e){}
+    // Re-render cards so seen badge appears
+    renderCards(cat);
+  }
+  _showPopup();
+}
+
+function _showPopup(){
+  const item=_popData[_popIdx];
+  if(!item) return;
+  const cat=_popCat;
+  const imgSrc=_getDetailImgSrc(cat,item);
+  const img=document.getElementById('popup-img');
+  img.style.display='';
+  img.src=imgSrc;
+  document.getElementById('popup-name').textContent=item.name;
+  document.getElementById('popup-counter').textContent=`${_popIdx+1} / ${_popData.length}`;
+  document.getElementById('popup-prev').disabled=_popIdx<=0;
+  document.getElementById('popup-next').disabled=_popIdx>=_popData.length-1;
+
+  let html='';
+  if(cat==='npcs'){
+    if(item.role)     html+=`<div class="pi-row"><span class="pi-l">Role</span><span class="pi-v">${item.role}</span></div>`;
+    if(item.location) html+=`<div class="pi-row"><span class="pi-l">Location</span><span class="pi-v">${item.location}</span></div>`;
+  }else if(cat==='animals'){
+    if(item.type)     html+=`<div class="pi-row"><span class="pi-l">Type</span><span class="pi-v">${item.type}</span></div>`;
+    if(item.food)     html+=`<div class="pi-row"><span class="pi-l">Food</span><span class="pi-v">${item.food}</span></div>`;
+    if(item.howToGet) html+=`<div class="pi-row"><span class="pi-l">How to Get</span><span class="pi-v">${item.howToGet}</span></div>`;
+  }else if(cat==='achievements'){
+    if(item.category)    html+=`<div class="pi-row"><span class="pi-l">Category</span><span class="pi-v">${item.category}</span></div>`;
+    if(item.requirement) html+=`<div class="pi-row"><span class="pi-l">Requirement</span><span class="pi-v">${item.requirement}</span></div>`;
+  }else if(cat==='collectables'){
+    if(item.type)   html+=`<div class="pi-row"><span class="pi-l">Type</span><span class="pi-v">${item.type}</span></div>`;
+    if(item.source) html+=`<div class="pi-row"><span class="pi-l">Source</span><span class="pi-v">${item.source}</span></div>`;
+  }else if(cat==='fish'||cat==='insects'||cat==='birds'){
+    if(item.location) html+=`<div class="pi-row"><span class="pi-l">Ort</span><span class="pi-v">${item.location}</span></div>`;
+    if(item.weather)  html+=`<div class="pi-row"><span class="pi-l">Wetter</span><span class="pi-v"><span class="wt ${wc(item.weather)}">${item.weather}</span></span></div>`;
+    if(item.time)     html+=`<div class="pi-row"><span class="pi-l">Zeit</span><span class="pi-v">${item.time}</span></div>`;
+    if(item.price!=null) html+=`<div class="pi-row"><span class="pi-l">Preis</span><span class="pi-v">${pc(starPrice(item.price))}</span></div>`;
+  }else if(cat==='recipes'){
+    if(item.ingredients) html+=`<div class="pi-row"><span class="pi-l">Zutaten</span><span class="pi-v">${item.ingredients}</span></div>`;
+    if(item.unlock)      html+=`<div class="pi-row"><span class="pi-l">Freischalten</span><span class="pi-v">${item.unlock}</span></div>`;
+  }else if(cat==='crops'){
+    if(item.growth) html+=`<div class="pi-row"><span class="pi-l">Wachszeit</span><span class="pi-v">${item.growth}</span></div>`;
+    if(item.buy)    html+=`<div class="pi-row"><span class="pi-l">Kaufpreis</span><span class="pi-v">${pc(item.buy)}</span></div>`;
+  }
+  if(item.description) html+=`<div class="pi-desc">${item.description}</div>`;
+  document.getElementById('popup-content').innerHTML=html;
+  document.getElementById('popup-overlay').classList.add('active');
+}
+
+function closePopup(){
+  document.getElementById('popup-overlay').classList.remove('active');
+}
+
+function popupNav(dir){
+  _popIdx=Math.max(0,Math.min(_popData.length-1,_popIdx+dir));
+  _showPopup();
+}
+
+document.addEventListener('keydown',function(e){
+  if(!document.getElementById('popup-overlay').classList.contains('active'))return;
+  if(e.key==='Escape')closePopup();
+  if(e.key==='ArrowLeft')popupNav(-1);
+  if(e.key==='ArrowRight')popupNav(1);
+});
+
+function filterCards(cat,q){
+  q=q.toLowerCase();
+  document.querySelectorAll(`#${cat}-grid .card`).forEach(card=>{
+    const match=card.querySelector('.card-name').textContent.toLowerCase().includes(q);
+    card.style.display=match?'':'none';
+  });
+}
+
+// ─── PROGRESS ───────────────────────────────────────────────────────────────
+function upd(c){
+  const n=state[c].size,t=TOTALS[c];
+  document.getElementById('prog-'+c).textContent=`${n} / ${t}`;
+  document.getElementById('bar-'+c).style.width=(t>0?n/t*100:0)+'%';
+  document.getElementById('badge-'+c).textContent=`${n}/${t}`;
+}
+
+// ─── CHECKBOX ───────────────────────────────────────────────────────────────
+function tog(c,i,cb){
+  if(cb.checked)state[c].add(i);else state[c].delete(i);
+  cb.closest('tr').classList.toggle('cr',cb.checked);
+  upd(c);
+  // auto-save to localStorage
+  try{localStorage.setItem('htp_'+c,JSON.stringify([...state[c]]));}catch(e){}
+}
+
+// ─── SEARCH ─────────────────────────────────────────────────────────────────────
+function ft(tid,q){
+  q=q.toLowerCase();
+  document.querySelectorAll(`#${tid} tbody tr:not(.lh)`).forEach(r=>{
+    r.style.display=r.textContent.toLowerCase().includes(q)?'':'none';
+  });
+}
+
+// ─── TABS ───────────────────────────────────────────────────────────────────
+function sw(id,btn){
+  document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  btn.classList.add('active');
+}
+
+// ─── SORT ───────────────────────────────────────────────────────────────────
+function st(c,f,th){
+  const ss=SS[c];
+  ss.d=ss.f===f?(ss.d==='asc'?'desc':'asc'):'asc';
+  ss.f=f;
+  document.getElementById(c+'-table').querySelectorAll('th.s').forEach(t=>t.classList.remove('asc','desc'));
+  th.classList.add(ss.d==='asc'?'asc':'desc');
+  if(c==='flowers')renderFlowers();
+  else if(c==='crops')rendercrops();
+  else renderColl(c);
+}
+function rs(c){
+  SS[c]={f:null,d:'asc'};
+  document.getElementById(c+'-table').querySelectorAll('th.s').forEach(t=>t.classList.remove('asc','desc'));
+  if(c==='flowers')renderFlowers();
+  else if(c==='crops')rendercrops();
+  else renderColl(c);
+}
+
+// ─── JSON EXPORT / IMPORT ───────────────────────────────────────────────────
+function exportJSON(){
+  const d={};
+  Object.keys(state).forEach(c=>{d[c]=[...state[c]];});
+  d._date=new Date().toISOString();
+  const json=JSON.stringify(d,null,2);
+  // Use data URL — works reliably in all browsers
+  const dataUrl='data:application/json;charset=utf-8,'+encodeURIComponent(json);
+  const a=document.createElement('a');
+  a.href=dataUrl;
+  a.download='heartopia-save.json';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  toast('⬇ heartopia-save.json gespeichert!');
+}
+
+function importJSON(){
+  const inp=document.createElement('input');
+  inp.type='file';
+  inp.accept='.json,application/json';
+  inp.onchange=e=>{
+    const f=e.target.files[0];if(!f)return;
+    const rd=new FileReader();
+    rd.onload=ev=>{
+      try{
+        const d=JSON.parse(ev.target.result);
+        Object.keys(state).forEach(c=>{if(Array.isArray(d[c]))state[c]=new Set(d[c]);});
+        // persist to localStorage
+        Object.keys(state).forEach(c=>{
+          try{localStorage.setItem('htp_'+c,JSON.stringify([...state[c]]));}catch(e){}
+        });
+        renderAll();
+        toast('⬆ Import erfolgreich!');
+      }catch(e){toast('❌ Ungültige Datei!');}
+    };
+    rd.readAsText(f);
+  };
+  inp.click();
+}
+
+// ─── RESET ──────────────────────────────────────────────────────────────────
+function resetAll(){
+  if(!confirm('Wirklich alles zurücksetzen?'))return;
+  Object.keys(state).forEach(c=>{
+    state[c].clear();
+    try{localStorage.removeItem('htp_'+c);}catch(e){}
+  });
+  renderAll();
+  toast('✕ Zurückgesetzt!');
+}
+
+// ─── TOAST ──────────────────────────────────────────────────────────────────
+let tT;
+function toast(m){
+  const el=document.getElementById('toast');
+  el.textContent=m;el.classList.add('show');
+  clearTimeout(tT);tT=setTimeout(()=>el.classList.remove('show'),2500);
+}
+
+// ─── INIT ───────────────────────────────────────────────────────────────────
+// Load from localStorage on startup
+Object.keys(state).forEach(c=>{
+  try{
+    const r=localStorage.getItem('htp_'+c);
+    if(r)state[c]=new Set(JSON.parse(r));
+  }catch(e){}
+});
+renderAll();
+</script>
+</body>
+</html>

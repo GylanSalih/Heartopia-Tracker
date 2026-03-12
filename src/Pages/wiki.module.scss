@@ -1,0 +1,229 @@
+$bg: #091428;
+$bg-card: #0d1f3c;
+$bg-card-hover: #122544;
+$border: rgba(255, 255, 255, 0.08);
+$text: #e8edf5;
+$text-muted: rgba(232, 237, 245, 0.6);
+$accent: #4d8cf0;
+$gold: #ffd166;
+$green: #5dbf7e;
+
+.page {
+  min-height: 100vh;
+  background: $bg;
+  color: $text;
+  padding-top: 4rem;
+  font-family: 'Poppins', sans-serif;
+}
+
+.inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2.5rem 2rem 4rem;
+
+  @media (max-width: 640px) {
+    padding: 2rem 1rem 3rem;
+  }
+}
+
+.pageHead {
+  margin-bottom: 2rem;
+}
+
+.pageTitle {
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: $text;
+  margin-bottom: 0.35rem;
+}
+
+.pageSubtitle {
+  font-size: 0.9rem;
+  color: $text-muted;
+}
+
+.tableWrap {
+  overflow-x: auto;
+  border: 1px solid $border;
+  border-radius: 0.75rem;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+
+  th,
+  td {
+    text-align: left;
+    padding: 0.7rem 1rem;
+    font-size: 0.875rem;
+    border-bottom: 1px solid $border;
+  }
+
+  th {
+    color: $text-muted;
+    font-weight: 600;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    background: rgba(255, 255, 255, 0.02);
+  }
+
+  td { color: $text; }
+
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: rgba(255, 255, 255, 0.025); }
+}
+
+.imgCell {
+  width: 44px;
+  text-align: center;
+}
+
+.itemImg {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+  border-radius: 6px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1rem;
+
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.card {
+  background: $bg-card;
+  border: 1px solid $border;
+  border-radius: 0.75rem;
+  padding: 1.25rem;
+  transition: background 150ms;
+
+  &:hover { background: $bg-card-hover; }
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.cardImg {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
+.cardTitle {
+  font-weight: 600;
+  font-size: 1rem;
+  color: $text;
+  line-height: 1.3;
+}
+
+.cardRole {
+  font-size: 0.78rem;
+  color: $accent;
+  font-weight: 500;
+}
+
+.cardBody {
+  font-size: 0.83rem;
+  color: $text-muted;
+  line-height: 1.55;
+}
+
+.meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  margin-top: 0.6rem;
+  font-size: 0.8rem;
+  color: $text-muted;
+
+  strong { color: $text; font-weight: 600; }
+}
+
+.badge {
+  display: inline-block;
+  background: rgba(77, 140, 240, 0.15);
+  color: $accent;
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-top: 0.5rem;
+}
+
+.tag {
+  background: rgba(93, 191, 126, 0.12);
+  color: $green;
+  padding: 0.15rem 0.55rem;
+  border-radius: 6px;
+  font-size: 0.72rem;
+  font-weight: 500;
+}
+
+.starRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-top: 0.5rem;
+}
+
+.starBadge {
+  background: rgba(255, 209, 102, 0.12);
+  color: $gold;
+  padding: 0.15rem 0.55rem;
+  border-radius: 6px;
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
+.weatherBadge {
+  display: inline-block;
+  font-size: 0.78rem;
+  padding: 0.1rem 0.45rem;
+  border-radius: 4px;
+
+  &.any { background: rgba(255,255,255,0.06); color: $text-muted; }
+  &.rain { background: rgba(100,149,237,0.15); color: #6495ed; }
+  &.sunny { background: rgba(255,215,0,0.12); color: $gold; }
+  &.rainbow { background: rgba(200,100,255,0.12); color: #c864ff; }
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.listItem {
+  background: $bg-card;
+  border: 1px solid $border;
+  border-radius: 0.5rem;
+  padding: 0.75rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.875rem;
+  color: $text;
+  transition: background 120ms;
+
+  &:hover { background: $bg-card-hover; }
+}

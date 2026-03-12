@@ -1,366 +1,104 @@
+﻿$bg: #091428;
+$bg-dropdown: #0a1830;
+$border: rgba(255, 255, 255, 0.08);
+$text: rgba(255, 255, 255, 0.88);
+$text-muted: rgba(255, 255, 255, 0.58);
+$accent: #4d8cf0;
+
 .header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 1030;
-  background: transparent;
-  backdrop-filter: none;
-  border-bottom: none;
-  transition: background 250ms cubic-bezier(0.4, 0, 0.2, 1),
-              backdrop-filter 250ms cubic-bezier(0.4, 0, 0.2, 1),
-              box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1);
-
-  &.scrolled {
-    background: rgba(0, 0, 0, 0.75);
-    backdrop-filter: blur(20px);
-    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06);
-  }
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  height: 4rem; background: $bg; border-bottom: 1px solid $border;
 }
-
-[data-theme="dark"] .header {
-  background: transparent;
-
-  &.scrolled {
-    background: rgba(0, 0, 0, 0.85);
-    backdrop-filter: blur(20px);
-    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06);
-  }
-}
-
-// KEY FIX: space-between puts logo left, nav right, center stays empty
 .container {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 0 2.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 4.5rem;
-
-  @media (max-width: 640px) {
-    padding: 0 1rem;
-    height: 3.5rem;
-  }
+  max-width: 1400px; margin: 0 auto; padding: 0 2rem; height: 100%;
+  display: flex; align-items: center; justify-content: space-between;
+  @media (max-width: 640px) { padding: 0 1rem; }
 }
-
 .logo {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  text-decoration: none;
-  color: #ffffff;
-  font-weight: 700;
-  font-size: 1.25rem;
-  transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
-  flex-shrink: 0;
-
-  .logoLight {
-    display: block;
-    width: 48px;
-    height: 48px;
-    transition: transform 200ms cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  .logoDark {
-    display: none;
-    width: 48px;
-    height: 48px;
-    transition: transform 200ms cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  &:hover {
-    opacity: 0.85;
-    transform: translateY(-1px);
-
-    .logoLight,
-    .logoDark {
-      transform: rotate(15deg) scale(1.1);
-    }
-  }
-
-  &:focus-visible {
-    outline: none;
-    box-shadow: 0 0 0 2px rgba(255,255,255,0.2), 0 0 0 4px rgba(255,255,255,0.6);
-    border-radius: 0.25rem;
-  }
+  display: flex; align-items: center; gap: 0.6rem;
+  text-decoration: none; color: #ffffff;
+  font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 1.1rem; flex-shrink: 0;
+  img { border-radius: 6px; object-fit: contain; }
+  &:hover { opacity: 0.85; }
 }
-
-[data-theme="dark"] .logo {
-  .logoLight { display: none; }
-  .logoDark  { display: block; }
-}
-
-// Nav sits on the right — no margin: auto
 .desktopNav {
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-
-  @media (max-width: 768px) {
-    display: none;
-  }
+  display: flex; align-items: center; gap: 0.125rem;
+  @media (max-width: 768px) { display: none; }
 }
-
 .navLink {
-  text-decoration: none;
-  color: rgba(255, 255, 255, 0.85);
-  font-weight: 500;
-  font-size: 0.975rem;
-  padding: 0.5rem 0.75rem;
-  transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
-  border-radius: 0.375rem;
-  letter-spacing: 0.01em;
-
-  &:hover {
-    color: #ffffff;
-    background: rgba(255, 255, 255, 0.12);
-  }
-
-  &.active {
-    color: #ffffff;
-    background: rgba(255, 255, 255, 0.18);
-  }
-
-  &:focus-visible {
-    outline: none;
-    box-shadow: 0 0 0 2px rgba(255,255,255,0.2), 0 0 0 4px rgba(255,255,255,0.6);
-  }
+  display: inline-flex; align-items: center; gap: 0.3rem;
+  text-decoration: none; color: $text-muted;
+  font-family: 'Poppins', sans-serif; font-weight: 500; font-size: 0.875rem;
+  padding: 0.45rem 0.8rem; border-radius: 0.4rem;
+  transition: color 120ms, background 120ms;
+  cursor: pointer; border: none; background: none; white-space: nowrap;
+  &:hover { color: $text; background: rgba(255,255,255,0.07); }
+  &.active { color: #ffffff; background: rgba(255,255,255,0.10); }
 }
-
-.themeToggleHeader {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 2.25rem;
-  height: 2.25rem;
-  cursor: pointer;
-  border-radius: 0.5rem;
-  background: rgba(255, 255, 255, 0.12);
-  color: #ffffff;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
-
-  &:hover {
-    background: rgba(255, 255, 255, 0.22);
-    border-color: rgba(255, 255, 255, 0.35);
-    transform: translateY(-1px);
-  }
-
-  &:active { transform: translateY(0) scale(0.95); }
-
-  &:focus-visible {
-    outline: none;
-    box-shadow: 0 0 0 2px rgba(255,255,255,0.2), 0 0 0 4px rgba(255,255,255,0.6);
-  }
-
-  svg { transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1); }
-  &:hover svg { transform: rotate(20deg); }
-}
-
-.mobileMenuButton {
-  display: none;
-  align-items: center;
-  justify-content: center;
-  width: 2.5rem;
-  height: 2.5rem;
-  background: rgba(255, 255, 255, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 0.5rem;
-  color: #ffffff;
-  cursor: pointer;
-  transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
-
-  @media (max-width: 768px) { display: flex; }
-
-  &:hover {
-    background: rgba(255, 255, 255, 0.22);
-    border-color: rgba(255, 255, 255, 0.35);
-    transform: translateY(-1px);
-  }
-
-  &:active { transform: translateY(0) scale(0.95); }
-
-  &:focus-visible {
-    outline: none;
-    box-shadow: 0 0 0 2px rgba(255,255,255,0.2), 0 0 0 4px rgba(255,255,255,0.6);
-  }
-}
-
-.mobileNav {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.97);
-  backdrop-filter: blur(10px);
-  z-index: 1050;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 150ms ease-out, visibility 150ms;
-
-  &.open {
-    opacity: 1;
-    visibility: visible;
-  }
-
-  @media (min-width: 769px) { display: none; }
-}
-
-.mobileCloseButton {
-  position: absolute;
-  top: 1.5rem;
-  right: 1.5rem;
-  z-index: 1060;
-  width: 3rem;
-  height: 3rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  border-radius: 50%;
-  color: #ffffff;
-  cursor: pointer;
-  transition: all 150ms ease-out;
-
-  &:hover {
-    background: rgba(255, 255, 255, 0.2);
-    border-color: rgba(255, 255, 255, 0.35);
-  }
-
-  &:active { transform: scale(0.95); }
-
-  @media (max-width: 640px) {
-    top: 1rem;
-    right: 1rem;
-    width: 2.5rem;
-    height: 2.5rem;
-  }
-}
-
-.mobileNavContent {
+.chevron { transition: transform 150ms ease; flex-shrink: 0; }
+.dropdown {
   position: relative;
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  padding: 6rem 1rem 3rem;
-  transform: translateY(-20px);
-  opacity: 0;
-  transition: transform 200ms ease-out, opacity 200ms ease-out;
-  box-sizing: border-box;
-
-  .mobileNav.open & {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-.mobileNavLinks {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 1.5rem;
-  flex: 1;
-}
-
-.mobileNavLink {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  max-width: min(400px, calc(100vw - 2rem));
-  padding: 1.125rem 2rem;
-  text-decoration: none;
-  color: #ffffff;
-  font-weight: 600;
-  font-size: clamp(1rem, 4vw, 1.125rem);
-  border-radius: 14px;
-  background: rgba(255, 255, 255, 0.07);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  transition: all 150ms ease-out;
-  text-align: center;
-  opacity: 0;
-  box-sizing: border-box;
-  letter-spacing: 0.02em;
-
-  &:nth-child(1) { transition-delay: 50ms; }
-  &:nth-child(2) { transition-delay: 80ms; }
-  &:nth-child(3) { transition-delay: 110ms; }
-
-  .mobileNav.open & { opacity: 1; }
-
   &:hover {
-    color: #000000;
-    background: rgba(255, 255, 255, 0.95);
-    transform: translateY(-2px);
-  }
-
-  &.active {
-    color: #000000;
-    background: #ffffff;
-    font-weight: 700;
-  }
-
-  &:active { transform: scale(0.98); }
-
-  &:focus-visible {
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5);
+    .dropdownMenu { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
+    .navLink .chevron { transform: rotate(180deg); }
   }
 }
-
-.socialIcons {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1.25rem;
-  padding: 1rem 0;
-  opacity: 0;
-  transition: opacity 200ms ease-out 220ms;
-
-  .mobileNav.open & { opacity: 1; }
+.dropdownMenu {
+  position: absolute; top: calc(100% + 0.5rem); left: 50%;
+  transform: translateX(-50%) translateY(-6px); min-width: 160px;
+  background: $bg-dropdown; border: 1px solid $border; border-radius: 0.6rem; padding: 0.35rem;
+  opacity: 0; visibility: hidden;
+  transition: opacity 150ms ease, visibility 150ms ease, transform 150ms ease;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  &:hover { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
 }
-
-.socialIcon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 2.75rem;
-  height: 2.75rem;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  border-radius: 50%;
-  color: #ffffff;
-  text-decoration: none;
-  transition: all 150ms ease-out;
-
-  &:hover {
-    background: rgba(255, 255, 255, 0.18);
-    transform: translateY(-2px);
-  }
-
-  &:active { transform: scale(0.95); }
-
-  &:focus-visible {
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5);
-  }
+.dropdownItem {
+  display: block; padding: 0.5rem 0.8rem; color: $text-muted;
+  font-family: 'Poppins', sans-serif; font-size: 0.825rem; font-weight: 500;
+  text-decoration: none; border-radius: 0.375rem; white-space: nowrap;
+  transition: color 100ms, background 100ms;
+  &:hover { color: #ffffff; background: rgba(255,255,255,0.08); }
+  &.activeItem { color: $accent; background: rgba(77,140,240,0.12); }
 }
-
-@media (max-width: 480px) {
-  .mobileNavContent {
-    padding: 4.5rem 0.75rem 1.5rem;
-  }
-
-  .mobileNavLink {
-    max-width: calc(100vw - 1rem);
-    padding: 0.875rem 1.25rem;
-    border-radius: 10px;
-  }
+.mobileMenuButton {
+  display: none; align-items: center; justify-content: center;
+  width: 2.2rem; height: 2.2rem; background: rgba(255,255,255,0.07);
+  border: 1px solid $border; border-radius: 0.4rem; color: $text; cursor: pointer;
+  @media (max-width: 768px) { display: flex; }
+  &:hover { background: rgba(255,255,255,0.12); }
 }
+.mobileNav {
+  position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+  background: $bg; z-index: 1050; overflow-y: auto;
+}
+.mobileClose {
+  position: absolute; top: 0.9rem; right: 1rem;
+  display: flex; align-items: center; justify-content: center;
+  width: 2.2rem; height: 2.2rem; background: rgba(255,255,255,0.07);
+  border: 1px solid $border; border-radius: 0.4rem; color: $text; cursor: pointer;
+}
+.mobileLinks { padding: 4.5rem 1.5rem 2rem; display: flex; flex-direction: column; gap: 0.15rem; }
+.mobileLink {
+  display: block; padding: 0.7rem 1rem; color: $text-muted;
+  font-family: 'Poppins', sans-serif; font-size: 1rem; font-weight: 500;
+  text-decoration: none; border-radius: 0.4rem; transition: color 100ms, background 100ms;
+  &:hover { color: $text; background: rgba(255,255,255,0.06); }
+  &.active { color: #ffffff; background: rgba(255,255,255,0.10); }
+}
+.mobileGroup { margin-top: 0.25rem; }
+.mobileGroupTitle {
+  display: flex; align-items: center; gap: 0.5rem; width: 100%;
+  padding: 0.7rem 1rem; color: $text-muted;
+  font-family: 'Poppins', sans-serif; font-size: 1rem; font-weight: 500;
+  background: none; border: none; border-radius: 0.4rem; cursor: pointer; text-align: left;
+  transition: color 100ms, background 100ms;
+  &:hover { color: $text; background: rgba(255,255,255,0.06); }
+}
+.mobileGroupLinks { padding-left: 1.25rem; display: flex; flex-direction: column; gap: 0.1rem; margin-top: 0.1rem; }
+.mobileSubLink {
+  display: block; padding: 0.55rem 1rem; color: $text-muted;
+  font-family: 'Poppins', sans-serif; font-size: 0.9rem; font-weight: 500;
+  text-decoration: none; border-radius: 0.375rem; transition: color 100ms, background 100ms;
+  &:hover { color: $text; background: rgba(255,255,255,0.06); }
+}
+.rotated { transform: rotate(180deg); }

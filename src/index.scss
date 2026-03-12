@@ -1,44 +1,23 @@
 // CSS Custom Properties for Theme System
 :root {
-  // Light theme colors (default)
-  --color-background: #ffffff;
-  --color-foreground: #000000;
-  --color-primary: #000000;
+  --header-height: 4rem;
+  --color-background: #091428;
+  --color-foreground: #e8edf5;
+  --color-primary: #4d8cf0;
   --color-primary-foreground: #ffffff;
-  --color-secondary: #f1f5f9;
-  --color-secondary-foreground: #0f172a;
-  --color-muted: #ffffff;
-  --color-muted-foreground: #64748b;
-  --color-accent: #f1f5f9;
-  --color-accent-foreground: #0f172a;
-  --color-border: #e2e8f0;
-  --color-input: #ffffff;
-  --color-ring: #000000;
-  --color-card: #ffffff;
-  --color-card-foreground: #000000;
-  --color-popover: #ffffff;
-  --color-popover-foreground: #000000;
-}
-
-// Dark theme colors
-[data-theme="dark"] {
-  --color-background: #000000;
-  --color-foreground: #ffffff;
-  --color-primary: #ffffff;
-  --color-primary-foreground: #000000;
-  --color-secondary: #1a1a1a;
-  --color-secondary-foreground: #fafafa;
-  --color-muted: #000000;
-  --color-muted-foreground: #a1a1aa;
-  --color-accent: #1a1a1a;
-  --color-accent-foreground: #fafafa;
-  --color-border: #262626;
-  --color-input: #1a1a1a;
-  --color-ring: #ffffff;
-  --color-card: #0a0a0a;
-  --color-card-foreground: #fafafa;
-  --color-popover: #0a0a0a;
-  --color-popover-foreground: #fafafa;
+  --color-secondary: #0d1f3c;
+  --color-secondary-foreground: #e8edf5;
+  --color-muted: #0d1f3c;
+  --color-muted-foreground: rgba(232,237,245,0.55);
+  --color-accent: #4d8cf0;
+  --color-accent-foreground: #ffffff;
+  --color-border: rgba(255,255,255,0.08);
+  --color-input: #0d1f3c;
+  --color-ring: #4d8cf0;
+  --color-card: #0d1f3c;
+  --color-card-foreground: #e8edf5;
+  --color-popover: #0d1f3c;
+  --color-popover-foreground: #e8edf5;
 }
 
 // Modern CSS Reset and Base Styles
