@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { getImgSrc } from '../Tracker/data/trackerData';
+import { useTrackerState } from '../../hooks/useTrackerState';
 import styles from '../wiki.module.scss';
 
 const CROPS = [
@@ -125,7 +127,45 @@ const CROPS = [
 const STAR_LABELS = ['⭐1', '⭐2', '⭐3', '⭐4', '⭐5'];
 
 const CropsPage = () => {
-  const [search, setSearch] = useState('');
+  const [search, setSearch]   = useState('');
+  const [sortCol, setSortCol] = useState('level');
+  const [sortDir, setSortDir] = useState('asc');
+  const [star, setStar]       = useState(1);
+  const [checked, toggle]     = useTrackerState('crops');
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [highlightedItem, setHighlightedItem] = useState(null);
+  const highlightedRef = useRef(null);
+
+  useEffect(() => {
+    const highlight = searchParams.get('highlight');
+    if (highlight) {
+      setHighlightedItem(highlight);
+      setTimeout(() => {
+        if (highlightedRef.current) {
+          highlightedRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }, 100);
+    }
+  }, [searchParams]);
+
+  useEffect(() => {
+    const handleClick = () => {
+      if (highlightedItem) {
+        setHighlightedItem(null);
+        setSearchParams({});
+      }
+    };
+    document.addEventListener('click', handleClick);
+    return () => document.removeEventListener('click', handleClick);
+  }, [highlightedItem, setSearchParams]);
+
+  const handleSort = (col) => {
+    if (sortCol === col) setSortDir((d) => (d === 'asc' ? 'desc' : 'asc'));
+    else { setSortCol(col); setSortDir('asc'); }
+  };
+
+  const thClass = (col) =>
+    `${styles.thSort} ${sortCol === col ? (sortDir === 'asc' ? styles.thAsc : styles.thDesc) : ''}`;
 
   const filtered = CROPS.filter(
     (c) =>
@@ -133,74 +173,125 @@ const CropsPage = () => {
       c.recipes.some((r) => r.toLowerCase().includes(search.toLowerCase()))
   );
 
+  const sorted = [...filtered].sort((a, b) => {
+    let av, bv;
+    if (sortCol === 'price') {
+      av = typeof a.stars[star - 1] === 'number' ? a.stars[star - 1] : -1;
+      bv = typeof b.stars[star - 1] === 'number' ? b.stars[star - 1] : -1;
+      return sortDir === 'asc' ? av - bv : bv - av;
+    }
+    av = a[sortCol] ?? ''; bv = b[sortCol] ?? '';
+    if (typeof av === 'number') return sortDir === 'asc' ? av - bv : bv - av;
+    return sortDir === 'asc'
+      ? String(av).localeCompare(String(bv))
+      : String(bv).localeCompare(String(av));
+  });
+
+  const pct = CROPS.length ? (checked.size / CROPS.length) * 100 : 0;
+
   return (
     <div className={styles.page}>
       <div className={styles.inner}>
         <div className={styles.pageHead}>
-          <h1 className={styles.pageTitle}>Crops</h1>
-          <p className={styles.pageSubtitle}>{CROPS.length} crops available to grow in Heartopia</p>
+          <div className={styles.pageHeadContent}>
+            <img src="/assets/img/Crops/grape.avif" alt="Crops" className={styles.pageIcon} loading="eager" onError={(e) => { e.target.style.display = 'none'; }} />
+            <div>
+              <h1 className={styles.pageTitle}>Crops</h1>
+              <p className={styles.pageSubtitle}>{CROPS.length} crops available to grow in Heartopia</p>
+            </div>
+          </div>
         </div>
 
-        <input
-          type="text"
-          placeholder="Search crops or recipes…"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          style={{
-            marginBottom: '1.5rem',
-            padding: '0.5rem 0.9rem',
-            borderRadius: '0.4rem',
-            border: '1px solid rgba(255,255,255,0.1)',
-            background: '#0d1f3c',
-            color: '#e8edf5',
-            fontFamily: 'Poppins, sans-serif',
-            fontSize: '0.875rem',
-            width: '100%',
-            maxWidth: '360px',
-          }}
-        />
-
-        <div className={styles.grid}>
-          {filtered.map((crop) => (
-            <div key={crop.name} className={styles.card}>
-              <div className={styles.cardHeader}>
-                <img
-                  src={getImgSrc(crop.name, 'gardening')}
-                  alt={crop.name}
-                  className={styles.cardImg}
-                  onError={(e) => { e.target.style.display = 'none'; }}
-                />
-                <div>
-                  <div className={styles.cardTitle}>{crop.name}</div>
-                  <div className={styles.cardRole}>
-                    {crop.isTree ? 'Tree Crop' : `${crop.growthTime} growth`}
-                  </div>
-                </div>
-              </div>
-
-              <div className={styles.meta}>
-                <span><strong>Seed Price:</strong> {crop.seedPrice}</span>
-                <span><strong>Unlock:</strong> Lv {crop.level}</span>
-                <span><strong>Growth Time:</strong> {crop.growthTime}</span>
-              </div>
-
-              <div className={styles.starRow}>
-                {crop.stars.map((val, i) => (
-                  <span key={i} className={styles.starBadge}>
-                    {STAR_LABELS[i]}: {val}
-                  </span>
-                ))}
-              </div>
-
-              {crop.recipes.length > 0 && (
-                <div className={styles.tags}>
-                  {crop.recipes.map((r) => (
-                    <span key={r} className={styles.tag}>{r}</span>
-                  ))}
-                </div>
-              )}
+        <div className={styles.toolbar}>
+          <div className={styles.progWrap}>
+            <span className={styles.progText}>{checked.size}/{CROPS.length}</span>
+            <div className={styles.progOuter}>
+              <div className={styles.progInner} style={{ width: `${pct}%` }} />
             </div>
-          ))}
+          </div>
+          <div className={styles.tbActions}>
+            <div className={styles.starSelector}>
+              <span className={styles.starLabel}>Preis:</span>
+              {[1,2,3,4,5].map((s) => (
+                <button
+                  key={s}
+                  className={`${styles.starBtn} ${star === s ? styles.starBtnActive : ''}`}
+                  onClick={() => setStar(s)}
+                >
+                  {s}★
+                </button>
+              ))}
+            </div>
+            <input
+              className={styles.searchInput}
+              placeholder="Search crops…"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+          </div>
+        </div>
+
+        <div className={styles.tableWrap}>
+          <table className={styles.table}>
+            <thead>
+              <tr>
+                <th>✓</th>
+                <th className={styles.imgCell} />
+                <th className={thClass('name')} onClick={() => handleSort('name')}>Name<span className={styles.sortArrow}/></th>
+                <th className={thClass('level')} onClick={() => handleSort('level')}>Level<span className={styles.sortArrow}/></th>
+                <th className={thClass('growthTime')} onClick={() => handleSort('growthTime')}>Wachstum<span className={styles.sortArrow}/></th>
+                <th className={thClass('seedPrice')} onClick={() => handleSort('seedPrice')}>Seed-Preis<span className={styles.sortArrow}/></th>
+                <th className={thClass('price')} onClick={() => handleSort('price')}>Ernte {star}★<span className={styles.sortArrow}/></th>
+                <th>Rezepte</th>
+              </tr>
+            </thead>
+            <tbody>
+              {sorted.map((crop) => {
+                const harvestVal = crop.stars[star - 1];
+                return (
+                  <tr 
+                    key={crop.name} 
+                    ref={highlightedItem === crop.name ? highlightedRef : null}
+                    className={`${checked.has(crop.name) ? styles.checkedRow : ''} ${highlightedItem === crop.name ? styles.highlightedRow : ''}`} 
+                    onClick={() => toggle(crop.name)} 
+                    style={{ cursor: 'pointer' }}
+                  >
+                    <td onClick={(e) => e.stopPropagation()}>
+                      <input type="checkbox" className={styles.cb} checked={checked.has(crop.name)} onChange={() => toggle(crop.name)} />
+                    </td>
+                    <td className={styles.imgCell}>
+                      <img 
+                        src={getImgSrc(crop.name, 'gardening')} 
+                        alt={crop.name} 
+                        className={styles.itemImg} 
+                        onError={(e) => { 
+                          e.target.style.display = 'none';
+                          const soonBadge = document.createElement('span');
+                          soonBadge.className = styles.soonBadge;
+                          soonBadge.textContent = 'SOON';
+                          if (!e.target.parentElement.querySelector(`.${styles.soonBadge}`)) {
+                            e.target.parentElement.appendChild(soonBadge);
+                          }
+                        }} 
+                      />
+                    </td>
+                    <td>{crop.name}{crop.isTree && <span className={styles.badge} style={{ marginLeft: '6px' }}>Tree</span>}</td>
+                    <td style={{ textAlign: 'center' }}><span className={styles.badge}>Lv {crop.level}</span></td>
+                    <td className={styles.timeDim}>{crop.growthTime}</td>
+                    <td className={styles.starBadge}>{crop.seedPrice}</td>
+                    <td>
+                      {typeof harvestVal === 'number'
+                        ? <span className={styles.starBadge}>{harvestVal}</span>
+                        : '—'}
+                    </td>
+                    <td style={{ fontSize: '0.74rem', color: '#7a9cc6', maxWidth: '180px' }}>
+                      {crop.recipes.join(', ')}
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
         </div>
       </div>
     </div>

@@ -1,59 +1,52 @@
-// CSS Custom Properties for Theme System
 :root {
   --header-height: 4rem;
-  --color-background: #091428;
-  --color-foreground: #e8edf5;
+}
+
+// Dark Mode - Dark Blue Theme
+html[data-theme="dark"],
+html:not([data-theme]) {
+  color-scheme: dark;
+  --color-background: #0a1628;
+  --color-foreground: #c8d8f0;
   --color-primary: #4d8cf0;
   --color-primary-foreground: #ffffff;
-  --color-secondary: #0d1f3c;
-  --color-secondary-foreground: #e8edf5;
-  --color-muted: #0d1f3c;
-  --color-muted-foreground: rgba(232,237,245,0.55);
+  --color-secondary: #1a2d4a;
+  --color-secondary-foreground: #c8d8f0;
+  --color-muted: #1a2d4a;
+  --color-muted-foreground: rgba(200,216,240,0.6);
   --color-accent: #4d8cf0;
   --color-accent-foreground: #ffffff;
-  --color-border: rgba(255,255,255,0.08);
-  --color-input: #0d1f3c;
+  --color-border: rgba(77,140,240,0.2);
+  --color-input: #1a2d4a;
   --color-ring: #4d8cf0;
-  --color-card: #0d1f3c;
-  --color-card-foreground: #e8edf5;
-  --color-popover: #0d1f3c;
-  --color-popover-foreground: #e8edf5;
+  --color-card: #1a2d4a;
+  --color-card-foreground: #c8d8f0;
+  --color-popover: #1a2d4a;
+  --color-popover-foreground: #c8d8f0;
 }
 
-// Modern CSS Reset and Base Styles
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-// Smooth scrolling for the entire page
-html {
-  scroll-behavior: smooth;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
-}
-
-// Set root font size for rem units
-html {
-  font-size: 16px;
-}
-
-// Initialize light theme by default
-html[data-theme="light"],
-html:not([data-theme]) {
-  color-scheme: light;
-}
-
-// Initialize dark theme
-html[data-theme="dark"] {
+// Light Mode - Dark Kawaii Pink Theme
+html[data-theme="light"] {
   color-scheme: dark;
+  --color-background: #1a0a12;
+  --color-foreground: #f0c8d8;
+  --color-primary: #d4527a;
+  --color-primary-foreground: #ffffff;
+  --color-secondary: #2d1a24;
+  --color-secondary-foreground: #f0c8d8;
+  --color-muted: #2d1a24;
+  --color-muted-foreground: rgba(240,200,216,0.6);
+  --color-accent: #d4527a;
+  --color-accent-foreground: #ffffff;
+  --color-border: rgba(212,82,122,0.2);
+  --color-input: #2d1a24;
+  --color-ring: #d4527a;
+  --color-card: #2d1a24;
+  --color-card-foreground: #f0c8d8;
+  --color-popover: #2d1a24;
+  --color-popover-foreground: #f0c8d8;
 }
 
-// Body base styles
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   font-size: 1rem;
@@ -62,13 +55,12 @@ body {
   background: var(--color-background);
   overflow-x: hidden;
   transition: color 0.3s ease, background-color 0.3s ease;
-  
-  // Modern selection styling
+
   &::selection {
     background: var(--color-primary);
     color: var(--color-primary-foreground);
   }
-  
+
   &::-moz-selection {
     background: var(--color-primary);
     color: var(--color-primary-foreground);

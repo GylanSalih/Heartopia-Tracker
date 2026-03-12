@@ -26,35 +26,3 @@
   font-weight: 700;
   font-style: normal;
 }
-
-/* -------------------Marcellus Font START--------------------------*/
-
-@font-face {
-  font-family: "Marcellus";
-  src: url("/public/assets/fonts/Marcellus/Marcellus-Regular.ttf") format("truetype");
-  font-weight: 400;
-  font-style: normal;
-}
-
-/* -------------------Spectral SC Font START--------------------------*/
-
-@font-face {
-  font-family: "SpectralSC";
-  src: url("/public/assets/fonts/Spectral_SC/SpectralSC-Regular.ttf") format("truetype");
-  font-weight: 400;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: "SpectralSC";
-  src: url("/public/assets/fonts/Spectral_SC/SpectralSC-Medium.ttf") format("truetype");
-  font-weight: 500;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: "SpectralSC";
-  src: url("/public/assets/fonts/Spectral_SC/SpectralSC-Bold.ttf") format("truetype");
-  font-weight: 700;
-  font-style: normal;
-}

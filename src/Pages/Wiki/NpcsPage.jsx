@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { getImgSrc } from '../Tracker/data/trackerData';
+import { useTrackerState } from '../../hooks/useTrackerState';
 import styles from '../wiki.module.scss';
 
 const NPCS = [
@@ -194,8 +195,9 @@ const NPCS = [
 ];
 
 const NpcsPage = () => {
-  const [search, setSearch] = useState('');
+  const [search, setSearch]     = useState('');
   const [category, setCategory] = useState('All');
+  const [checked, toggle]       = useTrackerState('npcs');
 
   const categories = ['All', ...Array.from(new Set(NPCS.map((n) => n.category)))];
 
@@ -208,65 +210,64 @@ const NpcsPage = () => {
     return matchSearch && matchCat;
   });
 
+  const pct = NPCS.length ? (checked.size / NPCS.length) * 100 : 0;
+
   return (
     <div className={styles.page}>
       <div className={styles.inner}>
         <div className={styles.pageHead}>
-          <h1 className={styles.pageTitle}>NPCs</h1>
-          <p className={styles.pageSubtitle}>All characters you can meet in Heartopia</p>
+          <div className={styles.pageHeadContent}>
+            <img src="/assets/img/npcs/naniwa.webp" alt="NPCs" className={styles.pageIcon} loading="eager" onError={(e) => { e.target.style.display = 'none'; }} />
+            <div>
+              <h1 className={styles.pageTitle}>NPCs</h1>
+              <p className={styles.pageSubtitle}>All characters you can meet in Heartopia</p>
+            </div>
+          </div>
         </div>
 
-        <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap', marginBottom: '1.5rem' }}>
-          <input
-            type="text"
-            placeholder="Search NPCs…"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            style={{
-              padding: '0.5rem 0.9rem',
-              borderRadius: '0.4rem',
-              border: '1px solid rgba(255,255,255,0.1)',
-              background: '#0d1f3c',
-              color: '#e8edf5',
-              fontFamily: 'Poppins, sans-serif',
-              fontSize: '0.875rem',
-              width: '100%',
-              maxWidth: '280px',
-            }}
-          />
-          <select
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-            style={{
-              padding: '0.5rem 0.9rem',
-              borderRadius: '0.4rem',
-              border: '1px solid rgba(255,255,255,0.1)',
-              background: '#0d1f3c',
-              color: '#e8edf5',
-              fontFamily: 'Poppins, sans-serif',
-              fontSize: '0.875rem',
-              cursor: 'pointer',
-            }}
-          >
-            {categories.map((c) => (
-              <option key={c} value={c}>{c}</option>
-            ))}
-          </select>
+        <div className={styles.toolbar}>
+          <div className={styles.tbActions}>
+            <select
+              className={styles.filterSelect}
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+            >
+              {categories.map((c) => <option key={c} value={c}>{c}</option>)}
+            </select>
+            <input
+              className={styles.searchInput}
+              placeholder="Search NPCs…"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+          </div>
         </div>
 
-        <div className={styles.grid}>
+        <div className={styles.gridWide}>
           {filtered.map((npc) => (
-            <div key={npc.name} className={styles.card}>
+            <div
+              key={npc.name}
+              className={styles.cardWide}
+            >
               <div className={styles.cardHeader}>
                 <img
                   src={getImgSrc(npc.name, 'npcs')}
                   alt={npc.name}
-                  className={styles.cardImg}
-                  onError={(e) => { e.target.style.display = 'none'; }}
+                  className={styles.cardImgWide}
+                  onError={(e) => { 
+                    e.target.style.display = 'none';
+                    const soonBadge = document.createElement('span');
+                    soonBadge.className = styles.soonBadge;
+                    soonBadge.textContent = 'SOON';
+                    if (!e.target.parentElement.querySelector(`.${styles.soonBadge}`)) {
+                      e.target.parentElement.appendChild(soonBadge);
+                    }
+                  }}
                 />
                 <div>
                   <div className={styles.cardTitle}>{npc.name}</div>
                   <div className={styles.cardRole}>{npc.title}</div>
+                  <span className={styles.badge} style={{ marginTop: '4px', display: 'inline-block' }}>{npc.category}</span>
                 </div>
               </div>
 
@@ -277,10 +278,6 @@ const NpcsPage = () => {
                 <span><strong>Unlock:</strong> {npc.unlock}</span>
                 {npc.items !== '—' && <span><strong>Items:</strong> {npc.items}</span>}
                 {npc.lovedGifts !== '—' && <span><strong>Loved Gifts:</strong> {npc.lovedGifts}</span>}
-              </div>
-
-              <div style={{ marginTop: '0.6rem' }}>
-                <span className={styles.badge}>{npc.category}</span>
               </div>
             </div>
           ))}

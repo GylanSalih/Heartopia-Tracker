@@ -1,10 +1,12 @@
 import React, { useState, useMemo } from 'react';
 import { ACHIEVEMENTS, getImgSrc } from '../Tracker/data/trackerData';
+import { useTrackerState } from '../../hooks/useTrackerState';
 import styles from '../wiki.module.scss';
 
 const AchievementsPage = () => {
-  const [search, setSearch] = useState('');
+  const [search, setSearch]   = useState('');
   const [category, setCategory] = useState('All');
+  const [checked, toggle, resetAll] = useTrackerState('achievements');
 
   const categories = useMemo(
     () => ['All', ...Array.from(new Set(ACHIEVEMENTS.map((a) => a.category))).sort()],
@@ -19,73 +21,100 @@ const AchievementsPage = () => {
     return matchSearch && matchCat;
   });
 
+  const pct = ACHIEVEMENTS.length ? (checked.size / ACHIEVEMENTS.length) * 100 : 0;
+
   return (
     <div className={styles.page}>
       <div className={styles.inner}>
         <div className={styles.pageHead}>
-          <h1 className={styles.pageTitle}>Achievements</h1>
-          <p className={styles.pageSubtitle}>{ACHIEVEMENTS.length} achievements to unlock in Heartopia</p>
+          <div className={styles.pageHeadContent}>
+            <img src="/assets/img/achievements/Meow-Meow Canteen.avif" alt="Achievements" className={styles.pageIcon} onError={(e) => { e.target.style.display = 'none'; }} />
+            <div>
+              <h1 className={styles.pageTitle}>Achievements</h1>
+              <p className={styles.pageSubtitle}>{ACHIEVEMENTS.length} achievements to unlock in Heartopia</p>
+            </div>
+          </div>
         </div>
 
-        <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap', marginBottom: '1.5rem' }}>
-          <input
-            type="text"
-            placeholder="Search achievements…"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            style={{
-              padding: '0.5rem 0.9rem',
-              borderRadius: '0.4rem',
-              border: '1px solid rgba(255,255,255,0.1)',
-              background: '#0d1f3c',
-              color: '#e8edf5',
-              fontFamily: 'Poppins, sans-serif',
-              fontSize: '0.875rem',
-              width: '100%',
-              maxWidth: '280px',
+        <div className={styles.toolbar}>
+          <div className={styles.progWrap}>
+            <span className={styles.progText}>{checked.size}/{ACHIEVEMENTS.length}</span>
+            <div className={styles.progOuter}>
+              <div className={styles.progInner} style={{ width: `${pct}%` }} />
+            </div>
+          </div>
+          <div className={styles.tbActions}>
+            <select
+              className={styles.filterSelect}
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+            >
+              {categories.map((c) => <option key={c} value={c}>{c}</option>)}
+            </select>
+            <button
+              className={styles.resetBtn}
+              onClick={() => {
+              setCategory('All');
+              setSearch('');
+              resetAll();
             }}
-          />
-          <select
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-            style={{
-              padding: '0.5rem 0.9rem',
-              borderRadius: '0.4rem',
-              border: '1px solid rgba(255,255,255,0.1)',
-              background: '#0d1f3c',
-              color: '#e8edf5',
-              fontFamily: 'Poppins, sans-serif',
-              fontSize: '0.875rem',
-              cursor: 'pointer',
-            }}
-          >
-            {categories.map((c) => (
-              <option key={c} value={c}>{c}</option>
-            ))}
-          </select>
+              title="Reset filters"
+            >
+              Reset
+            </button>
+            <input
+              className={styles.searchInput}
+              placeholder="Search achievements…"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+          </div>
         </div>
 
         <div className={styles.grid}>
           {filtered.map((ach) => (
-            <div key={ach.name} className={styles.card}>
-              <div className={styles.cardHeader}>
-                <img
-                  src={getImgSrc(ach.name, 'achievements')}
-                  alt={ach.name}
-                  className={styles.cardImg}
-                  onError={(e) => { e.target.style.display = 'none'; }}
+            <div
+              key={ach.name}
+              className={`${styles.card} ${checked.has(ach.name) ? styles.cardChecked : ''}`}
+              onClick={() => toggle(ach.name)}
+            >
+              <div className={styles.cardCheckbox}>
+                <input
+                  type="checkbox"
+                  className={styles.cb}
+                  checked={checked.has(ach.name)}
+                  onChange={() => toggle(ach.name)}
+                  onClick={(e) => e.stopPropagation()}
                 />
-                <div>
-                  <div className={styles.cardTitle}>{ach.name}</div>
-                  <span className={styles.badge}>{ach.category}</span>
-                </div>
               </div>
+              <img
+                src={getImgSrc(ach.name, 'achievements')}
+                alt={ach.name}
+                className={styles.cardImg}
+                onError={(e) => { 
+                  e.target.style.display = 'none';
+                  const soonBadge = document.createElement('span');
+                  soonBadge.className = styles.soonBadge;
+                  soonBadge.textContent = 'SOON';
+                  soonBadge.style.display = 'block';
+                  soonBadge.style.margin = '0 auto 10px';
+                  if (!e.target.parentElement.querySelector(`.${styles.soonBadge}`)) {
+                    e.target.parentElement.appendChild(soonBadge);
+                  }
+                }}
+              />
+              <div className={styles.cardTitle}>{ach.name}</div>
+              <span className={styles.badge}>{ach.category}</span>
               {ach.requirement && (
-                <div className={styles.meta}>
-                  <span><strong>Requirement:</strong> {ach.requirement}</span>
+                <div className={styles.meta} style={{ marginTop: '8px' }}>
+                  <span><strong>Req:</strong> {ach.requirement}</span>
                 </div>
               )}
-              <p className={styles.cardBody} style={{ marginTop: '0.5rem' }}>{ach.description}</p>
+              {ach.description && (
+                <p className={styles.cardBody} style={{ marginTop: '6px', textAlign: 'center', fontSize: '0.74rem' }}>
+                  {ach.description}
+                </p>
+              )}
             </div>
           ))}
         </div>

@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './heroSection.module.scss';
 
-const HeroSection = ({ imageUrl = '/assets/img/SliderLandingImage.png', onPlayClick }) => {
+const HeroSection = ({ imageUrl = '/assets/img/SliderLandingImage.jpg', onPlayClick }) => {
   return (
     <div className={styles.hero}>
       <div className={styles.background} style={{ backgroundImage: `url('${imageUrl}')` }}>
