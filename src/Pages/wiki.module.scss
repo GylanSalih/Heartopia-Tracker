@@ -696,8 +696,8 @@ $checked: rgba(255, 255, 255, 0.04);
     }
   }
 
-  .itemImg { width: 36px; height: 36px; }
-  .imgCell { width: 44px; }
+  .itemImg { width: 36px; height: 36px; min-width: 36px; }
+  .imgCell { width: 44px; min-width: 36px; }
 }
 
 // ─── Animations ──────────────────────────────────────────────
