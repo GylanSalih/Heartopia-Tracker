@@ -13,8 +13,6 @@
   }
 
   html {
-    // Prevent horizontal scroll globally
-    overflow-x: hidden;
     // Smooth anchor scrolling
     scroll-behavior: smooth;
     // Prevent font size inflation on mobile
@@ -29,7 +27,6 @@
 
   body {
     min-height: 100%;
-    overflow-x: hidden;
     // Inherit theme colors
     background: var(--color-background);
     color: var(--color-foreground);
@@ -131,7 +128,6 @@
   flex-direction: column;
   background: var(--color-background);
   color: var(--color-foreground);
-  overflow-x: hidden;
   position: relative;
 }
 

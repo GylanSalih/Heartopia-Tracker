@@ -63,6 +63,18 @@ const DesktopHeader = () => {
     setOpenSection(null);
   }, [location]);
 
+  // Prevent body scroll when mobile menu is open
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isMenuOpen]);
+
   const isActive = (path) => location.pathname === path;
   const isGroupActive = (links) => links.some((l) => location.pathname === l.to);
 
@@ -193,19 +205,35 @@ const DesktopHeader = () => {
         >
           {isMenuOpen ? <X size={22} /> : <Menu size={22} />}
         </button>
+      </div>
 
-        {isMenuOpen && (
+      {/* Mobile Menu Popup */}
+      {isMenuOpen && (
+        <>
+          <div 
+            className={styles.mobileMenuOverlay} 
+            onClick={() => setIsMenuOpen(false)}
+            aria-hidden="true"
+          />
           <div className={styles.mobileNav}>
-            <button
-              className={styles.mobileClose}
-              onClick={() => setIsMenuOpen(false)}
-              aria-label="Close menu"
-            >
-              <X size={22} />
-            </button>
+            <div className={styles.mobileMenuHeader}>
+              <span className={styles.mobileMenuTitle}>Menu</span>
+              <button
+                className={styles.mobileClose}
+                onClick={() => setIsMenuOpen(false)}
+                aria-label="Close menu"
+              >
+                <X size={20} />
+              </button>
+            </div>
+
             <div className={styles.mobileLinks}>
               {WILDLIFE_LINKS.map((l) => (
-                <Link key={l.to} to={l.to} className={styles.mobileLink}>
+                <Link 
+                  key={l.to} 
+                  to={l.to} 
+                  className={`${styles.mobileLink} ${isActive(l.to) ? styles.active : ''}`}
+                >
                   <img src={l.img} alt={l.label} className={styles.mobileIcon} loading="eager" onError={(e) => e.target.style.display = 'none'} />
                   <span>{l.label}</span>
                   <span className={styles.mobileCounter}>{getCounterLabel(l)}</span>
@@ -217,12 +245,17 @@ const DesktopHeader = () => {
                   className={styles.mobileGroupTitle}
                   onClick={() => setOpenSection(openSection === 'wiki' ? null : 'wiki')}
                 >
-                  Wiki <ChevronDown size={14} className={openSection === 'wiki' ? styles.rotated : ''} />
+                  <span>Wiki</span>
+                  <ChevronDown size={16} className={openSection === 'wiki' ? styles.rotated : ''} />
                 </button>
                 {openSection === 'wiki' && (
                   <div className={styles.mobileGroupLinks}>
                     {WIKI_LINKS.map((l) => (
-                      <Link key={l.to} to={l.to} className={styles.mobileSubLink}>
+                      <Link 
+                        key={l.to} 
+                        to={l.to} 
+                        className={`${styles.mobileSubLink} ${isActive(l.to) ? styles.active : ''}`}
+                      >
                         <img src={l.img} alt={l.label} className={styles.mobileIcon} loading="eager" onError={(e) => e.target.style.display = 'none'} />
                         <span>{l.label}</span>
                         <span className={styles.mobileCounter}>{getCounterLabel(l)}</span>
@@ -232,9 +265,46 @@ const DesktopHeader = () => {
                 )}
               </div>
             </div>
+
+            <div className={styles.mobileActions}>
+              <div className={styles.mobileActionGroup}>
+                <button
+                  onClick={handleExportJSON}
+                  className={styles.mobileActionButton}
+                >
+                  <Download size={18} />
+                  <span>Export JSON</span>
+                </button>
+                <button
+                  onClick={handleImportJSON}
+                  className={styles.mobileActionButton}
+                >
+                  <Upload size={18} />
+                  <span>Import JSON</span>
+                </button>
+              </div>
+
+              <button
+                className={styles.mobileThemeToggle}
+                onClick={toggleDarkMode}
+                aria-label="Toggle theme"
+              >
+                {isDarkMode ? (
+                  <>
+                    <Sun size={18} />
+                    <span style={{ marginLeft: '0.5rem' }}>Light Mode</span>
+                  </>
+                ) : (
+                  <>
+                    <Moon size={18} />
+                    <span style={{ marginLeft: '0.5rem' }}>Dark Mode</span>
+                  </>
+                )}
+              </button>
+            </div>
           </div>
-        )}
-      </div>
+        </>
+      )}
     </header>
   );
 };

@@ -20,14 +20,16 @@ $checked: rgba(255, 255, 255, 0.04);
   color: $text;
   font-family: 'Poppins', sans-serif;
   padding-top: 4rem;
+  overflow-x: hidden; // ← nur hier
 }
 
 .inner {
   max-width: 1400px;
   margin: 0 auto;
   padding: 0 0 4rem;
+  overflow: hidden; // ← ENTFERNEN falls vorhanden, oder:
+  min-width: 0;     // ← verhindert flex overflow
 }
-
 // ─── Page Header ─────────────────────────────────────────────
 .pageHead {
   padding: 2rem 1.5rem 1.5rem;
@@ -229,15 +231,18 @@ $checked: rgba(255, 255, 255, 0.04);
 }
 
 // ─── Table ───────────────────────────────────────────────────
+// ─── Table Wrap ───────────────────────────────────────────────
 .tableWrap {
-  padding: 0 0 40px;
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  width: 100%;
 }
 
 .table {
   width: 100%;
   border-collapse: collapse;
   font-size: 0.83rem;
+  min-width: 640px;
 
   thead th {
     background: $panel;

@@ -89,40 +89,218 @@ $accent: var(--color-accent);
   @media (max-width: 768px) { display: flex; }
   &:hover { background: rgba(255,255,255,0.12); }
 }
+
+// Mobile Menu Overlay
+.mobileMenuOverlay {
+  display: none;
+  @media (max-width: 768px) {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    animation: fadeIn 0.2s ease-out;
+  }
+}
+
+// Mobile Menu Container
 .mobileNav {
-  position:flex; align-items: center; gap: 0.6rem; padding: 0.7rem 1rem; color: $text-muted;
-  font-family: 'Poppins', sans-serif; font-size: 1rem; font-weight: 500;
-  text-decoration: none; border-radius: 0.4rem; transition: color 100ms, background 100ms;
+  display: none;
+  @media (max-width: 768px) {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 85%;
+    max-width: 320px;
+    background: $bg;
+    border-left: 1px solid $border;
+    z-index: 1000;
+    overflow-y: auto;
+    animation: slideInRight 0.3s ease-out;
+  }
+}
+
+// Mobile Menu Header
+.mobileMenuHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid $border;
+  flex-shrink: 0;
+}
+
+.mobileMenuTitle {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: $text;
+}
+
+.mobileClose {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid $border;
+  border-radius: 0.4rem;
+  color: $text;
+  cursor: pointer;
+  &:hover { background: rgba(255,255,255,0.12); }
+}
+
+// Mobile Links Container
+.mobileLinks {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 1rem 0.75rem;
+  flex: 1;
+}
+
+// Mobile Link Styles
+.mobileLink {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.7rem 1rem;
+  color: $text-muted;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  text-decoration: none;
+  border-radius: 0.4rem;
+  transition: color 100ms, background 100ms;
   &:hover { color: $text; background: rgba(255,255,255,0.06); }
   &.active { color: #ffffff; background: rgba(255,255,255,0.10); }
 }
-.mobileSubLink {
-  display: flex; align-items: center; gap: 0.6rem; padding: 0.55rem 1rem; color: $text-muted;
-  font-family: 'Poppins', sans-serif; font-size: 0.9rem; font-weight: 500;
-  text-decoration: none; border-radius: 0.375rem; transition: color 100ms, background 100ms;
-  &:hover { color: $text; background: rgba(255,255,255,0.06); }
-}
+
 .mobileIcon {
-  width: 24px; height: 24px; object-fit: contain; border-radius: 4px; flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  border-radius: 4px;
+  flex-shrink: 0;
 }
+
 .mobileCounter {
   font-family: 'Rajdhani', 'Poppins', sans-serif;
-  font-size: 0.8rem; font-weight: 700;
+  font-size: 0.8rem;
+  font-weight: 700;
   background: rgba(77,140,240,0.2);
   color: $accent;
-  padding: 0.15rem 0.45rem; border-radius: 0.3rem;
+  padding: 0.15rem 0.45rem;
+  border-radius: 0.3rem;
   margin-left: auto;
-  font-family: 'Poppins', sans-serif; font-size: 1rem; font-weight: 500;
-  background: none; border: none; border-radius: 0.4rem; cursor: pointer; text-align: left;
+}
+
+// Mobile Group Styles
+.mobileGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.mobileGroupTitle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0.7rem 1rem;
+  color: $text-muted;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  background: none;
+  border: none;
+  border-radius: 0.4rem;
+  cursor: pointer;
+  text-align: left;
   transition: color 100ms, background 100ms;
   &:hover { color: $text; background: rgba(255,255,255,0.06); }
 }
-.mobileGroupLinks { padding-left: 1.25rem; display: flex; flex-direction: column; gap: 0.1rem; margin-top: 0.1rem; }
+
+.mobileGroupLinks {
+  padding-left: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  margin-top: 0.1rem;
+}
+
 .mobileSubLink {
-  display: block; padding: 0.55rem 1rem; color: $text-muted;
-  font-family: 'Poppins', sans-serif; font-size: 0.9rem; font-weight: 500;
-  text-decoration: none; border-radius: 0.375rem; transition: color 100ms, background 100ms;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.55rem 1rem;
+  color: $text-muted;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-decoration: none;
+  border-radius: 0.375rem;
+  transition: color 100ms, background 100ms;
   &:hover { color: $text; background: rgba(255,255,255,0.06); }
+  &.active { color: #ffffff; background: rgba(255,255,255,0.10); }
+}
+
+// Mobile Actions (Save dropdown & Theme toggle)
+.mobileActions {
+  border-top: 1px solid $border;
+  padding: 0.75rem;
+  flex-shrink: 0;
+}
+
+.mobileActionGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin-bottom: 0.75rem;
+}
+
+.mobileActionButton {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.7rem 1rem;
+  color: $text-muted;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 500;
+  background: none;
+  border: 1px solid $border;
+  border-radius: 0.4rem;
+  cursor: pointer;
+  text-align: left;
+  transition: all 100ms;
+  &:hover {
+    color: $text;
+    background: rgba(255,255,255,0.06);
+  }
+}
+
+.mobileThemeToggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 0.7rem;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid $border;
+  border-radius: 0.4rem;
+  color: $text;
+  cursor: pointer;
+  transition: all 0.2s;
+  &:hover {
+    background: rgba(255,255,255,0.12);
+  }
 }
 .rotated { transform: rotate(180deg); }
 .themeToggle {
@@ -131,4 +309,23 @@ $accent: var(--color-accent);
   border: 1px solid $border; border-radius: 0.4rem; color: $text; cursor: pointer;
   margin-left: 0.5rem; transition: all 0.2s;
   &:hover { background: rgba(255,255,255,0.12); transform: scale(1.05); }
+}
+
+// Animations
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
 }
